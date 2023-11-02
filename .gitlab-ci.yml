@@ -26,8 +26,8 @@ docker-build-app:
         tag="app"
         echo "Running on branch 'docker': tag = 'app'"
         cd spring/
-        docker build --pull -t "$CI_REGISTRY_IMAGE${tag}" .
-        docker push "$CI_REGISTRY_IMAGE${tag}"
+        docker build --pull -t "$CI_REGISTRY_IMAGE:${tag}" .
+        docker push "$CI_REGISTRY_IMAGE:${tag}"
       fi
   # Run this job in a branch where a Dockerfile exists
   rules:
