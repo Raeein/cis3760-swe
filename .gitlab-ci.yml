@@ -12,7 +12,7 @@
 
 docker-build-app:
   # Use the official docker image.
-  image: docker:latest
+  image: docker:cli
   stage: build
   services:
     - docker:dind
@@ -23,11 +23,10 @@ docker-build-app:
   script:
     - |
       if [[ "$CI_COMMIT_BRANCH" == "docker" ]]; then
-        tag="app"
         echo "Running on branch 'docker': tag = 'app'"
         cd spring/
-        docker build --pull -t "$CI_REGISTRY_IMAGE:${tag}" .
-        docker push "$CI_REGISTRY_IMAGE:${tag}"
+        docker build --pull -t "$CI_REGISTRY_IMAGE:app" .
+        docker push "$CI_REGISTRY_IMAGE:app"
       fi
   # Run this job in a branch where a Dockerfile exists
   rules:
