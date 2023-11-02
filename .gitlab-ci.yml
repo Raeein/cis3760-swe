@@ -17,7 +17,7 @@ docker-build-app:
   services:
     - docker:dind
   variables:
-    DOCKER_HOST: tcp://docker:2375
+    DOCKER_HOST: tcp://localhost:2375
   before_script:
     - docker login -u "$DOCKER_HUB_USER" -p "$DOCKER_HUB_PASSWORD"
   # Default branch leaves tag empty (= latest tag)
