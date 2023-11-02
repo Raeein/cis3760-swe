@@ -16,6 +16,8 @@ docker-build-app:
   stage: build
   services:
     - docker:dind
+  variables:
+    DOCKER_HOST: tcp://docker:2375
   before_script:
     - docker login -u "$DOCKER_HUB_USER" -p "$DOCKER_HUB_PASSWORD"
   # Default branch leaves tag empty (= latest tag)
@@ -25,7 +27,7 @@ docker-build-app:
       if [[ "$CI_COMMIT_BRANCH" == "docker" ]]; then
         tag="app"
         echo "Running on branch 'docker': tag = 'app'"
-        cd ./spring
+        cd spring/
         docker build --pull -t "springtemplate:${tag}" .
         docker push "springtemplate:${tag}"
       fi
