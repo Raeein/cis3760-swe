@@ -17,7 +17,7 @@ docker-build-app:
   services:
     - docker:dind
   before_script:
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" springtemplate
   # Default branch leaves tag empty (= latest tag)
   # All other branches are tagged with the escaped branch name (commit ref slug)
   script:
@@ -26,8 +26,8 @@ docker-build-app:
         tag="app"
         echo "Running on branch 'docker': tag = 'app'"
         cd ./spring
-        docker build --pull -t "$CI_REGISTRY_IMAGE${tag}" .
-        docker push "$CI_REGISTRY_IMAGE${tag}"
+        docker build --pull -t "springtemplate:${tag}" .
+        docker push "springtemplate:${tag}"
       fi
   # Run this job in a branch where a Dockerfile exists
   rules:
