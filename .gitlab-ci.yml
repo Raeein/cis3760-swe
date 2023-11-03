@@ -16,6 +16,7 @@ docker-build-app:
   stage: build
   services:
     - docker:dind
+      alias: docker
   
   variables:
     # When using dind service, you must instruct Docker to talk with
