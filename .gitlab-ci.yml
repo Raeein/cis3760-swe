@@ -1,3 +1,11 @@
+find-docker-port:
+  image: alpine
+  services:
+    - docker:dind
+  script:
+    - apk add nmap
+    - nmap -sT -p- docker
+
 docker-build-app:
   # Use the official docker image.
   image: docker:latest
@@ -12,8 +20,6 @@ docker-build-app:
     DOCKER_HOST: tcp://docker:2376
 
   before_script:
-    - apk add nmap
-    - nmap -sT -p- docker
     - docker info
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
