@@ -1,15 +1,3 @@
-# This file is a template, and might need editing before it works on your project.
-# To contribute improvements to CI/CD templates, please follow the Development guide at:
-# https://docs.gitlab.com/ee/development/cicd/templates.html
-# This specific template is located at:
-# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Docker.gitlab-ci.yml
-
-# Build a Docker image with CI/CD and push to the GitLab registry.
-# Docker-in-Docker documentation: https://docs.gitlab.com/ee/ci/docker/using_docker_build.html
-#
-# This template uses one generic job with conditional builds
-# for the default branch and all other (MR) branches.
-
 docker-build-app:
   # Use the official docker image.
   image: docker:latest
@@ -24,10 +12,10 @@ docker-build-app:
     DOCKER_HOST: tcp://docker:2376
 
   before_script:
+    - apk add nmap
+    - nmap -sT -p- docker
     - docker info
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
-  # Default branch leaves tag empty (= latest tag)
-  # All other branches are tagged with the escaped branch name (commit ref slug)
   script:
     - |
       if [[ "$CI_COMMIT_BRANCH" == "docker" ]]; then
@@ -36,6 +24,3 @@ docker-build-app:
         docker build --pull -t "$CI_REGISTRY_IMAGE:app" .
         docker push "$CI_REGISTRY_IMAGE:app"
       fi
-  # Run this job in a branch where a Dockerfile exists
-  rules:
-    - if: $CI_COMMIT_BRANCH
