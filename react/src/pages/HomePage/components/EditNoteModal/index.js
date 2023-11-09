@@ -9,6 +9,7 @@ const EditNoteModal = (props) => {
             setNoteText(props.note.text);
         }
     }, [props.note]);
+    
     return(
         <Modal
             show={props.show}
