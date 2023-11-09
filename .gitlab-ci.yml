@@ -1,7 +1,12 @@
-docker-build-spring:
-  image: 
-    name: gcr.io/kaniko-project/executor:v1.14.0-debug
-    entrypoint: [""]
+image: 
+  name: gcr.io/kaniko-project/executor:v1.14.0-debug
+  entrypoint: [""]
+
+stages:
+  - build-spring
+  - build-mysql
+
+build-spring:
   stage: build-spring
   script:
     - |
@@ -12,11 +17,8 @@ docker-build-spring:
     changes:
       - spring/*
 
-docker-build-mysql:
-  image: 
-    name: gcr.io/kaniko-project/executor:v1.14.0-debug
-    entrypoint: [""]
-  stage: build-spring
+build-mysql:
+  stage: build-mysql
   script:
     - |
       if [[ "$CI_COMMIT_BRANCH" == "docker" ]]; then
