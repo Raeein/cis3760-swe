@@ -24,15 +24,23 @@ const HomePage = () => {
     }, [])
 
 
+    const status = (res) => {
+        if (!res.ok) {
+            throw new Error('Something Went Wrong');
+        }
+        return res;
+    }
+
     const fetchAllNotes = () => {
         setLoading(true);
         fetch('/api/notes/all')
+            .then(status)
             .then(res => res.json())
             .then(data => {
                 setNotes(data);
                 setLoading(false);
             }).catch(error => {
-                setErrorMessage(error);
+                setErrorMessage(error.message);
                 setError(true);
             });
     }
@@ -46,12 +54,14 @@ const HomePage = () => {
             body: JSON.stringify({
                 text: newNote
             })
-        }).then(res => {
+        })
+        .then(status)
+        .then(res => {
             console.log(res);
             setNewNote('');
             fetchAllNotes();
         }).catch(error => {
-            setErrorMessage(error);
+            setErrorMessage(error.message);
             setError(true);
         });
     }
@@ -59,11 +69,13 @@ const HomePage = () => {
     const deleteNote = (id) => {
         fetch(`/api/notes/delete/${id}`, {
             method: 'DELETE'
-        }).then(res => {
+        })
+        .then(status)
+        .then(res => {
             console.log(res);
             fetchAllNotes();
         }).catch(error => {
-            setErrorMessage(error);
+            setErrorMessage(error.message);
             setError(true);
         });
     }
@@ -84,11 +96,13 @@ const HomePage = () => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(note)
-        }).then(res => {
+        })
+        .then(status)
+        .then(res => {
             console.log(res);
             fetchAllNotes();
         }).catch(error => {
-            setErrorMessage(error);
+            setErrorMessage(error.message);
             setError(true);
         });
     }
