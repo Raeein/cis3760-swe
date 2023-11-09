@@ -5,6 +5,7 @@ image:
 stages:
   - build-spring
   - build-mysql
+  - build-react
 
 build-spring:
   stage: build-spring
@@ -27,3 +28,14 @@ build-mysql:
   only:
     changes:
       - mysql/*
+
+build-react:
+  stage: build-react
+  script:
+    - |
+      if [[ "$CI_COMMIT_BRANCH" == "docker" ]]; then
+        /kaniko/executor --context "./react" --destination "${CI_REGISTRY_IMAGE}:react"
+      fi
+  only:
+    changes:
+      - react/*
