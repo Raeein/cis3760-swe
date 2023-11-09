@@ -1,16 +1,10 @@
 docker-build-app:
-  # Use the official docker image.
-  image: docker:latest
+  image: 
+    name: gcr.io/kaniko-project/executor:v1.14.0-debug
+    entrypoint: [""]
   stage: build
-  variables:
-  before_script:
-    - docker info
-    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
     - |
       if [[ "$CI_COMMIT_BRANCH" == "docker" ]]; then
-        echo "Running on branch 'docker': tag = 'app'"
-        cd spring/
-        docker build --pull -t "$CI_REGISTRY_IMAGE:app" .
-        docker push "$CI_REGISTRY_IMAGE:app"
+        /kaniko/executor --context "./spring" --destination "${CI_REGISTRY_IMAGE}:spring"
       fi
