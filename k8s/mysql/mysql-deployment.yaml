@@ -16,7 +16,11 @@ spec:
     spec:
       containers:
       - name: mysql
-        image: amerch/springtemplate:mysql
+        image: registry.socs.uoguelph.ca/amerch04/springtemplate:mysql
+        resources:
+          limits:
+            memory: "500Mi"
+            cpu: "500m"
         env:
           - name: MYSQL_ROOT_PASSWORD
             value: pwd
@@ -24,3 +28,5 @@ spec:
             value: template_db
         ports:
         - containerPort: 3360
+      imagePullSecrets:
+      - name : regcred

@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: spring-deployment
+  labels:
+    app: spring
 spec:
   replicas: 2
   selector:
@@ -14,7 +16,11 @@ spec:
     spec:
       containers:
       - name: spring
-        image: amerch/springtemplate:spring
+        image: registry.socs.uoguelph.ca/amerch04/springtemplate:spring
+        resources:
+          limits:
+            memory: "500Mi"
+            cpu: "500m"
         env:
           - name: DB_HOST
             value: mysql-service
@@ -24,3 +30,5 @@ spec:
             value: root
           - name: DB_PASSWORD
             value: pwd
+      imagePullSecrets:
+      - name : regcred
