@@ -17,7 +17,7 @@ spec:
             port: 
               number: 3000
       - pathType: Prefix
-        path: /api
+        path: /spring
         backend:
           service:
             name: spring-service
