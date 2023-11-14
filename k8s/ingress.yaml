@@ -16,8 +16,11 @@ spec:
             name: react-service
             port: 
               number: 3000
+  - host: api.template.uoguelph.ca
+    http:
+      paths:
       - pathType: Prefix
-        path: /spring
+        path: /
         backend:
           service:
             name: spring-service
