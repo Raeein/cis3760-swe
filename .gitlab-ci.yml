@@ -42,6 +42,7 @@ build-react:
       - react/*
 
 deploy:
+  stage: deploy
   image:
     name: bitnami/kubectl:latest
     entrypoint: ['']
