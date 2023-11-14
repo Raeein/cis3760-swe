@@ -23,3 +23,13 @@ spec:
   imagePullSecrets:
   - name: regcred
 ```
+
+
+
+Steps to setup flux:
+
+1. Install flux using eith choco or brew or linux
+2. Create an access token
+3. run the following command: echo "<Your access Token>" | flux bootstrap gitlab --owner=amerch04 --repository=springtemplate --branch=main --path=k8s --hostname=gitlab.socs.uoguelph.ca
+4. Follow the rest of the instructions on: https://docs.gitlab.com/ee/user/clusters/agent/gitops/flux_tutorial.html#create-a-personal-access-token
+
