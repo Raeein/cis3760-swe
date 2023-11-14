@@ -48,4 +48,5 @@ deploy:
     entrypoint: ['']
   script:
     - kubectl config get-contexts
+    - kubectl config use-context amerch04/springtemplate:local
     - kubectl get pods
