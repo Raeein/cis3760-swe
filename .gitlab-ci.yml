@@ -6,7 +6,6 @@ stages:
   - build-spring
   - build-mysql
   - build-react
-  - deploy
 
 build-spring:
   stage: build-spring
@@ -40,13 +39,3 @@ build-react:
   only:
     changes:
       - react/*
-
-deploy:
-  stage: deploy
-  image:
-    name: bitnami/kubectl:latest
-    entrypoint: ['']
-  script:
-    - kubectl config get-contexts
-    - kubectl config use-context amerch04/springtemplate:local
-    - kubectl get pods
