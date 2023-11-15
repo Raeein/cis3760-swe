@@ -1,20 +1,74 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
-  name: nginx-deployment
+  name: ingress
+  namespace: gitlab-agent-local
+  labels:
+    name: ingress
+spec:
+  rules:
+  - host: template.uoguelph.ca
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: react-service
+            port: 
+              number: 3000
+  - host: api.template.uoguelph.ca
+    http:
+      paths:
+      - pathType: Prefix
+        path: /
+        backend:
+          service:
+            name: spring-service
+            port: 
+              number: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-service
   namespace: gitlab-agent-local
 spec:
   selector:
-    matchLabels:
-      app: nginx
-  replicas: 2
-  template:
-    metadata:
-      labels:
-        app: nginx
-    spec:
-      containers:
-      - name: nginx
-        image: nginx:1.14.2
-        ports:
-        - containerPort: 80
+    app: spring
+  ports:
+  - port: 8080
+    targetPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-service
+  namespace: gitlab-agent-local
+spec:
+  selector:
+    app: react
+  ports:
+  - port: 3000
+    targetPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+  namespace: gitlab-agent-local
+spec:
+  selector:
+    app: mysql
+  ports:
+  - port: 3306
+    targetPort: 3306
+---
+apiVersion: v1
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJyZWdpc3RyeS5zb2NzLnVvZ3VlbHBoLmNhIjp7InVzZXJuYW1lIjoiYW1lcmNoMDQiLCJwYXNzd29yZCI6ImdscGF0LVh6SFB5RmplekRUbmpidkNoOUN4IiwiYXV0aCI6IllXMWxjbU5vTURRNloyeHdZWFF0V0hwSVVIbEdhbVY2UkZSdWFtSjJRMmc1UTNnPSJ9fX0=
+kind: Secret
+metadata:
+  name: regcred
+  namespace: gitlab-agent-local
+type: kubernetes.io/dockerconfigjson
