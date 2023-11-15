@@ -12,6 +12,8 @@ build-spring:
     - /kaniko/executor --context "./spring" --destination "${CI_REGISTRY_IMAGE}/spring:v0.0.0"
   rules:
     - if: '$CI_COMMIT_BRANCH == "docker"'
+    - changes:
+      - "./spring"
 
 build-mysql:
   stage: build
@@ -19,6 +21,8 @@ build-mysql:
     - /kaniko/executor --context "./mysql" --destination "${CI_REGISTRY_IMAGE}/mysql:v0.0.0"
   rules:
     - if: '$CI_COMMIT_BRANCH == "docker"'
+    - changes:
+      - "./mysql"
 
 build-react:
   stage: build
@@ -26,6 +30,8 @@ build-react:
     - /kaniko/executor --context "./react" --destination "${CI_REGISTRY_IMAGE}/react:v0.0.0"
   rules:
     - if: '$CI_COMMIT_BRANCH == "docker"'
+    - changes:
+      - "./react"
 
 deploy-spring:
   stage: deploy
@@ -39,8 +45,6 @@ deploy-spring:
     - kubectl apply -f k8s/spring/spring-deployment.yaml
   rules:
     - if: '$CI_COMMIT_BRANCH == "docker"'
-    - changes:
-      - k8s/spring/spring-deployment.yaml
 
 deploy-mysql:
   stage: deploy
@@ -54,8 +58,6 @@ deploy-mysql:
     - kubectl apply -f k8s/mysql/mysql-deployment.yaml
   rules:
     - if: '$CI_COMMIT_BRANCH == "docker"'
-    - changes:
-      - k8s/mysql/mysql-deployment.yaml
 
 deploy-react:
   stage: deploy
@@ -69,5 +71,3 @@ deploy-react:
     - kubectl apply -f k8s/react/react-deployment.yaml
   rules:
     - if: '$CI_COMMIT_BRANCH == "docker"'
-    - changes:
-      - k8s/react/react-deployment.yaml
