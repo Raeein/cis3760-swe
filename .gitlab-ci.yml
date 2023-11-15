@@ -5,6 +5,7 @@ image:
 stages:
   - build
   - deploy
+  - deploy-socs
 
 build-spring:
   stage: build
@@ -67,6 +68,45 @@ deploy-react:
   script:
     - kubectl config get-contexts
     - kubectl config use-context amerch04/springtemplate:local
+    - kubectl get pods
+    - kubectl apply -f k8s/react/react-deployment.yaml
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "docker"'
+
+deploy-spring-socs:
+  stage: deploy-socs
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: ['']
+  script:
+    - kubectl config get-contexts
+    - kubectl config use-context amerch04/springtemplate:socs
+    - kubectl get pods
+    - kubectl apply -f k8s/spring/spring-deployment.yaml
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "docker"'
+
+deploy-mysql-socs:
+  stage: deploy-socs
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: ['']
+  script:
+    - kubectl config get-contexts
+    - kubectl config use-context amerch04/springtemplate:socs
+    - kubectl get pods
+    - kubectl apply -f k8s/mysql/mysql-deployment.yaml
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "docker"'
+
+deploy-react-socs:
+  stage: deploy-socs
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: ['']
+  script:
+    - kubectl config get-contexts
+    - kubectl config use-context amerch04/springtemplate:socs
     - kubectl get pods
     - kubectl apply -f k8s/react/react-deployment.yaml
   rules:
