@@ -5,7 +5,6 @@ image:
 stages:
   - build
   - deploy
-  - deploy-socs
 
 build-spring:
   stage: build
@@ -74,7 +73,7 @@ deploy-react:
     - if: '$CI_COMMIT_BRANCH == "docker"'
 
 deploy-spring-socs:
-  stage: deploy-socs
+  stage: deploy
   image:
     name: bitnami/kubectl:latest
     entrypoint: ['']
@@ -87,7 +86,7 @@ deploy-spring-socs:
     - if: '$CI_COMMIT_BRANCH == "docker"'
 
 deploy-mysql-socs:
-  stage: deploy-socs
+  stage: deploy
   image:
     name: bitnami/kubectl:latest
     entrypoint: ['']
@@ -100,7 +99,7 @@ deploy-mysql-socs:
     - if: '$CI_COMMIT_BRANCH == "docker"'
 
 deploy-react-socs:
-  stage: deploy-socs
+  stage: deploy
   image:
     name: bitnami/kubectl:latest
     entrypoint: ['']
