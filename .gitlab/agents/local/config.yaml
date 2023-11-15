@@ -3,7 +3,3 @@ gitops:
   - id: "amerch04/springtemplate"
     paths:
     - glob: '/**/*manifest.{yaml, yml, json}'
-
-  ci_access:
-    projects:
-      - id: amerch04/springtemplate
