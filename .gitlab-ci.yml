@@ -37,11 +37,10 @@ deploy-spring:
     - kubectl config use-context amerch04/springtemplate:local
     - kubectl get pods
     - kubectl apply -f k8s/spring/spring-deployment.yaml
-  only:
-    changes:
-      - k8s/spring/spring-deployment.yaml
   rules:
     - if: '$CI_COMMIT_BRANCH == "docker"'
+    - changes:
+      - k8s/spring/spring-deployment.yaml
 
 deploy-mysql:
   stage: deploy
@@ -53,11 +52,10 @@ deploy-mysql:
     - kubectl config use-context amerch04/springtemplate:local
     - kubectl get pods
     - kubectl apply -f k8s/mysql/mysql-deployment.yaml
-  only:
-    changes:
-      - k8s/mysql/mysql-deployment.yaml
   rules:
     - if: '$CI_COMMIT_BRANCH == "docker"'
+    - changes:
+      - k8s/mysql/mysql-deployment.yaml
 
 deploy-react:
   stage: deploy
@@ -69,8 +67,7 @@ deploy-react:
     - kubectl config use-context amerch04/springtemplate:local
     - kubectl get pods
     - kubectl apply -f k8s/react/react-deployment.yaml
-  only:
-    changes:
-      - k8s/react/react-deployment.yaml
   rules:
     - if: '$CI_COMMIT_BRANCH == "docker"'
+    - changes:
+      - k8s/react/react-deployment.yaml
