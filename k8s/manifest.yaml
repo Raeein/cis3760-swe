@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress
-  namespace: gitlab-agent
+  namespace: gitlab-agent-a
   labels:
     name: ingress
 spec:
@@ -32,7 +32,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: spring-service
-  namespace: gitlab-agent
+  namespace: gitlab-agent-a
 spec:
   selector:
     app: spring
@@ -44,7 +44,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: react-service
-  namespace: gitlab-agent
+  namespace: gitlab-agent-a
 spec:
   selector:
     app: react
@@ -56,7 +56,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mysql-service
-  namespace: gitlab-agent
+  namespace: gitlab-agent-a
 spec:
   selector:
     app: mysql
@@ -70,5 +70,5 @@ data:
 kind: Secret
 metadata:
   name: regcred
-  namespace: gitlab-agent
+  namespace: gitlab-agent-a
 type: kubernetes.io/dockerconfigjson

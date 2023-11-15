@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: react-deployment
-  namespace: gitlab-agent
+  namespace: gitlab-agent-a
   labels:
     app: react
 spec:

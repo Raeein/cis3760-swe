@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: spring-deployment
-  namespace: gitlab-agent
+  namespace: gitlab-agent-a
   labels:
     app: spring
 spec:
