@@ -1,3 +1,9 @@
+Setting up your remote server
+
+Install Helm: https://helm.sh/docs/intro/install/
+Install Ingress-nginx if not already in the kluster (if using RKE2, it should already be installed): 
+https://docs.nginx.com/nginx-ingress-controller/installation/installation-with-helm/
+
 Steps to create gitlab credentials.
 
 1. Settings -> Access Tokens -> Create new token with read permissions
