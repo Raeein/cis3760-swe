@@ -4,36 +4,73 @@ image:
 
 stages:
   - build
+  - deploy
 
 build-spring:
   stage: build
   script:
-    - |
-      if [[ "$CI_COMMIT_BRANCH" == "docker" ]]; then
-        /kaniko/executor --context "./spring" --destination "${CI_REGISTRY_IMAGE}/spring:v0.0.0"
-      fi
-  only:
-    changes:
-      - spring/*
+    - /kaniko/executor --context "./spring" --destination "${CI_REGISTRY_IMAGE}/spring:v0.0.0"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "docker"'
 
 build-mysql:
   stage: build
   script:
-    - |
-      if [[ "$CI_COMMIT_BRANCH" == "docker" ]]; then
-        /kaniko/executor --context "./mysql" --destination "${CI_REGISTRY_IMAGE}/mysql:v0.0.0"
-      fi
-  only:
-    changes:
-      - mysql/*
+    - /kaniko/executor --context "./mysql" --destination "${CI_REGISTRY_IMAGE}/mysql:v0.0.0"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "docker"'
 
 build-react:
   stage: build
   script:
-    - |
-      if [[ "$CI_COMMIT_BRANCH" == "docker" ]]; then
-        /kaniko/executor --context "./react" --destination "${CI_REGISTRY_IMAGE}/react:v0.0.0"
-      fi
+    - /kaniko/executor --context "./react" --destination "${CI_REGISTRY_IMAGE}/react:v0.0.0"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "docker"'
+
+deploy-spring:
+  stage: deploy
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: ['']
+  script:
+    - kubectl config get-contexts
+    - kubectl config use-context amerch04/springtemplate:local
+    - kubectl get pods
+    - kubectl apply -f k8s/spring/spring-deployment.yaml
   only:
     changes:
-      - react/*
+      - k8s/spring/spring-deployment.yaml
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "docker"'
+
+deploy-mysql:
+  stage: deploy
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: ['']
+  script:
+    - kubectl config get-contexts
+    - kubectl config use-context amerch04/springtemplate:local
+    - kubectl get pods
+    - kubectl apply -f k8s/mysql/mysql-deployment.yaml
+  only:
+    changes:
+      - k8s/mysql/mysql-deployment.yaml
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "docker"'
+
+deploy-react:
+  stage: deploy
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: ['']
+  script:
+    - kubectl config get-contexts
+    - kubectl config use-context amerch04/springtemplate:local
+    - kubectl get pods
+    - kubectl apply -f k8s/react/react-deployment.yaml
+  only:
+    changes:
+      - k8s/react/react-deployment.yaml
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "docker"'
