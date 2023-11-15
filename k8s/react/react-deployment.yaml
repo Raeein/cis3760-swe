@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: react-deployment
+  namespace: gitlab-agent
   labels:
     app: react
 spec:
@@ -16,7 +17,7 @@ spec:
     spec:
       containers:
       - name: react
-        image: registry.socs.uoguelph.ca/amerch04/springtemplate:react
+        image: registry.socs.uoguelph.ca/amerch04/springtemplate/react:v0.0.0
         resources:
           limits:
             memory: "500Mi"

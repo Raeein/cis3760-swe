@@ -3,38 +3,36 @@ image:
   entrypoint: [""]
 
 stages:
-  - build-spring
-  - build-mysql
-  - build-react
+  - build
 
 build-spring:
-  stage: build-spring
+  stage: build
   script:
     - |
       if [[ "$CI_COMMIT_BRANCH" == "docker" ]]; then
-        /kaniko/executor --context "./spring" --destination "${CI_REGISTRY_IMAGE}:spring"
+        /kaniko/executor --context "./spring" --destination "${CI_REGISTRY_IMAGE}/spring:v0.0.0"
       fi
   only:
     changes:
       - spring/*
 
 build-mysql:
-  stage: build-mysql
+  stage: build
   script:
     - |
       if [[ "$CI_COMMIT_BRANCH" == "docker" ]]; then
-        /kaniko/executor --context "./mysql" --destination "${CI_REGISTRY_IMAGE}:mysql"
+        /kaniko/executor --context "./mysql" --destination "${CI_REGISTRY_IMAGE}/mysql:v0.0.0"
       fi
   only:
     changes:
       - mysql/*
 
 build-react:
-  stage: build-react
+  stage: build
   script:
     - |
       if [[ "$CI_COMMIT_BRANCH" == "docker" ]]; then
-        /kaniko/executor --context "./react" --destination "${CI_REGISTRY_IMAGE}:react"
+        /kaniko/executor --context "./react" --destination "${CI_REGISTRY_IMAGE}/react:v0.0.0"
       fi
   only:
     changes:

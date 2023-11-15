@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: spring-deployment
+  namespace: gitlab-agent
   labels:
     app: spring
 spec:
@@ -16,7 +17,7 @@ spec:
     spec:
       containers:
       - name: spring
-        image: registry.socs.uoguelph.ca/amerch04/springtemplate:spring
+        image: registry.socs.uoguelph.ca/amerch04/springtemplate/spring:v0.0.0
         resources:
           limits:
             memory: "500Mi"
