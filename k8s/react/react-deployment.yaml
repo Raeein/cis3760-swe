@@ -18,10 +18,6 @@ spec:
       containers:
       - name: react
         image: registry.socs.uoguelph.ca/amerch04/springtemplate/react:v0.0.0
-        resources:
-          limits:
-            memory: "500Mi"
-            cpu: "500m"
         env:
           - name: BACKEND_PROXY
             value: http://spring-service:8080
