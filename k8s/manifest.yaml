@@ -7,21 +7,17 @@ metadata:
     name: ingress
 spec:
   rules:
-  - host: template.uoguelph.ca
-    http:
+  - http:
       paths:
       - pathType: Prefix
-        path: /
+        path: /console
         backend:
           service:
             name: react-service
             port: 
               number: 3000
-  - host: api.template.uoguelph.ca
-    http:
-      paths:
       - pathType: Prefix
-        path: /
+        path: /api
         backend:
           service:
             name: spring-service
