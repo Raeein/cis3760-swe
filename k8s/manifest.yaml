@@ -7,22 +7,24 @@ metadata:
     name: ingress
 spec:
   rules:
-  - http:
+  - host: amerch04.socs.uoguelph.ca
+    http:
       paths:
-      - pathType: Prefix
-        path: /console
+      - path: /console
+        pathType: Prefix
         backend:
           service:
             name: react-service
             port: 
               number: 3000
-      - pathType: Prefix
-        path: /api
+      - path: /api
+        pathType: Prefix
         backend:
           service:
             name: spring-service
             port: 
               number: 8080
+  ingressClassName: nginx
 ---
 apiVersion: v1
 kind: Service
