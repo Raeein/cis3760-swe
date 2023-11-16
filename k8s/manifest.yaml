@@ -24,7 +24,6 @@ spec:
             name: spring-service
             port: 
               number: 8080
-  ingressClassName: nginx
 ---
 apiVersion: v1
 kind: Service
