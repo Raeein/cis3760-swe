@@ -3,8 +3,6 @@ kind: Ingress
 metadata:
   name: ingress
   namespace: gitlab-agent-local
-  labels:
-    name: ingress
 spec:
   rules:
   - host: amerch04.socs.uoguelph.ca
