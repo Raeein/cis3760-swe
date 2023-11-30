@@ -12,9 +12,10 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: spring-service
+            name: react-service
             port: 
-              number: 8080
+              number: 3000
+      
 ---
 apiVersion: v1
 kind: Service
