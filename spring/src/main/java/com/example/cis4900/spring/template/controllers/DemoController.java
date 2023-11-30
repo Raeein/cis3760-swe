@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/demo")
+@RequestMapping(path = "/api")
 public class DemoController {
 
     @GetMapping()
     public String getDemo() {
-        return "demo!";
+        return "ping!";
     }
 }
