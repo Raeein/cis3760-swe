@@ -11,27 +11,27 @@ build-spring:
   script:
     - /kaniko/executor --context "./spring" --destination "${CI_REGISTRY_IMAGE}/spring:v0.0.0"
   rules:
-    - if: '$CI_COMMIT_BRANCH == "docker"'
+    - if: $CI_COMMIT_BRANCH == "docker"
       changes:
-        - "spring/*"
+        - spring/**/*
 
 build-mysql:
   stage: build
   script:
     - /kaniko/executor --context "./mysql" --destination "${CI_REGISTRY_IMAGE}/mysql:v0.0.0"
   rules:
-    - if: '$CI_COMMIT_BRANCH == "docker"'
+    - if: $CI_COMMIT_BRANCH == "docker"
       changes:
-        - "mysql/*"
+        - mysql/**/*
 
 build-react:
   stage: build
   script:
     - /kaniko/executor --context "./react" --destination "${CI_REGISTRY_IMAGE}/react:v0.0.0"
   rules:
-    - if: '$CI_COMMIT_BRANCH == "docker"'
+    - if: $CI_COMMIT_BRANCH == "docker"
       changes:
-        - "react/*"
+        - react/**/*
 
 deploy-spring:
   stage: deploy
