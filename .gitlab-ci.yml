@@ -13,7 +13,7 @@ build-spring:
   rules:
     - if: '$CI_COMMIT_BRANCH == "docker"'
       changes:
-        - "./spring"
+        - "spring/*"
 
 build-mysql:
   stage: build
@@ -22,7 +22,7 @@ build-mysql:
   rules:
     - if: '$CI_COMMIT_BRANCH == "docker"'
       changes:
-        - "./mysql"
+        - "mysql/*"
 
 build-react:
   stage: build
@@ -31,7 +31,7 @@ build-react:
   rules:
     - if: '$CI_COMMIT_BRANCH == "docker"'
       changes:
-        - "./react"
+        - "react/*"
 
 deploy-spring:
   stage: deploy
