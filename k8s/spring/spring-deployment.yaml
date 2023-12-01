@@ -18,6 +18,7 @@ spec:
       containers:
       - name: spring
         image: registry.socs.uoguelph.ca/amerch04/springtemplate/spring:v0.0.0
+        imagePullPolicy: Always
         env:
           - name: DB_HOST
             value: mysql-service

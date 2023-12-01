@@ -18,6 +18,7 @@ spec:
       containers:
       - name: mysql
         image: registry.socs.uoguelph.ca/amerch04/springtemplate/mysql:v0.0.0
+        imagePullPolicy: Always
         env:
           - name: MYSQL_ROOT_PASSWORD
             value: pwd

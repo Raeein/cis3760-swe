@@ -18,6 +18,7 @@ spec:
       containers:
       - name: react
         image: registry.socs.uoguelph.ca/amerch04/springtemplate/react:v0.0.0
+        imagePullPolicy: Always
         env:
           - name: BACKEND_PROXY
             value: http://spring-service:8080
