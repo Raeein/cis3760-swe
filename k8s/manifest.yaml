@@ -90,7 +90,9 @@ spec:
       name: letsencrypt-prod
     # Enable the HTTP-01 challenge provider
     solvers:
-      - http01: {}
+      - http01:
+          ingress:
+            class: nginx
 ---
 apiVersion: cert-manager.io/v1
 kind: Issuer
@@ -108,4 +110,6 @@ spec:
       name: letsencrypt-staging
     # Enable the HTTP-01 challenge provider
     solvers:
-      - http01: {} 
+      - http01:
+          ingress:
+              class: nginx
