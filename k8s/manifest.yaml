@@ -108,4 +108,4 @@ spec:
       name: letsencrypt-staging
     # Enable the HTTP-01 challenge provider
     solvers:
-      - http01: {}
+      - http01: {} 
