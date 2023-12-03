@@ -33,6 +33,15 @@ build-react:
       changes:
         - react/**/*
 
+build-blog:
+  stage: build
+  script:
+    - /kaniko/executor --context "./blog" --destination "${CI_REGISTRY_IMAGE}/blog:v0.0.0"
+  rules:
+    - if: $CI_COMMIT_BRANCH == "docker"
+      changes:
+        - blog/**/*
+
 deploy-spring:
   stage: deploy
   image:
@@ -108,5 +117,18 @@ deploy-react-socs:
     - kubectl config use-context amerch04/springtemplate:socs
     - kubectl get pods
     - kubectl apply -f k8s/react/react-deployment.yaml
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "docker"'
+
+deploy-react-blog:
+  stage: deploy
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: ['']
+  script:
+    - kubectl config get-contexts
+    - kubectl config use-context amerch04/springtemplate:socs
+    - kubectl get pods
+    - kubectl apply -f k8s/blog/blog-deployment.yaml
   rules:
     - if: '$CI_COMMIT_BRANCH == "docker"'
