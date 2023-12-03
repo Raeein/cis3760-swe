@@ -61,3 +61,11 @@ yarn-debug.log*
 yarn-error.log*
 
 .dockerconfigjson
+
+
+## Jekyll ##
+_site
+.sass-cache
+.jekyll-cache
+.jekyll-metadata
+vendor
