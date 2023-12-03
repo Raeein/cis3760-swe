@@ -120,7 +120,7 @@ deploy-react-socs:
   rules:
     - if: '$CI_COMMIT_BRANCH == "docker"'
 
-deploy-react-blog:
+deploy-blog-socs:
   stage: deploy
   image:
     name: bitnami/kubectl:latest

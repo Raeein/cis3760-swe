@@ -4,7 +4,7 @@ metadata:
   name: blog-deployment
   namespace: gitlab-agent-local
 spec:
-  replica: 1
+  replicas: 1
   selector:
     matchLabels:
       app: blog
