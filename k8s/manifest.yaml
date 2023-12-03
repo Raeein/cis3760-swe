@@ -28,6 +28,13 @@ spec:
             name: spring-service
             port: 
               number: 8080
+      - path: /blog
+        pathType: Prefix
+        backend:
+          service:
+            name: blog-service
+            port: 
+              number: 4000
 ---
 apiVersion: v1
 kind: Service
@@ -64,6 +71,18 @@ spec:
   ports:
   - port: 3306
     targetPort: 3306
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: blog-service
+  namespace: gitlab-agent-local
+spec:
+  selector:
+    app: blog
+  ports:
+  - port: 4000
+    targetPort: 4000
 ---
 apiVersion: v1
 data:
