@@ -9,9 +9,11 @@ Docker plays a huge role in the world of modern software development world as it
 
 In this blog we’ll dive into the very basics one how to setup containers so that we can later use this knowledge to build the CIS*3760 project template.
 
-# Key Terms in Docker
+---
+<h1 align="center">Key Terms in Docker</h1>
+---
 
-Before we start, let’s look at the following terms that will server as the building blocks to containerize our applications.
+Before we start, let’s look at the following terms that will serve as the building blocks to containerize our applications.
 
 ### Container: 
 An isolated process running on a host machine holding all the essential components necessary for your application to run. They are a solution to our old “it works on my machine” problem by creating a standard or consistent environment to run our application.
@@ -19,9 +21,11 @@ An isolated process running on a host machine holding all the essential componen
 ### Images:
 A filesystem that is pulled inside a docker container and has everything needed to run your application. Think of it as a blueprint with application code, dependencies, libraries, and ENV variables. Once created, they can be reused access various environments.
 
-![docker explained](/assets/img/understand-docker.png)
+![docker explained]({{site.baseurl}}/assets/img/understand-docker.png)
 
-# How is Docker Used For Our Template
+---
+<h1 align="center">How is Docker Used For Our Template</h1>
+---
 
 The template app built for CIS*3760 is a simple note app that lets you create, read, update and delete notes. To achieve this, we’re using docker to create three distinct containers:
 
@@ -29,11 +33,13 @@ The template app built for CIS*3760 is a simple note app that lets you create, r
 2. **Spring container:** runs the backend code responsible of directly talking with our database and takes care of any logic to manipulate or retrieve data.
 3. **React container:** Adds a visual layer to our application, offering an interactive interface to work with the data and communicate with the Spring app.
 
-![docker explained](/assets/img/app-setup-1.png)
+![docker explained]({{site.baseurl}}/assets/img/app-setup-1.png)
 
 In the next post, we will be going through the specifics of each container, guiding you on how to create a docker image for each one of the applications stated above and how to locally deploy these applications using docker and docker compose. But before we dive into that, lets take a moment and learn a little bit about the concept of Docker files and Docker Compose.
 
-# Understanding Dockerfiles
+---
+<h1 align="center">Understanding Dockerfiles</h1>
+---
 
 Earlier in this post we went through what a Docker Image is and how it forms the basis for containers. Now, let’s take a deeper look into creating your own Docker image using a Dockerfile. A Dockerfile is a set of instructions that defines the environment for your application.
 
@@ -111,7 +117,9 @@ Your server should now be accessible on localhost:3000. The ‘-p 3000:3000’ m
 
 Now let’s consider the scenario where you and your co-worker are working on the same app and are trying to setup the server an identical manner. You could ask them to run the same commands you did, but there is more elegant solution to this and its Docker Compose. In the next section, we’ll explore how Docker Compose simplifies the setup process.
 
-# Understanding Docker Compose
+---
+<h1 align="center">Understanding Docker Compose</h1>
+---
 
 A [docker compose file](https://docs.docker.com/compose/compose-file/) provides a standardized approach to configuring your docker containers. This goes beyond just setting up containers, it allows you to define any services, volumes, and network configurations necessary to run our application. In most cases, this is used for multi-container applications, but we will set it up for our single server created earlier.
 
