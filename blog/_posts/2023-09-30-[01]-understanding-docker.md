@@ -39,7 +39,7 @@ Earlier in this post we went through what a Docker Image is and how it forms the
 
 ### Prerequisites:
 
-Ensure that Docker is installed, and that Docker daemon is up and running on your computer. If not, follow the instructions here [https://www.docker.com/get-started/]
+Ensure that Docker is installed, and that Docker daemon is up and running on your computer. If not, follow the instructions [here](https://www.docker.com/get-started/).
 
 ### Creating a basic node JS app: Step-by-step Guide
 
@@ -87,7 +87,7 @@ CMD [ "node", "index.js" ]
 ```
 
 **Explanation:**
-- **From [image]** The Dockerfile starts with a FROM clause which defines the base image for our application. Think of it as the pizza base that we can add toppings onto to build our app. Here, we use the “node:alpine3.18” to build our app (which itself is built on top of other images [https://hub.docker.com/layers/library/node/latest/images/sha256-a9446b301e5c5f20835a3d8df0d31d25e7a86ffe50e97556036bf1f5e638deea?context=explore] such as debian:12 and has Node.js included with it).
+- **From [image]** The Dockerfile starts with a FROM clause which defines the base image for our application. Think of it as the pizza base that we can add toppings onto to build our app. Here, we use the “node:alpine3.18” to build our app (which itself is built on top of [other images](https://hub.docker.com/layers/library/node/latest/images/sha256-a9446b301e5c5f20835a3d8df0d31d25e7a86ffe50e97556036bf1f5e638deea?context=explore) such as debian:12 and has Node.js included with it).
 - **Workdir [path]** Sets the working directory inside the container. It creates the directory if the directory doesn’t exist already.
 - **Copy [src] [dest]** Copies files from our current directory to the docker container. In our case, it’ll copy the index.js file that we need to run.
 - **Expose [port]** Informs docker that our container will on port 3000.
@@ -105,7 +105,7 @@ Run the image with:
 
 ```docker run -p 3000:3000 server```
 
-Your server should now be accessible on localhost:3000. The ‘-p 3000:3000’ maps the container port 3000 to port 3000 on our local machine. Explore more Docker run options here [https://docs.docker.com/engine/reference/commandline/run/]
+Your server should now be accessible on localhost:3000. The ‘-p 3000:3000’ maps the container port 3000 to port 3000 on our local machine. Explore more Docker run options [here](https://docs.docker.com/engine/reference/commandline/run/)
 
 **Congratulations!** You successfully setup your first server in a Docker container. The containerized application you just created can be run consistently on any machine or os using Docker.
 
@@ -113,7 +113,7 @@ Now let’s consider the scenario where you and your co-worker are working on th
 
 # Understanding Docker Compose
 
-A docker compose file [https://docs.docker.com/compose/compose-file/] provides a standardized approach to configuring your docker containers. This goes beyond just setting up containers, it allows you to define any services, volumes, and network configurations necessary to run our application. In most cases, this is used for multi-container applications, but we will set it up for our single server created earlier.
+A [docker compose file](https://docs.docker.com/compose/compose-file/) provides a standardized approach to configuring your docker containers. This goes beyond just setting up containers, it allows you to define any services, volumes, and network configurations necessary to run our application. In most cases, this is used for multi-container applications, but we will set it up for our single server created earlier.
 
 ### Setting up docker compose: Quick Guide
 
