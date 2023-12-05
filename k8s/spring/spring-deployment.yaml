@@ -21,7 +21,7 @@ spec:
         imagePullPolicy: Always
         env:
           - name: DB_ADDRESS
-            value: mysql://mysql-service:3306
+            value: jdbc:mysql://mysql-service:3306
           - name: DB_DATABASE
             value: template_db
           - name: DB_USER
