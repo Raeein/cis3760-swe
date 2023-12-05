@@ -71,7 +71,7 @@ DEPENDENCIES
   jekyll
   kramdown-parser-gfm
   no-style-please
-  webrick
+  webrick (~> 1.8)
 
 BUNDLED WITH
    2.4.22

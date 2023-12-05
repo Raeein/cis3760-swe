@@ -1,14 +1,20 @@
+# Use the Node.js 18 Alpine image as the base image
 FROM node:18-alpine
 
+# Copy package.json and package-lock.json to the image
+# We need them to build the dependencies for our project
 COPY package.json package.json
 COPY package-lock.json package-lock.json
 
-# Same as npm install
+# Run `npm ci` to install project dependencies
 RUN npm ci
 
+# Set environment variables
 ENV CI=true
 ENV PORT=3000
 
+# Copy the entire project directory to the image
 COPY . .
 
+# Default command to start the app
 CMD [ "npm", "start" ]
