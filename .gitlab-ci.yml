@@ -11,7 +11,7 @@ build-spring:
   script:
     - /kaniko/executor --context "./spring" --destination "${CI_REGISTRY_IMAGE}/spring:v0.0.0"
   rules:
-    - if: $CI_COMMIT_BRANCH == "docker"
+    - if: $CI_COMMIT_BRANCH == "deploy"
       changes:
         - spring/**/*
 
@@ -20,7 +20,7 @@ build-mysql:
   script:
     - /kaniko/executor --context "./mysql" --destination "${CI_REGISTRY_IMAGE}/mysql:v0.0.0"
   rules:
-    - if: $CI_COMMIT_BRANCH == "docker"
+    - if: $CI_COMMIT_BRANCH == "deploy"
       changes:
         - mysql/**/*
 
@@ -29,7 +29,7 @@ build-react:
   script:
     - /kaniko/executor --context "./react" --destination "${CI_REGISTRY_IMAGE}/react:v0.0.0"
   rules:
-    - if: $CI_COMMIT_BRANCH == "docker"
+    - if: $CI_COMMIT_BRANCH == "deploy"
       changes:
         - react/**/*
 
@@ -38,7 +38,7 @@ build-blog:
   script:
     - /kaniko/executor --context "./blog" --destination "${CI_REGISTRY_IMAGE}/blog:v0.0.0"
   rules:
-    - if: $CI_COMMIT_BRANCH == "docker"
+    - if: $CI_COMMIT_BRANCH == "deploy"
       changes:
         - blog/**/*
 
@@ -53,7 +53,7 @@ deploy-spring-socs:
     - kubectl get pods
     - kubectl apply -f k8s/spring/spring-deployment.yaml
   rules:
-    - if: '$CI_COMMIT_BRANCH == "docker"'
+    - if: '$CI_COMMIT_BRANCH == "deploy"'
 
 deploy-mysql-socs:
   stage: deploy
@@ -66,7 +66,7 @@ deploy-mysql-socs:
     - kubectl get pods
     - kubectl apply -f k8s/mysql/mysql-deployment.yaml
   rules:
-    - if: '$CI_COMMIT_BRANCH == "docker"'
+    - if: '$CI_COMMIT_BRANCH == "deploy"'
 
 deploy-react-socs:
   stage: deploy
@@ -79,7 +79,7 @@ deploy-react-socs:
     - kubectl get pods
     - kubectl apply -f k8s/react/react-deployment.yaml
   rules:
-    - if: '$CI_COMMIT_BRANCH == "docker"'
+    - if: '$CI_COMMIT_BRANCH == "deploy"'
 
 deploy-blog-socs:
   stage: deploy
@@ -92,4 +92,4 @@ deploy-blog-socs:
     - kubectl get pods
     - kubectl apply -f k8s/blog/blog-deployment.yaml
   rules:
-    - if: '$CI_COMMIT_BRANCH == "docker"'
+    - if: '$CI_COMMIT_BRANCH == "deploy"'
