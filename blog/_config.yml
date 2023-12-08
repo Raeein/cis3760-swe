@@ -1,7 +1,7 @@
 title: CIS*3760 project template
 author: Alif Merchant
 email: amerch04@uguelph.ca
-baseurl: "/blog"
+baseurl: "/blogs"
 description: >
   A guide on setting up your webserver with docker, k8s and continuous deployment with GitLab.
 
