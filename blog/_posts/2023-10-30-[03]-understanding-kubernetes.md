@@ -42,6 +42,20 @@ Grasping these terms lays a good foundation for exploring the world of container
 
 In this section, we'll deploy two Node.js applications—a basic arithmetic calculator and a calculator history tracker—within a cluster. These applications communicate using cluster IPs, with the calculator performing arithmetic operations and the calculator-history app keeping a record of these operations. The two application have their images online in a docker hub repository, all we have to do is pull these images inside our pods when creating a deployment. The code for the two applications can be found at the very end of this post. 
 
+The following API endpoints are implemented in the two applications:
+**calculator**:
+- ```/add```: Adds two numbers
+- ```/subtract```: Subtract num2 from num1
+- ```/multiply```: Multiply two numbers
+- ```/divide```: Divide num1 with num2
+
+Each endpoint takes input in the following format: ```{"num1": int, "num2": int}```
+
+**history**:
+- ```/history/all```: returns a list of all the operations and their results that were logged
+- ```/history/add```: add a new operation and its result (called by the calculator)
+- ```/history/clear```: clear all history
+
 > Before we get started, make sure to have Minikube installed and running. Use this [link](https://minikube.sigs.k8s.io/docs/start/) to setup Minikube on your local machine.
 
 ### Setting up The Cluster:
