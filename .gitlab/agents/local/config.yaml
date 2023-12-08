@@ -1,5 +1,0 @@
-gitops:
-  manifest_projects:
-  - id: "amerch04/springtemplate"
-    paths:
-    - glob: '/**/*manifest.{yaml, yml, json}'

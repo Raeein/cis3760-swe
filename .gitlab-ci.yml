@@ -42,45 +42,6 @@ build-blog:
       changes:
         - blog/**/*
 
-deploy-spring:
-  stage: deploy
-  image:
-    name: bitnami/kubectl:latest
-    entrypoint: ['']
-  script:
-    - kubectl config get-contexts
-    - kubectl config use-context amerch04/springtemplate:local
-    - kubectl get pods
-    - kubectl apply -f k8s/spring/spring-deployment.yaml
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "docker"'
-
-deploy-mysql:
-  stage: deploy
-  image:
-    name: bitnami/kubectl:latest
-    entrypoint: ['']
-  script:
-    - kubectl config get-contexts
-    - kubectl config use-context amerch04/springtemplate:local
-    - kubectl get pods
-    - kubectl apply -f k8s/mysql/mysql-deployment.yaml
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "docker"'
-
-deploy-react:
-  stage: deploy
-  image:
-    name: bitnami/kubectl:latest
-    entrypoint: ['']
-  script:
-    - kubectl config get-contexts
-    - kubectl config use-context amerch04/springtemplate:local
-    - kubectl get pods
-    - kubectl apply -f k8s/react/react-deployment.yaml
-  rules:
-    - if: '$CI_COMMIT_BRANCH == "docker"'
-
 deploy-spring-socs:
   stage: deploy
   image:
