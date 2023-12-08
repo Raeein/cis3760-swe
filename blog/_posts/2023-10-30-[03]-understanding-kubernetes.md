@@ -56,9 +56,10 @@ Each endpoint takes input in the following format: ```{"num1": int, "num2": int}
 - ```/history/add```: add a new operation and its result (called by the calculator)
 - ```/history/clear```: clear all history
 
-> Before we get started, make sure to have Minikube installed and running. Use this [link](https://minikube.sigs.k8s.io/docs/start/) to setup Minikube on your local machine.
 
 ### Setting up The Cluster:
+
+> Before we get started, make sure to have Minikube installed and running. Use this [link](https://minikube.sigs.k8s.io/docs/start/) to setup Minikube on your local machine.
 
 1. **Start minikube:**
 
