@@ -1,3 +1,4 @@
+# List of Services
 services:
   spring:
     build: ./spring   # Look for Dockerfile in this path
@@ -36,7 +37,8 @@ services:
     build: ./blog
     ports:
       - "4000:4000"
-    
-networks:               # Specify the networks
+
+# List of Networks
+networks:               
   spring-mysql:
   spring-react:
