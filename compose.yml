@@ -20,8 +20,10 @@ services:
       # Mysql docker image env vars
       - MYSQL_ROOT_PASSWORD=pwd
       - MYSQL_DATABASE=template_db
+    volumes:
+      - mariadb_data:/var/lib/mysql
     networks:
-      - spring-mysql    # Allow the spring app to talk to the spring app
+      - spring-mysql    # Allow the mysql app to talk to the spring app
     
   react:
     build: ./react    # Look for Dockerfile in this path
@@ -31,12 +33,10 @@ services:
       # Tell the react app that our spring server is running here
       - BACKEND_PROXY=http://spring:8080
     networks:
-      - spring-react    # Allow the spring app to discover the spring app
+      - spring-react    # Allow the react app to discover the spring app
 
-  blog:
-    build: ./blog
-    ports:
-      - "4000:4000"
+volumes:
+  mariadb_data:
 
 # List of Networks
 networks:               

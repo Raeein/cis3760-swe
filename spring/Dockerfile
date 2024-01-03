@@ -1,6 +1,6 @@
 # Stage 1: build
 ##  Start with a base image from Eclipse Temurin (a distribution of OpenJDK) with Alpine Linux, specifying it as the build stage and naming it "build".
-FROM eclipse-temurin:17-jdk-alpine as build
+FROM eclipse-temurin:21-jammy as build
 WORKDIR /workspace/app
 
 ## Copy neccessary files for building the java project
@@ -16,7 +16,7 @@ RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
 # Stage 2: runtime
 ## Start a new stage, using a fresh Alpine-based image from Eclipse Temurin.
-FROM eclipse-temurin:17-jdk-alpine
+FROM eclipse-temurin:21-jammy
 ARG DEPENDENCY=/workspace/app/target/dependency
 
 ## Only copy necessary files

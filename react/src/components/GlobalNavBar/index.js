@@ -6,9 +6,7 @@ const GlobalNavBar = (props) => {
         <Navbar className="bg-body-tertiary">
             <Container>
                 <Navbar.Brand>Notes App</Navbar.Brand>
-                <Nav className="me-auto">
-                    <Nav.Link href="/blogs/">Blogs</Nav.Link>
-                </Nav>
+
                 <div>
                     {props.pageName}
                 </div>

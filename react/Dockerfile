@@ -1,8 +1,9 @@
-# Use the Node.js 18 Alpine image as the base image
-FROM node:18-alpine
+# 
+FROM node:alpine
 
 # Copy package.json and package-lock.json to the image
 # We need them to build the dependencies for our project
+RUN npm i npm@latest -g
 COPY package.json package.json
 COPY package-lock.json package-lock.json
 
