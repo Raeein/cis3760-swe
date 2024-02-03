@@ -30,12 +30,12 @@ public class JobsController {
     }
 
     @GetMapping("/get/{id}")
-    private @ResponseBody Note getJob(@PathVariable Integer id) {
+    private @ResponseBody Job getJob(@PathVariable Integer id) {
         return jobsService.getJob(id);
     }
 
     @PutMapping("/update")
-    private @ResponseBody String updateJob(@RequestBody Note updatedJob) {
+    private @ResponseBody String updateJob(@RequestBody Job updatedJob) {
         return jobsService.updateJob(updatedJob);
     }
 
@@ -45,7 +45,7 @@ public class JobsController {
     }
 
     @GetMapping("/all")
-    private @ResponseBody Iterable<Note> allJobs() {
+    private @ResponseBody Iterable<Job> allJobs() {
         return jobsService.allJobs();
     }
 
