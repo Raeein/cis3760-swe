@@ -14,5 +14,5 @@ public interface JobsService {
 
     public Iterable<Job> allJobs();
 
-    public Integer count();
+    public Integer countJobs();
 }

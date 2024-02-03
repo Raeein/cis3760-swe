@@ -7,6 +7,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface JobsDao extends CrudRepository<Job, Integer> {
 
-    @Query("SELECT COUNT(*) FROM jobs")
-    Integer getCount();
+    @Query("SELECT COUNT(*) FROM job")
+    Integer getJobCount();
 }

@@ -50,7 +50,7 @@ public class JobsController {
     }
 
     @GetMapping("/count")
-    private @ResponseBody Integer count() {
-        return jobsService.count();
+    private @ResponseBody Integer countJobs() {
+        return jobsService.countJobs();
     }
 }

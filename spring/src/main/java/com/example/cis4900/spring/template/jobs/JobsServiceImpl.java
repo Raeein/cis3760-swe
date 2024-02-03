@@ -52,7 +52,7 @@ public class JobsServiceImpl implements JobsService {
     }
 
     @Override
-    public Integer count() {
-        return jobsDao.getCount();
+    public Integer countJobs() {
+        return jobsDao.getJobCount();
     }
 }
