@@ -20,7 +20,7 @@ public class JobsController {
     private JobsService jobsService;
 
     @Autowired
-    NotesController(JobsService jobsService) {
+    JobsController(JobsService jobsService) {
         this.jobsService = jobsService;
     }
 
