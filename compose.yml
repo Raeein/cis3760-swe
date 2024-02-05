@@ -24,14 +24,20 @@ services:
       - mariadb_data:/var/lib/mysql
     networks:
       - spring-mysql    # Allow the mysql app to talk to the spring app
-    
+
   react:
     build: ./react    # Look for Dockerfile in this path
+    command: npm start
     ports:
       - "3000:3000"   # Expose port 3000
     environment:
       # Tell the react app that our spring server is running here
       - BACKEND_PROXY=http://spring:8080
+    develop:
+      watch:
+        - action: sync
+          path: ./react
+          target: /app
     networks:
       - spring-react    # Allow the react app to discover the spring app
 
