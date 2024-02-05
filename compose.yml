@@ -22,8 +22,14 @@ services:
       - MYSQL_DATABASE=template_db
     volumes:
       - mariadb_data:/var/lib/mysql
+    healthcheck:
+      # Make sure the mysql container is healthy before starting the spring app
+      test: ["CMD", "whoami"]
+      interval: 2s
+      retries: 10
     networks:
       - spring-mysql    # Allow the mysql app to talk to the spring app
+      - scraper-mysql   # Allow the mysql app to discover the scraper app
 
   react:
     build: ./react    # Look for Dockerfile in this path
@@ -41,10 +47,27 @@ services:
     networks:
       - spring-react    # Allow the react app to discover the spring app
 
+  scraper:
+    build: ./scraper  # Look for Dockerfile in this path
+    command: python main.py
+    environment:
+      - DB_ADDRESS=mysql
+      - DB_DATABASE=template_db
+      - DB_USER=root
+      - DB_PASSWORD=pwd
+      - DB_PORT=3306
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - spring-mysql    # Allow the scraper app to talk to the mysql app
+      - scraper-mysql   # Allow the scraper app to discover the mysql app
+
 volumes:
   mariadb_data:
 
 # List of Networks
-networks:               
+networks:
   spring-mysql:
   spring-react:
+  scraper-mysql:
