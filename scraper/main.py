@@ -1,6 +1,8 @@
 import mariadb
 import sys
 import os
+import json
+
 
 user = os.getenv('DB_USER', 'default_user')
 password = os.getenv('DB_PASSWORD', 'default_password')
@@ -23,7 +25,29 @@ except mariadb.Error as e:
 print("Connected to MariaDB Platform!")
 cur = conn.cursor()
 
-for i in range(10):
-    cur.execute("INSERT INTO note (text) VALUES (?)", (f"Hello, World! {i}",))
+insert_statement = """
+    INSERT INTO job (jobid, job_title, job_location, salary)
+    VALUES (NULL, ?, ?, ?);
+    """
+
+with open("fake_jobs.json") as f:
+    data = json.load(f)
+    for job in data['jobs']:
+        job_title = job["title"]
+        job_location = job["location"]
+        salary = job.get("salary", "Negotiable")  # Assuming 'salary' might not be present in all records
+
+        res = cur.execute(insert_statement, (job_title, job_location, salary))
+        if res == 0:
+            print("Error inserting data: ", job_title, job_location, salary)
+
 
 conn.commit()
+print("Job database populated!")
+
+# Make sure the data is in the database
+# cur.execute("SELECT * FROM job")
+# for (jobid, job_title, job_location, salary) in cur:
+#     print(f"Job: {jobid}, {job_title}, {job_location}, {salary}")
+
+conn.close()

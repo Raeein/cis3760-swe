@@ -1,0 +1,204 @@
+{
+  "jobs": [
+    {
+      "id": "1",
+      "title": "Fullstack Developer",
+      "description": "Experienced with modern JS stack, experience with React and Node.",
+      "employment_type": "Full time",
+      "location": "berlin",
+      "salary": "Negotiable"
+    },
+    {
+      "id": "2",
+      "title": "Frontend Developer",
+      "description": "Experienced with modern JS stack, experience with React.",
+      "employment_type": "Full time",
+      "location": "madrid",
+      "salary": "Negotiable"
+    },
+    {
+      "id": "3",
+      "title": "Backend Developer",
+      "description": "Experienced with modern JS stack, experience with Node.",
+      "employment_type": "Full time",
+      "location": "amsterdam",
+      "salary": "Negotiable"
+    },
+    {
+      "id": "4",
+      "title": "DevOps Engineer",
+      "description": "Experienced with Docker and Kubernetes.",
+      "employment_type": "part_time",
+      "location": "cairo",
+      "salary": "Negotiable"
+    },
+    {
+      "id": "5",
+      "title": "UI/UX Designer",
+      "description": "Experienced with wireframe tools (e.g. Wireframe.cc and InVision).",
+      "employment_type": "Full time",
+      "location": "alexandria",
+      "salary": "Negotiable"
+    },
+    {
+      "id": "6",
+      "title": "Data Warehouse Engineer",
+      "description": "Experienced with using Spark SQL and Hive to write queries and scripts.",
+      "employment_type": "Full time",
+      "location": "berlin",
+      "salary": "Negotiable"
+    },
+    {
+      "id": "7",
+      "title": "IT Administrator",
+      "description": "Experienced with systems planning, security principles, and general software management best practices.",
+      "employment_type": "part_time",
+      "location": "amsterdam",
+      "salary": "Negotiable"
+    },
+    {
+      "id": "8",
+      "title": "IT Recruiter",
+      "description": "Experienced with with various selection processes (phone interview, reference check, etc).",
+      "employment_type": "part_time",
+      "location": "madrid",
+      "salary": "Negotiable"
+    },
+    {
+      "id": "9",
+      "title": "HR Specialist",
+      "description": "Experienced with HR policies and systems.",
+      "employment_type": "Full time",
+      "location": "alexandria",
+      "salary": "Negotiable"
+    },
+    {
+      "id": "10",
+      "title": "Scrum Master",
+      "description": "Experienced with  the software development lifecycle.",
+      "employment_type": "Full time",
+      "location": "cairo",
+      "salary": "Negotiable"
+    },
+    {
+      "id": "11",
+      "title": "Graphic Designer",
+      "description": "Experienced with  the software development lifecycle.",
+      "employment_type": "Full time",
+      "location": "cairo",
+      "salary": "Negotiable"
+    },
+    {
+      "id": "12",
+      "title": "Fullstack Developer",
+      "description": "Experienced with modern JS stack, experience with React and Node.",
+      "employment_type": "Full time",
+      "location": "cairo",
+      "salary": "Negotiable"
+    },
+    {
+      "id": "13",
+      "title": "Frontend Developer",
+      "description": "Experienced with modern JS stack, experience with React.",
+      "employment_type": "Full time",
+      "location": "berlin",
+      "salary": "Negotiable"
+    },
+    {
+      "id": "14",
+      "title": "Backend Developer",
+      "description": "Experienced with modern JS stack, experience with Node.",
+      "employment_type": "Full time",
+      "location": "amsterdam",
+      "salary": "Negotiable"
+    },
+    {
+      "id": "15",
+      "title": "DevOps Engineer",
+      "description": "Experienced with Docker and Kubernetes.",
+      "employment_type": "part_time",
+      "location": "madrid",
+      "salary": "Negotiable"
+    },
+    {
+      "id": "16",
+      "title": "Cloud Architect",
+      "description": "Expertise in cloud services architecture, including AWS, Azure, and Google Cloud.",
+      "employment_type": "Full time",
+      "location": "new york",
+      "salary": "Negotiable"
+    },
+    {
+      "id": "17",
+      "title": "Security Analyst",
+      "description": "Proficient in cybersecurity measures and threat mitigation strategies.",
+      "employment_type": "Full time",
+      "location": "london",
+      "salary": "Negotiable"
+    },
+    {
+      "id": "18",
+      "title": "Project Manager",
+      "description": "Experienced in managing software development projects from inception to completion.",
+      "employment_type": "Full time",
+      "location": "toronto",
+      "salary": "Negotiable"
+    },
+    {
+      "id": "19",
+      "title": "Machine Learning Engineer",
+      "description": "Skilled in developing and deploying machine learning models to solve business problems.",
+      "employment_type": "Full time",
+      "location": "berlin",
+      "salary": "Negotiable"
+    },
+    {
+      "id": "20",
+      "title": "Mobile App Developer",
+      "description": "Expert in developing mobile applications for both iOS and Android platforms.",
+      "employment_type": "Full time",
+      "location": "san francisco",
+      "salary": "Negotiable"
+    },
+    {
+      "id": "21",
+      "title": "Business Analyst",
+      "description": "Proficient in analyzing business processes and identifying areas for improvement.",
+      "employment_type": "Full time",
+      "location": "sydney",
+      "salary": "Negotiable"
+    },
+    {
+      "id": "22",
+      "title": "Network Engineer",
+      "description": "Experienced in designing, implementing, and managing enterprise network solutions.",
+      "employment_type": "Full time",
+      "location": "tokyo",
+      "salary": "Negotiable"
+    },
+    {
+      "id": "23",
+      "title": "Quality Assurance Engineer",
+      "description": "Skilled in developing and executing test plans to ensure software quality.",
+      "employment_type": "Full time",
+      "location": "dublin",
+      "salary": "Negotiable"
+    },
+    {
+      "id": "24",
+      "title": "Systems Administrator",
+      "description": "Proficient in managing and maintaining IT infrastructure for optimal performance.",
+      "employment_type": "Full time",
+      "location": "cape town",
+      "salary": "Negotiable"
+    },
+    {
+      "id": "25",
+      "title": "Technical Writer",
+      "description": "Experienced in creating clear and concise technical documentation for software products.",
+      "employment_type": "Full time",
+      "location": "austin",
+      "salary": "Negotiable"
+    }
+  ]
+}
