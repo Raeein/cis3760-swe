@@ -1,18 +1,19 @@
 DROP DATABASE IF EXISTS template_db;
+CREATE DATABASE  template_db;
 
 USE template_db;
 
 DROP TABLE IF EXISTS note;
 DROP TABLE IF EXISTS job;
 
-create table if not exists note
+create table note
 (
     id int auto_increment comment 'Primary Key'
         primary key,
     text varchar(255) null
 );
 
-create table if not exists job
+create table job
 (
     jobid int auto_increment comment 'Primary Key'
         primary key,
