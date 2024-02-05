@@ -15,3 +15,6 @@ This will setup the app and you can access the following addresses on your brows
 - Spring backend = http://localhost:8080/api (add **/docs.html** to access Swagger UI)
 
 
+## Development Tips
+- Run `docker compose up --build` to rebuild the containers
+- When developing the MariaDB database remove the volumes to reset the database or your changes will not be reflected `docker compose down -v`

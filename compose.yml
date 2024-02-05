@@ -24,7 +24,7 @@ services:
       - mariadb_data:/var/lib/mysql
     healthcheck:
       # Make sure the mysql container is healthy before starting the spring app
-      test: ["CMD", "whoami"]
+      test: [ "CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized" ]
       interval: 2s
       retries: 10
     networks:
