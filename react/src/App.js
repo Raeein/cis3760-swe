@@ -4,11 +4,11 @@ import './App.css';
 import JobTable from './components/JobTable.jsx'
 import jobDataTest from './test.json'
 
-function App() {
+export default function App(){
 
   const [jobData, setJobData] = useState([])
   useEffect(() => {
-    fetch('http://localhost:8080/api/jobs/all')
+    fetch('/api/jobs/all')
       .then((response) => response.json())
       .then((data) => setJobData(data))
       .catch((error) => console.error('Error:', error))
@@ -19,9 +19,7 @@ function App() {
 
   return (
     <div className="App">
-      <JobTable data = {jobDataTest} />
+      <JobTable data = {jobData} />
     </div>
   );
 }
-
-export default App;
