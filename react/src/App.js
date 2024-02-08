@@ -1,12 +1,24 @@
+import React from 'react';
+import { useState, useEffect } from 'react'
 import './App.css';
-import HomePage from './pages/HomePage';
+import JobTable from './components/JobTable.jsx'
 
-function App() {
+export default function App(){
+
+  const [jobData, setJobData] = useState([])
+  useEffect(() => {
+    fetch('/api/jobs/all')
+      .then((response) => response.json())
+      .then((data) => setJobData(data))
+      .catch((error) => console.error('Error:', error))
+  }, [])
+
+  console.log(jobData);
+
+
   return (
     <div className="App">
-      <HomePage />
+      <JobTable data = {jobData} />
     </div>
   );
 }
-
-export default App;
