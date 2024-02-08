@@ -2,7 +2,6 @@ import React from 'react';
 import { useState, useEffect } from 'react'
 import './App.css';
 import JobTable from './components/JobTable.jsx'
-import jobDataTest from './test.json'
 
 export default function App(){
 
