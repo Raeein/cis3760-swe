@@ -1,8 +1,8 @@
-package com.example.cis4900.spring.template;
+package com.pixelate.geojobsearch;
 
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TemplateApplicationTests {
+class ApplicationTests {
 
 }

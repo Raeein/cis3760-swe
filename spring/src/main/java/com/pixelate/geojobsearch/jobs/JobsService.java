@@ -1,6 +1,6 @@
-package com.example.cis4900.spring.template.jobs;
+package com.pixelate.geojobsearch.jobs;
 
-import com.example.cis4900.spring.template.jobs.models.Job;
+import com.pixelate.geojobsearch.jobs.models.Job;
 
 
 public interface JobsService {

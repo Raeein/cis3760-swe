@@ -1,10 +1,10 @@
-package com.example.cis4900.spring.template.jobs;
+package com.pixelate.geojobsearch.jobs;
 
+import com.pixelate.geojobsearch.jobs.models.Job;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.cis4900.spring.template.jobs.dao.JobsDao;
-import com.example.cis4900.spring.template.jobs.models.Job;
+import com.pixelate.geojobsearch.jobs.dao.JobsDao;
 
 @Service
 public class JobsServiceImpl implements JobsService {

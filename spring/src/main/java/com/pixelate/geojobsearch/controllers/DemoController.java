@@ -1,4 +1,4 @@
-package com.example.cis4900.spring.template.controllers;
+package com.pixelate.geojobsearch.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

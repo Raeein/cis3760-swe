@@ -7,7 +7,7 @@ services:
     environment:
       # These are used in apllication.property to setup DB connection
       - DB_ADDRESS=jdbc:mysql://mysql:3306
-      - DB_DATABASE=template_db
+      - DB_DATABASE=geo_job_search_db
       - DB_USER=root
       - DB_PASSWORD=pwd
     networks:
@@ -19,7 +19,7 @@ services:
     environment:
       # Mysql docker image env vars
       - MYSQL_ROOT_PASSWORD=pwd
-      - MYSQL_DATABASE=template_db
+      - MYSQL_DATABASE=geo_job_search_db
     volumes:
       - mariadb_data:/var/lib/mysql
     healthcheck:
@@ -52,7 +52,7 @@ services:
     command: python main.py
     environment:
       - DB_ADDRESS=mysql
-      - DB_DATABASE=template_db
+      - DB_DATABASE=geo_job_search_db
       - DB_USER=root
       - DB_PASSWORD=pwd
       - DB_PORT=3306

@@ -25,4 +25,4 @@ COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
 COPY --from=build ${DEPENDENCY}/BOOT-INF/classes /app
 
 ## Start the srping app
-ENTRYPOINT ["java","-cp","app:app/lib/*","com.example.cis4900.spring.template.TemplateApplication"]
+ENTRYPOINT ["java","-cp","app:app/lib/*","com.pixelate.geojobsearch.Application"]

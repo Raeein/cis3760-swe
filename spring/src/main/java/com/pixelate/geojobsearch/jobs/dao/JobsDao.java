@@ -1,6 +1,6 @@
-package com.example.cis4900.spring.template.jobs.dao;
+package com.pixelate.geojobsearch.jobs.dao;
 
-import com.example.cis4900.spring.template.jobs.models.Job;
+import com.pixelate.geojobsearch.jobs.models.Job;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
