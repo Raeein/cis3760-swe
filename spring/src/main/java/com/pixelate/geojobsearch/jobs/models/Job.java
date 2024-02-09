@@ -1,4 +1,4 @@
-package com.example.cis4900.spring.template.jobs.models;
+package com.pixelate.geojobsearch.jobs.models;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,17 +1,9 @@
-DROP DATABASE IF EXISTS template_db;
-CREATE DATABASE  template_db;
+DROP DATABASE IF EXISTS geo_job_search_db;
+CREATE DATABASE geo_job_search_db;
 
-USE template_db;
+USE geo_job_search_db;
 
-DROP TABLE IF EXISTS note;
 DROP TABLE IF EXISTS job;
-
-create table note
-(
-    id int auto_increment comment 'Primary Key'
-        primary key,
-    text varchar(255) null
-);
 
 create table job
 (

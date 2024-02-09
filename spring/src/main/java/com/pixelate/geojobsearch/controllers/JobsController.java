@@ -1,7 +1,7 @@
-package com.example.cis4900.spring.template.controllers;
+package com.pixelate.geojobsearch.controllers;
 
-import com.example.cis4900.spring.template.jobs.JobsService;
-import com.example.cis4900.spring.template.jobs.models.Job;
+import com.pixelate.geojobsearch.jobs.JobsService;
+import com.pixelate.geojobsearch.jobs.models.Job;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -48,6 +48,7 @@ public class JobsController {
     private @ResponseBody Iterable<Job> allJobs() {
         return jobsService.allJobs();
     }
+
 
     @GetMapping("/count")
     private @ResponseBody Integer countJobs() {
