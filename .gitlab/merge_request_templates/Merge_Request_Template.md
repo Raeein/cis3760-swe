@@ -1,4 +1,4 @@
-# Code Review Template
+# Merge Request Template
 
 ## Purpose
 _Describe the purpose of this merge request._
