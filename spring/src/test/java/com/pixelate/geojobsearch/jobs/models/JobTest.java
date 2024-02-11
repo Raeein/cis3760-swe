@@ -1,16 +1,18 @@
 package com.pixelate.geojobsearch.jobs.models;
 
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.assertEquals;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@SpringBootTest
 public class JobTest {
     
     private Job tester;
 
-    @Before
-    public void setup() {
+    @BeforeEach
+    public void setUp() {
         tester = new Job();
     }
 
@@ -21,7 +23,7 @@ public class JobTest {
         Integer result = tester.getJobId();
 
         //Assert
-        assertEquals(1, result);
+        assertEquals(Integer.valueOf(1), result);
     }
 
     @Test
@@ -31,7 +33,7 @@ public class JobTest {
         Integer result = tester.getJobId();
 
         //Assert
-        assertEquals(50, result);
+        assertEquals(Integer.valueOf(50), result);
     }
 
     @Test
@@ -43,7 +45,7 @@ public class JobTest {
         Integer result = tester.getJobId();
 
         //Assert
-        assertEquals(24, result);
+        assertEquals(Integer.valueOf(24), result);
     }
 
     @Test
@@ -55,7 +57,7 @@ public class JobTest {
         Integer result = tester.getJobId();
 
         //Assert
-        assertEquals(67, result);
+        assertEquals(Integer.valueOf(67), result);
     }
 
     @Test
