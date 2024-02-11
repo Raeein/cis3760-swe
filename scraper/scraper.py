@@ -18,13 +18,34 @@ jobBoardList = [
                         "jobBoardName": "Indeed",
                         "jobBoardBaseUrl": "https://ca.indeed.com", 
                         "jobBoardSearchUrl": "https://ca.indeed.com/jobs?q={jobTitle}&l={location}",
+
+                        "jobCardElement": "div",
                         "jobCardClass": "job_seen_beacon",
-                        "jobCardElement": "div"
+
+                        "jobTitleElement": "h1",
+                        "jobTitleSearchObject": {"class": "jobsearch-JobInfoHeader-title"},
+
+                        "jobCompanyElement": "div",
+                        "jobCompanySearchObject": {"data-company-name": "true"},
+
+                        "jobLocationElement": "div",
+                        "jobLocationSearchObject": {"data-testid": "inlineHeader-companyLocation"},
+
+                        "jobEmploymentElement": "div",
+                        "jobEmploymentSearchObject": {"aria-label":"Job type"},
+
+                        "jobPayElement": "div",
+                        "jobPaySearchObject": {"aria-label":"Pay"},
+
+                        "jobDescriptionElement": "div",
+                        "jobDescriptionSearchObject": {"id":"jobDescriptionText"}
                     }
                 ]
 
 
 def getJobInfo(jobTitle:str, location:str, specifiedJobBoards:list[str] = [] ):
+
+    
     
     options = Options()
     options.add_argument("--headless")
@@ -40,6 +61,8 @@ def getJobInfo(jobTitle:str, location:str, specifiedJobBoards:list[str] = [] ):
 
     driver.implicitly_wait(10)
 
+
+    jobJsonObjectList = []
 
     jobBoardSearchList = []
     if(specifiedJobBoards == []):
@@ -58,9 +81,10 @@ def getJobInfo(jobTitle:str, location:str, specifiedJobBoards:list[str] = [] ):
     # url = websites[0].format(jobTitle=jobTitle, location=location)
         url = jobBoardObject["jobBoardSearchUrl"].format(jobTitle=jobTitle, location=location)
         
-
+        time.sleep(2)
+        driver.implicitly_wait(10)
         driver.get(url=url)
-        time.sleep(5)
+        
 
         soup = BeautifulSoup(driver.page_source, "html.parser")
 
@@ -71,26 +95,54 @@ def getJobInfo(jobTitle:str, location:str, specifiedJobBoards:list[str] = [] ):
         for jobCard in jobCards:
 
             jobUrl = jobBoardObject["jobBoardBaseUrl"]+jobCard.find('a', href=True)['href']
+            jobJsonObject = {}
 
+            time.sleep(2)
+            driver.implicitly_wait(10)
             driver.get(url=jobUrl)
-            time.sleep(5)
+            
             
             jobSoup = BeautifulSoup(driver.page_source, "html.parser")
 
             print("-"*20)
-            title = jobSoup.find("h1", {"class": "jobsearch-JobInfoHeader-title"} ).text
-            print("title:", title)
+            title = jobSoup.find(jobBoardObject["jobTitleElement"], jobBoardObject["jobTitleSearchObject"]).text
+            jobJsonObject["title"] = title
+            print("title: ", title)
+            
 
-            company = jobSoup.find("div", {"data-company-name": "true"}).text
-            print(company)
+            company = jobSoup.find(jobBoardObject["jobCompanyElement"], jobBoardObject["jobCompanySearchObject"]).text
+            jobJsonObject["company"] = company
+            print("company: ", company)
 
-            location = jobSoup.find("div", {"data-testid": "inlineHeader-companyLocation"}).text
-            print(location)
+            location = jobSoup.find(jobBoardObject["jobLocationElement"], jobBoardObject["jobLocationSearchObject"]).text
+            jobJsonObject["location"] = location
+            print("location:", location)
+
+            try:
+                employmentType = jobSoup.find(jobBoardObject["jobEmploymentElement"], jobBoardObject["jobEmploymentSearchObject"]).text[8:]
+            except:
+                employmentType = "Unknown"
+            finally:
+                jobJsonObject["employment_type"] = employmentType
+                print("employment type: ", employmentType)
+
+            try:
+                salary = jobSoup.find(jobBoardObject["jobPayElement"], jobBoardObject["jobPaySearchObject"]).text[3:]
+            except:
+                salary = "Unknown"
+            finally:
+                jobJsonObject["salary"] = salary
+                print("salary: ",salary)
+
+            description = jobSoup.find(jobBoardObject["jobDescriptionElement"], jobBoardObject["jobDescriptionSearchObject"]).text
+            jobJsonObject["description"] = description
+            print("description: ", description)
 
             print(jobUrl)
             print("-"*20)
+            jobJsonObjectList.append(jobJsonObject)
 
 
-    return 0
+    return jobJsonObjectList
 
-getJobInfo("Software","Toronto")
+print(getJobInfo("Software","Toronto"))

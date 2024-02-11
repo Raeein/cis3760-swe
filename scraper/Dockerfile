@@ -1,5 +1,4 @@
-ARG PYTHON_VERSION=3.12
-FROM python:${PYTHON_VERSION}-slim as base
+FROM python:3.11 as base
 
 RUN apt-get update -y && \
     apt-get install -y libmariadb-dev gcc
@@ -20,7 +19,7 @@ ARG UID=10001
 RUN adduser \
     --disabled-password \
     --gecos "" \
-    --home "/nonexistent" \
+    #--home "/nonexistent" \
     --shell "/sbin/nologin" \
     --no-create-home \
     --uid "${UID}" \
