@@ -26,6 +26,7 @@ export default function JobTable({ data }) {
             <article className="card" key={job.jobId}>
               <h1>{job.jobTitle}</h1>
               <p>Salary: {job.salary}</p>
+              <p>{job.description}</p>
               <h2>located in {job.jobLocation}</h2>
             </article>
           ))}
