@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
-
 public class JobTest {
     
     private Job tester;
@@ -21,7 +20,7 @@ public class JobTest {
         Integer result = tester.getJobId();
 
         //Assert
-        assertEquals(1, result);
+        assertEquals(Integer.valueOf(1), result);
     }
 
     @Test
@@ -31,7 +30,7 @@ public class JobTest {
         Integer result = tester.getJobId();
 
         //Assert
-        assertEquals(50, result);
+        assertEquals(Integer.valueOf(50), result);
     }
 
     @Test
@@ -43,7 +42,7 @@ public class JobTest {
         Integer result = tester.getJobId();
 
         //Assert
-        assertEquals(24, result);
+        assertEquals(Integer.valueOf(24), result);
     }
 
     @Test
@@ -55,7 +54,7 @@ public class JobTest {
         Integer result = tester.getJobId();
 
         //Assert
-        assertEquals(67, result);
+        assertEquals(Integer.valueOf(67), result);
     }
 
     @Test

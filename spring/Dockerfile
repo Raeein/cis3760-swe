@@ -11,7 +11,7 @@ COPY pom.xml .
 COPY src src
 
 ## Use Maven to build the application using the RUN stanza
-RUN ./mvnw install -DskipTests
+RUN ./mvnw install
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
 # Stage 2: runtime

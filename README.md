@@ -16,5 +16,5 @@ This will setup the app and you can access the following addresses on your brows
 
 
 ## Development Tips
-- Run `docker compose up --build` to rebuild the containers
+- Run `docker compose up --build` to rebuild and test the containers using the Java and Python testing frameworks
 - When developing the MariaDB database remove the volumes to reset the database or your changes will not be reflected `docker compose down -v`
