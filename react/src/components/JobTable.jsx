@@ -18,9 +18,7 @@ export default function JobTable({ data }) {
           .filter((item) => {
             return search.toLowerCase() === ""
               ? item
-              : item.jobTitle
-                  .toLowerCase()
-                  .includes(search.toLocaleLowerCase());
+              : item.jobTitle.toLowerCase().includes(search.toLowerCase());
           })
           .map((job) => (
             <article className="card" key={job.jobId}>
