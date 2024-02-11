@@ -14,7 +14,13 @@ This will setup the app and you can access the following addresses on your brows
 - React frontend = http://localhost:3000
 - Spring backend = http://localhost:8080/api (add **/docs.html** to access Swagger UI)
 
+## Testing
+To run the tests for the Java and Python applications, run the following command:
+
+```
+make test
+```
 
 ## Development Tips
-- Run `docker compose up --build` to rebuild the containers
+- Run `docker compose up --build` to rebuild and test the containers using the Java and Python testing frameworks
 - When developing the MariaDB database remove the volumes to reset the database or your changes will not be reflected `docker compose down -v`
