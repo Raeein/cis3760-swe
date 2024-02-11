@@ -59,7 +59,7 @@ public class Job {
         this.salary = salary;
     }
 
-       public String getDescription() {
+    public String getDescription() {
         return job_description;
     }
 
