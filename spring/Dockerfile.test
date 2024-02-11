@@ -1,0 +1,15 @@
+# Start with a base image from Eclipse Temurin (a distribution of OpenJDK) with Alpine Linux.
+FROM eclipse-temurin:21-jammy as build
+WORKDIR /workspace/app
+
+# Copy necessary files for building the java project
+COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
+COPY src src
+
+# Make mvnw executable
+RUN chmod +x ./mvnw
+
+# Run the tests
+CMD ["./mvnw", "test", "-B"]
