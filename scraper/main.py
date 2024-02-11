@@ -26,8 +26,8 @@ print("Connected to MariaDB Platform!")
 cur = conn.cursor()
 
 insert_statement = """
-    INSERT INTO job (jobid, job_title, job_location, salary)
-    VALUES (NULL, ?, ?, ?);
+    INSERT INTO job (jobid, job_title, job_location, salary, job_description)
+    VALUES (NULL, ?, ?, ?, ?);
     """
 
 with open("fake_jobs.json") as f:
@@ -36,10 +36,11 @@ with open("fake_jobs.json") as f:
         job_title = job["title"]
         job_location = job["location"]
         salary = job.get("salary", "Negotiable")  # Assuming 'salary' might not be present in all records
+        job_description = job.get("job_description", "No description available")  # Assuming 'description' might not be present in all records
 
-        res = cur.execute(insert_statement, (job_title, job_location, salary))
+        res = cur.execute(insert_statement, (job_title, job_location, salary, job_description))
         if res == 0:
-            print("Error inserting data: ", job_title, job_location, salary)
+            print("Error inserting data: ", job_title, job_location, salary, job_description)
 
 
 conn.commit()

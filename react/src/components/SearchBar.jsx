@@ -1,13 +1,10 @@
 export default function SearchBar({ onSearched }) {
   return (
-    <div className="SearchContainer">
-      <input
-        className="SearchBar"
-        type="text"
-        placeholder="Search..."
-        onChange={onSearched}
-      />
-      {/* <button type="submit">Search</button> */}
-    </div>
+    <input
+      className="search-bar"
+      type="text"
+      placeholder="search for a job..."
+      onChange={onSearched}
+    />
   );
 }

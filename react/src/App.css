@@ -1,46 +1,111 @@
-table {
-  border-collapse: collapse;
-  width: 50%;
-  height: 500px;
+.JobTable {
+  grid-row: 2 / 10;
+  grid-column: 1 / 6;
+  max-height: 100vh;
   overflow-y: scroll;
-  display: block;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: space-between; */
+}
+
+.JobTable::-webkit-scrollbar {
+  display: none;
+}
+
+.card-list {
+  padding-top: 20px;
+}
+
+.card {
+  height: 200px;
+  width: 400px;
+  min-width: 250px;
+  padding: 1.5rem;
+  border-radius: 16px;
+  background: #17141d;
+  display: flex;
+  flex-direction: column;
+  transition-duration: 600ms;
+  transition-timing-function: ease;
+  margin: 0;
+  scroll-snap-align: start;
+  clear: both;
+  position: relative;
+
+  text-align: center;
+}
+
+.card:hover ~ .card {
+  transform: translateX(-130px);
+}
+
+.card:not(:hover) {
+  transform: translateX(-70px);
+}
+
+.card h1 {
+  color: #fff;
+  font-size: 1.5rem;
+  /* margin-bottom: 1rem; */
+}
+
+.card h2 {
+  color: #fff;
+  font-size: 1.25rem;
+  /* margin-bottom: 1rem; */
+}
+
+.card p {
+  color: #fff;
+  font-size: 1rem;
+  /* margin-bottom: 1rem; */
+}
+
+.card:after {
+  background: linear-gradient(transparent, mediumslateblue, transparent);
+  height: 70px;
+  width: 1px;
+  position: absolute;
+  right: -1px;
+  top: 40%;
+  content: "";
+  transition: top, opacity;
+  transition-duration: 600ms;
+  transition-timing-function: ease;
+}
+
+.card:after {
+  top: 65%;
+  opacity: 0;
+}
+
+.card:hover:after {
+  top: 25%;
+  opacity: 1;
+}
+
+.search-bar {
   border-radius: 5px;
-}
-
-thead tr:first-child th {
-  position: sticky;
-  top: 0;
-  width: 488.617px;
-}
-
-th,
-td {
-  text-align: left;
-  padding: 8px;
-}
-
-tr:nth-child(even) {
-  background-color: black;
-}
-
-th {
-  background-color: #f2f2f2;
-  color: black;
-}
-
-tr:hover {
-  opacity: 0.5;
-  transition: 0.5s;
-  cursor: pointer;
-}
-
-.SearchBar {
-  width: 488.617px;
   padding: 10px;
-  border-radius: 6px;
-  border: 0px;
+  max-width: 350px;
+  border: none;
+  background-color: #383440;
+  color: white;
+  outline: none;
+  /* position: sticky;
+  top: 0;
+  z-index: 1; */
 }
 
-.searchContainer {
-  padding: 5px;
+.map {
+  grid-column: 6 / 14;
+  grid-row: 2 / 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: grey;
+}
+
+.map > h1 {
+  color: white;
 }

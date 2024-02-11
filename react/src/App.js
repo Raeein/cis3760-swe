@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import "./App.css";
 import JobTable from "./components/JobTable.jsx";
+import fakejobs from "./test.json";
 
 export default function App() {
   const [jobData, setJobData] = useState([]);
@@ -12,12 +13,14 @@ export default function App() {
       .catch((error) => console.error("Error:", error));
   }, []);
 
-  console.log(jobData);
+  //console log the infomration in the json file as a string
+  console.log(JSON.stringify(jobData));
 
   return (
-    <div className="App">
-      <div className="JobTable">
-        <JobTable data={jobData} />
+    <div className="container">
+      <JobTable data={fakejobs} />
+      <div className="map">
+        <h1>MAP</h1>
       </div>
     </div>
   );
