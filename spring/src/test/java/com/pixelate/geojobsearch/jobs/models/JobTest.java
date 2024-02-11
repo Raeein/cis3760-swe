@@ -1,15 +1,18 @@
 package com.pixelate.geojobsearch.jobs.models;
 
-import org.junit.Before;
-import org.junit.Test;
-import static org.junit.Assert.assertEquals;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+@SpringBootTest
 public class JobTest {
     
     private Job tester;
 
-    @Before
-    public void setup() {
+    @BeforeEach
+    public void setUp() {
         tester = new Job();
     }
 

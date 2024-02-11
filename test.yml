@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  spring-test:
+    build:
+      context: ./spring
+      dockerfile: Dockerfile.test
+#    environment:
+#      - DB_ADDRESS=jdbc:h2:mem:testdb # Using in-memory H2 database for tests
+#      - DB_DATABASE=test
+#      - DB_USER=sa
+#      - DB_PASSWORD=
+
+#  python-test:
+#    build: ./scraper
+#    command: pytest # Assuming you're using pytest for Python tests
+#    environment:
+#      - DB_ADDRESS=localhost
+#      - DB_DATABASE=testdb
+#      - DB_USER=test
+#      - DB_PASSWORD=test
+#      - DB_PORT=3306
