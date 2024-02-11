@@ -34,27 +34,27 @@ insert_statement = """
 
 # uncomment the code below to use test data
 
-# with open("fake_jobs.json") as f:
-#     data = json.load(f)
-#     for job in data['jobs']:
-#         job_title = job["title"]
-#         job_location = job["location"]
-#         salary = job.get("salary", "Negotiable")  # Assuming 'salary' might not be present in all records
+with open("fake_jobs.json") as f:
+    data = json.load(f)
+    for job in data['jobs']:
+        job_title = job["title"]
+        job_location = job["location"]
+        salary = job.get("salary", "Negotiable")  # Assuming 'salary' might not be present in all records
 
-#         res = cur.execute(insert_statement, (job_title, job_location, salary))
-#         if res == 0:
-#             print("Error inserting data: ", job_title, job_location, salary)
+        res = cur.execute(insert_statement, (job_title, job_location, salary))
+        if res == 0:
+            print("Error inserting data: ", job_title, job_location, salary)
 
 
-jobObjectList = scraper.getJobInfo("Software Developer", "Toronto, ON")
-for job in jobObjectList:
-    job_title = job["title"]
-    job_location = job["location"]
-    salary = job.get("salary", "Negotiable")
-    res = cur.execute(insert_statement, (job_title, job_location, salary))
+# jobObjectList = scraper.getJobInfo("Software Developer", "Toronto, ON")
+# for job in jobObjectList:
+#     job_title = job["title"]
+#     job_location = job["location"]
+#     salary = job.get("salary", "Negotiable")
+#     res = cur.execute(insert_statement, (job_title, job_location, salary))
 
-    if res == 0:
-        print("Error inserting data: ", job_title, job_location, salary)
+#     if res == 0:
+#         print("Error inserting data: ", job_title, job_location, salary)
 
 
 conn.commit()

@@ -1,4 +1,6 @@
-FROM python:3.11 as base
+ARG PYTHON_VERSION=3.12
+FROM python:${PYTHON_VERSION}-slim as base
+
 
 RUN apt-get update -y && \
     apt-get install -y libmariadb-dev gcc
@@ -19,7 +21,7 @@ ARG UID=10001
 RUN adduser \
     --disabled-password \
     --gecos "" \
-    #--home "/nonexistent" \
+    --home "/nonexistent" \
     --shell "/sbin/nologin" \
     --no-create-home \
     --uid "${UID}" \
@@ -39,4 +41,4 @@ USER appuser
 # Copy the source code into the container.
 COPY . .
 
-CMD["python3", "main.py"]
+CMD ["python3", "main.py"]
