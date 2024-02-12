@@ -6,7 +6,7 @@ export default function JobTable({ data }) {
   const [search, setSearch] = useState("");
 
   function searchBarChange(event) {
-    console.log(event.target.value);
+    // console.log(event.target.value);
     setSearch(event.target.value);
   }
 

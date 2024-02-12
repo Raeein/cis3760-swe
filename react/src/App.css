@@ -35,6 +35,7 @@
   text-align: center;
 }
 
+.card:focus-within,
 .card:hover ~ .card {
   transform: translateX(-130px);
 }
