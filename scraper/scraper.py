@@ -1,140 +1,129 @@
 import time
 from bs4 import BeautifulSoup
-from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
-from webdriver_manager.chrome import ChromeDriverManager
+
+job_board_list_object = {
+                            "Indeed" : {
+                                        "job_board_base_url": "https://ca.indeed.com", 
+                                        "job_board_search_url": "https://ca.indeed.com/jobs?q={job_title}&l={location}",
+
+                                        "job_card_element": "div",
+                                        "job_card_class": "job_seen_beacon",
+
+                                        # job page attribute start
+                                        # string parse will be parsing beginning and end of string. Positive will remove character from beginning, negative remove character from end
+                                        "job_title_element": "h1",
+                                        "job_title_search_object": {"class": "jobsearch-JobInfoHeader-title"},
+
+                                        "job_company_element": "div",
+                                        "job_company_search_object": {"data-company-name": "true"},
+
+                                        "job_location_element": "div",
+                                        "job_location_search_object": {"data-testid": "inlineHeader-companyLocation"},
+
+                                        "job_employment_element": "div",
+                                        "job_employment_search_object": {"aria-label":"Job type"},
+                                        "job_employment_string_parse": 8,
+
+                                        "job_pay_element": "div",
+                                        "job_pay_search_object": {"aria-label":"Pay"},
+                                        "job_pay_string_parse": 3,
+
+                                        "job_description_element": "div",
+                                        "job_description_search_object": {"id":"jobDescriptionText"},
+                                        # job page attribute ends
+                                    },
+                        }
+
+#set web driver options
+options = Options()
+options.add_argument("--headless")
+options.add_argument("--disable-blink-features=AutomationControlled")
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")
+#https://www.whatismybrowser.com/guides/the-latest-user-agent/chrome seem to be working
+options.add_argument("""user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36""")
+driver = webdriver.Chrome(options=options)
+driver.implicitly_wait(10)
+    
+
+def getJobCardsFromHTML(html_string:str, job_board_name: str) -> list[str]:
+    job_cards = []
+
+    soup = BeautifulSoup(html_string, "html.parser")
+    
+    job_board_object = job_board_list_object[job_board_name]
+    job_cards = soup.find_all(job_board_object["job_card_element"], class_=job_board_object["job_card_class"] )
+
+    return job_cards
 
 
+# attribute will be the string defined in the attribute section of the job list object subtracting the suffix
+def getJobAttribute(html_string:str, attribute:str, job_board_name:str) -> str:
 
-job_board_list = [
-                    {
-                        "job_board_name": "Indeed",
-                        "job_board_base_url": "https://ca.indeed.com", 
-                        "job_board_search_url": "https://ca.indeed.com/jobs?q={job_title}&l={location}",
+    job_soup = BeautifulSoup(html_string, "html.parser")
 
-                        "job_card_element": "div",
-                        "job_card_class": "job_seen_beacon",
+    try:
+        data = job_soup.find(
+                                    job_board_list_object[job_board_name][attribute+"_element"], 
+                                    job_board_list_object[job_board_name][attribute+"_search_object"]
+                                ).text
+        if(attribute+"_string_parse" in job_board_list_object[job_board_name]):
+            data = data[job_board_list_object[job_board_name][attribute+"_string_parse"]:]
 
-                        "job_title_element": "h1",
-                        "job_title_search_object": {"class": "jobsearch-JobInfoHeader-title"},
+    except:
+        data = "Unknown"
 
-                        "job_company_element": "div",
-                        "job_company_search_object": {"data-company-name": "true"},
-
-                        "job_location_element": "div",
-                        "job_location_search_object": {"data-testid": "inlineHeader-companyLocation"},
-
-                        "job_employment_element": "div",
-                        "job_employment_search_object": {"aria-label":"Job type"},
-
-                        "job_pay_element": "div",
-                        "job_pay_search_object": {"aria-label":"Pay"},
-
-                        "job_description_element": "div",
-                        "job_description_search_object": {"id":"jobDescriptionText"}
-                    }
-                ]
+    return data
 
 
-def getJobInfo(job_title:str, location:str, specified_job_boards:list[str] = [] ):
-    #return variable
+def getJobInfo(job_title:str, location:str, specified_job_boards:list[str] = [] ) -> list[dict]: 
     job_json_object_list = []
-
-    options = Options()
-    options.add_argument("--headless")
-    options.add_argument("--disable-blink-features=AutomationControlled")
-    options.add_argument("--no-sandbox")
-    options.add_argument("--disable-dev-shm-usage")
-    #https://www.whatismybrowser.com/guides/the-latest-user-agent/chrome seem to be working
-    options.add_argument("""user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36""")
-    #service = Service(ChromeDriverManager().install())
-
-    #driver = webdriver.Chrome(service=service, options=options)
-    driver = webdriver.Chrome(options=options)
-    driver.implicitly_wait(10)
-
-
     job_board_search_list = []
+    
     if(specified_job_boards == []):
-        job_board_search_list = job_board_list
-    else:
-        for job_board in specified_job_boards:
-            for job_board_object in job_board_list:
-                if(job_board["job_board_name"] == job_board):
-                    job_board_search_list.append(job_board_object)
-                    break
+        job_board_search_list = list(job_board_list_object.keys())
         
-    for job_board_object in job_board_search_list:
-        url = job_board_object["job_board_search_url"].format(job_title=job_title, location=location)
+    for job_board_name in job_board_search_list:
+        url = job_board_list_object[job_board_name]["job_board_search_url"].format(job_title=job_title, location=location)
         
+        driver.get(url=url)
         time.sleep(2)
         driver.implicitly_wait(10)
-        driver.get(url=url)
         
-
-        soup = BeautifulSoup(driver.page_source, "html.parser")
-
-        job_cards = soup.find_all(job_board_object["job_card_element"], class_=job_board_object["job_card_class"] )
+        job_cards = getJobCardsFromHTML(driver.page_source, job_board_name)
 
         for job_card in job_cards:
-
-            jobUrl = job_board_object["job_board_base_url"]+job_card.find('a', href=True)['href']
             job_json_object = {}
+            jobUrl = job_board_list_object[job_board_name]["job_board_base_url"]+job_card.find('a', href=True)['href']
 
-            time.sleep(2)
-            driver.implicitly_wait(10)
-            driver.get(url=jobUrl)
+            if(jobUrl != None):
             
-            
-            job_soup = BeautifulSoup(driver.page_source, "html.parser")
+                driver.get(url=jobUrl)
+                time.sleep(2)
+                driver.implicitly_wait(10)
 
-            print("-"*20)
-            title = job_soup.find(job_board_object["job_title_element"], 
-                                 job_board_object["job_title_search_object"]).text
-            job_json_object["title"] = title
-            print("title: ", title)
+                job_json_object["title"] = getJobAttribute(driver.page_source, "job_title", "Indeed")
+                job_json_object["company"] = getJobAttribute(driver.page_source, "job_company", "Indeed")
+                job_json_object["location"] = getJobAttribute(driver.page_source, "job_location", "Indeed")
+                job_json_object["employment_type"] = getJobAttribute(driver.page_source, "job_employment", "Indeed")
+                job_json_object["salary"] = getJobAttribute(driver.page_source, "job_pay", "Indeed")
+                job_json_object["description"] = getJobAttribute(driver.page_source, "job_description", "Indeed")
+                job_json_object["url"] = jobUrl
 
-            company = job_soup.find(job_board_object["job_company_element"], 
-                                   job_board_object["job_company_search_object"]).text
-            job_json_object["company"] = company
-            print("company: ", company)
-
-            location = job_soup.find(job_board_object["job_location_element"], 
-                                    job_board_object["job_location_search_object"]).text
-            job_json_object["location"] = location
-            print("location:", location)
-
-            try:
-                employment_type = job_soup.find(job_board_object["job_employment_element"], 
-                                              job_board_object["job_employment_search_object"]).text[8:]
-            except:
-                employment_type = "Unknown"
-            finally:
-                job_json_object["employment_type"] = employment_type
-                print("employment type: ", employment_type)
-
-            try:
-                salary = job_soup.find(job_board_object["job_pay_element"], 
-                                      job_board_object["job_pay_search_object"]).text[3:]
-            except:
-                salary = "Unknown"
-            finally:
-                job_json_object["salary"] = salary
-                print("salary: ",salary)
-
-            description = job_soup.find(job_board_object["job_description_element"], 
-                                       job_board_object["job_description_search_object"]).text
-            job_json_object["description"] = description
-            print("description: ", description)
-
-            print(jobUrl)
-            print("-"*20)
-            job_json_object_list.append(job_json_object)
-
+                print("-"*20)
+                print("Title: ",job_json_object["title"])
+                print("Company: ", job_json_object["company"])
+                print("Location: ", job_json_object["location"])
+                print("Employment type: ", job_json_object["employment_type"])
+                print("Salary: ", job_json_object["salary"])
+                print("Description: ", job_json_object["description"])
+                print("Url: ", job_json_object["url"])
+                print("-"*20)
+                job_json_object_list.append(job_json_object)
 
     return job_json_object_list
-
 
 if __name__ == "__main__":
     getJobInfo("Software Developer", "Toronto, On")
