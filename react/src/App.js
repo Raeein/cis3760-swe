@@ -14,11 +14,11 @@ export default function App() {
   }, []);
 
   //console log the infomration in the json file as a string
-  //console.log(JSON.stringify(jobData));
+  // console.log(jobData);
 
   return (
     <div className="container">
-      <JobTable data={jobData} />
+      <JobTable data={fakejobs} />
       <div className="map">
         <h1>MAP</h1>
       </div>
