@@ -21,6 +21,18 @@ To run the tests for the Java and Python applications, run the following command
 make test
 ```
 
+To only run the tests for the Python application, run the following command:
+
+```
+docker-compose -f test.yml up --build python-test
+```
+
+To only run the tests for the Java application, run the following command:
+
+```
+docker-compose -f test.yml up --build spring-test
+```
+
 If the user does not have make installed on their computer, please run this instead:
 
 ```
