@@ -18,7 +18,7 @@ export default function App() {
 
   return (
     <div className="container">
-      <JobTable data={fakejobs} />
+      <JobTable data={jobData} />
       <div className="map">
         <h1>MAP</h1>
       </div>
