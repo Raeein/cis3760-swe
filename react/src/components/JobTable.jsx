@@ -48,8 +48,10 @@ export default function JobTable({ data }) {
           onRequestClose={() => setDetailsPane({ visible: false, data: null })}
           from="left"  
           width="30%"
+          overlayClassName="overlay"
+          className="slider"
         >
-          <div>
+          <div className="slider-details">
             <h3>Job Details</h3>
             <p>Salary: {detailsPane.data.salary}</p>
             <p>Location: {detailsPane.data.jobLocation}</p>
