@@ -2,8 +2,6 @@ import React from "react";
 import SearchBar from "./SearchBar";
 import { useState } from "react";
 
-import { motion, AnimatePresence } from "framer-motion";
-
 export default function JobTable({ data }) {
   const [search, setSearch] = useState("")
 
