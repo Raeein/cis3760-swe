@@ -13,8 +13,8 @@ export default function App() {
       .catch((error) => console.error("Error:", error));
   }, []);
 
-  //console log the infomration in the json file as a string
-  // console.log(jobData);
+  // console log the infomration in the json file as a string
+  console.log(jobData);
 
   return (
     <div className="container">

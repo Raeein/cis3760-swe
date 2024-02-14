@@ -35,6 +35,7 @@ export default function JobTable({ data }) {
               >
                 <h1>{job.jobTitle}</h1>
                 <p>Salary: {job.salary}</p>
+                <p>Company: {job.company}</p>
                 <h2>located in {job.jobLocation}</h2>
               </article>
             ))}
@@ -52,10 +53,11 @@ export default function JobTable({ data }) {
           className="slider"
         >
           <div className="slider-details">
-            <h3>Job Details</h3>
             <p>Salary: {detailsPane.data.salary}</p>
             <p>Location: {detailsPane.data.jobLocation}</p>
+            <p>Company: {detailsPane.data.company}</p>
             <p>Description: {detailsPane.data.description}</p>
+            {/* <p>{detailsPane.data}</p> */}
           </div>
         </SlidingPane>
       )}
