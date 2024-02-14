@@ -12,6 +12,16 @@
   display: none;
 }
 
+.logo {
+  color:#fff;
+  font: 'Roboto';
+  font-size: 2.8rem;
+  top: 0;
+  font-weight: 1000;
+  left: 0;
+  padding: 50px 50px 10px 10px; 
+}
+
 .card-list {
   padding-top: 20px;
 }
