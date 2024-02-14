@@ -49,12 +49,11 @@ export default function JobTable({ data }) {
           from="left"  
           width="30%"
         >
-          {/* Content inside the sliding pane */}
           <div>
             <h3>Job Details</h3>
             <p>Salary: {detailsPane.data.salary}</p>
             <p>Location: {detailsPane.data.jobLocation}</p>
-            {/* Add more details as needed */}
+            <p>Description: {detailsPane.data.description}</p>
           </div>
         </SlidingPane>
       )}
