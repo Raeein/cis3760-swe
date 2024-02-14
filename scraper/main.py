@@ -52,7 +52,7 @@ for job in jobObjectList:
     job_title = job["title"]
     job_location = job["location"]
     salary = job.get("salary", "Negotiable")
-    job_description = job.get("job_description", "list a job description here")
+    job_description = job.get("description", "list a job description here")
     res = cur.execute(insert_statement, (job_title, job_location, salary, job_description))
 
     if res == 0:

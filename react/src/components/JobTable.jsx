@@ -5,11 +5,9 @@ import { useState } from "react";
 export default function JobTable({ data }) {
   const [search, setSearch] = useState("")
 
-  const [detailsPane, setDetailsPane] = React.useState({visible: false});
+  const [detailsPane, setDetailsPane] = React.useState({visible: false, data: null});
 
-  const testHandler = (param) => {
-    alert(`You clicked a card! ${param}`);
-  }
+
 
   function searchBarChange(event) {
     // console.log(event.target.value);
@@ -20,6 +18,12 @@ export default function JobTable({ data }) {
     <>
       <div>
           <span className="logo">GeoJobSearch</span>
+      </div>
+
+      <div>
+        <pre>
+          {JSON.stringify(detailsPane.data, null, 2)}
+        </pre>
       </div>
         
       <div className="JobTable">
@@ -33,7 +37,7 @@ export default function JobTable({ data }) {
                 : item.jobTitle.toLowerCase().includes(search.toLowerCase());
             })
             .map((job) => (
-              <article className="card" key={job.jobId} onClick={() => setDetailsPane({visible: true})}>
+              <article className="card" key={job.jobId} onClick={() => setDetailsPane({visible: true, data: job})}>
                 <h1>{job.jobTitle}</h1>
                 <p>Salary: {job.salary}</p>
                 {/* <p>{job.description}</p> */}
