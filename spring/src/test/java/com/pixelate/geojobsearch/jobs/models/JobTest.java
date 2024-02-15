@@ -192,4 +192,47 @@ public class JobTest {
         assertEquals(" ", result);
     }
 
+    @Test
+    public void testSetCompanyOne(){
+         //Arrange & Act
+        tester.setCompany("Google");
+        String result = tester.getCompany();
+
+        //Assert
+        assertEquals("Google", result);
+    }
+
+    @Test
+    public void testSetCompanyTwo(){
+         //Arrange & Act
+        tester.setCompany("Dell Technologies Inc.");
+        String result = tester.getCompany();
+
+        //Assert
+        assertEquals("Dell Technologies Inc.", result);
+    }
+
+    @Test
+    public void testGetCompanyOne(){
+        //Arrange
+        tester.setCompany("Facebook");
+
+        //Act
+        String result = tester.getCompany();
+
+        //Assert
+        assertEquals("Facebook", result);
+    }
+
+    @Test
+    public void testGetCompanyTwo(){
+        //Arrange
+        tester.setCompany(" ");
+
+        //Act
+        String result = tester.getCompany();
+
+        //Assert
+        assertEquals(" ", result);
+    }
 }

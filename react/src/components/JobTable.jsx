@@ -36,7 +36,7 @@ export default function JobTable({ data }) {
                 <h1>{job.jobTitle}</h1>
                 <p>Salary: {job.salary}</p>
                 <p>Company: {job.company}</p>
-                <h2>located in {job.jobLocation}</h2>
+                <p>located in {job.jobLocation}</p>
               </article>
             ))}
         </div>
