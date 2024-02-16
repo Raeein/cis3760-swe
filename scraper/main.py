@@ -47,6 +47,7 @@ insert_statement = """
 #             print("Error inserting data: ", job_title, job_location, salary)
 
 
+count = 0
 jobObjectList = scraper.getJobInfo("Software Developer", "Toronto, ON")
 for job in jobObjectList:
     job_title = job["title"]
@@ -56,10 +57,11 @@ for job in jobObjectList:
 
     if res == 0:
         print("Error inserting data: ", job_title, job_location, salary)
+        count+=1
 
 
 conn.commit()
-print("Job database populated!")
+print(f"Job database populated! Populated {count} job(s)")
 
 # Make sure the data is in the database
 # cur.execute("SELECT * FROM job")

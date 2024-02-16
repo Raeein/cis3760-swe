@@ -1,12 +1,19 @@
 ARG PYTHON_VERSION=3.12
 FROM --platform=linux/amd64 python:${PYTHON_VERSION}-slim as base
 
+
 RUN apt-get update -y && \
     apt-get install -y libmariadb-dev gcc wget gnupg
 
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-RUN echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
-RUN apt-get update -y && apt-get install -y google-chrome-stable
+RUN apt-get update && apt-get install -y \
+    firefox-esr \
+    && rm -rf /var/lib/apt/lists/*
+
+
+
+# RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
+# RUN echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list
+# RUN apt-get update -y && apt-get install -y google-chrome-stable
 
 # Prevents Python from writing pyc files.
 ENV PYTHONDONTWRITEBYTECODE=1

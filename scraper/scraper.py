@@ -1,6 +1,8 @@
 import time
 from bs4 import BeautifulSoup
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.firefox.service import Service
+from webdriver_manager.firefox import GeckoDriverManager
 from selenium import webdriver
 
 job_board_list_object = {
@@ -42,10 +44,10 @@ options.add_argument("--headless")
 options.add_argument("--disable-blink-features=AutomationControlled")
 options.add_argument("--no-sandbox")
 options.add_argument("--disable-dev-shm-usage")
-#https://www.whatismybrowser.com/guides/the-latest-user-agent/chrome seem to be working
 options.add_argument("""user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36""")
-driver = webdriver.Chrome(options=options)
-driver.implicitly_wait(10)
+driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()), options=options)
+driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => false})")
+driver.implicitly_wait(100)
     
 
 def getJobCardsFromHTML(html_string:str, job_board_name: str) -> list[str]:
@@ -68,7 +70,7 @@ def getJobAttribute(html_string:str, attribute:str, job_board_name:str) -> str:
         data = job_soup.find(
                                     job_board_list_object[job_board_name][attribute+"_element"], 
                                     job_board_list_object[job_board_name][attribute+"_search_object"]
-                                ).text
+                            ).text
         if(attribute+"_string_parse" in job_board_list_object[job_board_name]):
             data = data[job_board_list_object[job_board_name][attribute+"_string_parse"]:]
 
@@ -89,8 +91,7 @@ def getJobInfo(job_title:str, location:str, specified_job_boards:list[str] = [] 
         url = job_board_list_object[job_board_name]["job_board_search_url"].format(job_title=job_title, location=location)
         
         driver.get(url=url)
-        time.sleep(2)
-        driver.implicitly_wait(10)
+
         
         job_cards = getJobCardsFromHTML(driver.page_source, job_board_name)
 
@@ -102,7 +103,6 @@ def getJobInfo(job_title:str, location:str, specified_job_boards:list[str] = [] 
             
                 driver.get(url=jobUrl)
                 time.sleep(2)
-                driver.implicitly_wait(10)
 
                 job_json_object["title"] = getJobAttribute(driver.page_source, "job_title", "Indeed")
                 job_json_object["company"] = getJobAttribute(driver.page_source, "job_company", "Indeed")
