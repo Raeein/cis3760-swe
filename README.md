@@ -39,6 +39,13 @@ If the user does not have make installed on their computer, please run this inst
 docker-compose -f test.yml up --build
 ```
 
+## Debugging
+To only get the logs of a single service, run the following command:
+
+```
+make log c=service_name
+```
+
 ## Development Tips
 - Run `docker compose up --build` to rebuild the containers
 - When developing the MariaDB database remove the volumes to reset the database or your changes will not be reflected `docker compose down -v`
