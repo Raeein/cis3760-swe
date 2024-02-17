@@ -9,7 +9,10 @@ RUN apt-get update && apt-get install -y \
     firefox-esr \
     && rm -rf /var/lib/apt/lists/*
 
-
+COPY geckodriver-v0.34.0-linux64.tar.gz /usr/bin/
+RUN tar -xvzf /usr/bin/geckodriver-v0.34.0-linux64.tar.gz -C /usr/bin/
+RUN chmod +x /usr/bin/geckodriver
+RUN rm /usr/bin/geckodriver-v0.34.0-linux64.tar.gz
 
 # RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
 # RUN echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list

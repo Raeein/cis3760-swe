@@ -38,17 +38,30 @@ job_board_list_object = {
                                     },
                         }
 
-#set web driver options
-options = Options()
-options.add_argument("--headless")
-options.add_argument("--disable-blink-features=AutomationControlled")
-options.add_argument("--no-sandbox")
-options.add_argument("--disable-dev-shm-usage")
-options.add_argument("""user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36""")
-driver = webdriver.Firefox(service=Service(GeckoDriverManager().install()), options=options)
-driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => false})")
-driver.implicitly_wait(100)
-    
+
+def get_firefox_driver():
+    #set web driver options
+    options = Options()
+    options.add_argument("--headless")
+    options.add_argument("--disable-blink-features=AutomationControlled")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("""user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36""")
+
+    # check if geckodriver is installed, if not print an error message and exit
+    try:
+        service = Service('/usr/bin/geckodriver')
+    except Exception as e:
+        print("Error: ", e)
+        exit()
+    driver = webdriver.Firefox(service=service, options=options)
+    driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => false})")
+    driver.implicitly_wait(100)
+
+    return driver
+
+
+driver = get_firefox_driver()
 
 def getJobCardsFromHTML(html_string:str, job_board_name: str) -> list[str]:
     job_cards = []
