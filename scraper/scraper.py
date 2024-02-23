@@ -1,40 +1,68 @@
 import time
+import random
 from bs4 import BeautifulSoup
 from selenium.webdriver.chrome.options import Options
 from selenium import webdriver
 
-job_board_list_object = {
-                            "Indeed" : {
-                                        "job_board_base_url": "https://ca.indeed.com", 
-                                        "job_board_search_url": "https://ca.indeed.com/jobs?q={job_title}&l={location}",
+job_board_list_object = {   
+                        "Indeed" : {
+                            "job_board_base_url": "https://ca.indeed.com", 
+                            "job_board_search_url": "https://ca.indeed.com/jobs?q={job_title}&l={location}",
 
-                                        "job_card_element": "div",
-                                        "job_card_class": "job_seen_beacon",
+                            "job_card_element": "div",
+                            "job_card_class": "job_seen_beacon",
 
-                                        # job page attribute start
-                                        # string parse will be parsing beginning and end of string. Positive will remove character from beginning, negative remove character from end
-                                        "job_title_element": "h1",
-                                        "job_title_search_object": {"class": "jobsearch-JobInfoHeader-title"},
+                            # job page attribute start
+                            # string parse will be parsing beginning and end of string. Positive will remove character from beginning, negative remove character from end
+                            "job_title_element": "h1",
+                            "job_title_search_object": {"class": "jobsearch-JobInfoHeader-title"},
 
-                                        "job_company_element": "div",
-                                        "job_company_search_object": {"data-company-name": "true"},
+                            "job_company_element": "div",
+                            "job_company_search_object": {"data-company-name": "true"},
 
-                                        "job_location_element": "div",
-                                        "job_location_search_object": {"data-testid": "inlineHeader-companyLocation"},
+                            "job_location_element": "div",
+                            "job_location_search_object": {"data-testid": "inlineHeader-companyLocation"},
 
-                                        "job_employment_element": "div",
-                                        "job_employment_search_object": {"aria-label":"Job type"},
-                                        "job_employment_string_parse": 8,
+                            "job_employment_element": "div",
+                            "job_employment_search_object": {"aria-label":"Job type"},
+                            "job_employment_string_parse": 8,
 
-                                        "job_pay_element": "div",
-                                        "job_pay_search_object": {"aria-label":"Pay"},
-                                        "job_pay_string_parse": 3,
+                            "job_pay_element": "div",
+                            "job_pay_search_object": {"aria-label":"Pay"},
+                            "job_pay_string_parse": 3,
 
-                                        "job_description_element": "div",
-                                        "job_description_search_object": {"id":"jobDescriptionText"},
-                                        # job page attribute ends
-                                    },
+                            "job_description_element": "div",
+                            "job_description_search_object": {"id":"jobDescriptionText"},
+                            # job page attribute ends
+                        },
+                        "Canadian Job Bank" : {
+                            "job_board_base_url": "https://www.jobbank.gc.ca",
+                            "job_board_search_url": "https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring={job_title}&locationstring={location}",
+
+                            "job_card_element": "a",
+                            "job_card_class": "resultJobItem",
+
+
+
+                            "job_title_element": "span",
+                            "job_title_search_object": {"property": "title"},
+
+                            "job_company_element": "span",
+                            "job_company_search_object": {"property": "hiringOrganization"},
+
+                            "job_location_element": "span",
+                            "job_location_search_object": {"property": "address"},
+
+                            "job_employment_element": "span",
+                            "job_employment_search_object": {"property":"employmentType"},
+
+                            "job_pay_element": "span",
+                            "job_pay_search_object": {"property":"baseSalary"},
+
+                            "job_description_element": "div",
+                            "job_description_search_object": {"id":"comparisonchart"},
                         }
+                    }
 
 #set web driver options
 options = Options()
@@ -48,7 +76,7 @@ driver = webdriver.Chrome(options=options)
 driver.implicitly_wait(10)
     
 
-def getJobCardsFromHTML(html_string:str, job_board_name: str) -> list[str]:
+def getJobCardsFromHTML(html_string:str, job_board_name: str) :
     job_cards = []
 
     soup = BeautifulSoup(html_string, "html.parser")
@@ -66,16 +94,16 @@ def getJobAttribute(html_string:str, attribute:str, job_board_name:str) -> str:
 
     try:
         data = job_soup.find(
-                                    job_board_list_object[job_board_name][attribute+"_element"], 
-                                    job_board_list_object[job_board_name][attribute+"_search_object"]
-                                ).text
+                            job_board_list_object[job_board_name][attribute+"_element"], 
+                            job_board_list_object[job_board_name][attribute+"_search_object"]
+                            ).text
         if(attribute+"_string_parse" in job_board_list_object[job_board_name]):
             data = data[job_board_list_object[job_board_name][attribute+"_string_parse"]:]
 
     except:
         data = "Unknown"
 
-    return data
+    return data.strip()
 
 
 def getJobInfo(job_title:str, location:str, specified_job_boards:list[str] = [] ) -> list[dict]: 
@@ -84,32 +112,37 @@ def getJobInfo(job_title:str, location:str, specified_job_boards:list[str] = [] 
     
     if(specified_job_boards == []):
         job_board_search_list = list(job_board_list_object.keys())
+    else:
+        for i in specified_job_boards:
+            if i in list(job_board_list_object.keys()):
+                job_board_search_list.append(i)
         
     for job_board_name in job_board_search_list:
         url = job_board_list_object[job_board_name]["job_board_search_url"].format(job_title=job_title, location=location)
         
         driver.get(url=url)
-        time.sleep(2)
-        driver.implicitly_wait(10)
-        
+        time.sleep(random.randint(2, 6))
+
         job_cards = getJobCardsFromHTML(driver.page_source, job_board_name)
 
         for job_card in job_cards:
             job_json_object = {}
-            jobUrl = job_board_list_object[job_board_name]["job_board_base_url"]+job_card.find('a', href=True)['href']
+            job_card = "<div>"+str(job_card)+"</div>"
+            job_card = BeautifulSoup(job_card, "html.parser")
+            
+            jobUrl = job_board_list_object[job_board_name]["job_board_base_url"]+job_card.find('a')['href']
 
             if(jobUrl != None):
             
                 driver.get(url=jobUrl)
-                time.sleep(2)
-                driver.implicitly_wait(10)
+                time.sleep(random.randint(2, 8))
 
-                job_json_object["title"] = getJobAttribute(driver.page_source, "job_title", "Indeed")
-                job_json_object["company"] = getJobAttribute(driver.page_source, "job_company", "Indeed")
-                job_json_object["location"] = getJobAttribute(driver.page_source, "job_location", "Indeed")
-                job_json_object["employment_type"] = getJobAttribute(driver.page_source, "job_employment", "Indeed")
-                job_json_object["salary"] = getJobAttribute(driver.page_source, "job_pay", "Indeed")
-                job_json_object["description"] = getJobAttribute(driver.page_source, "job_description", "Indeed")
+                job_json_object["title"] = getJobAttribute(driver.page_source, "job_title", job_board_name)
+                job_json_object["company"] = getJobAttribute(driver.page_source, "job_company", job_board_name)
+                job_json_object["location"] = getJobAttribute(driver.page_source, "job_location", job_board_name)
+                job_json_object["employment_type"] = getJobAttribute(driver.page_source, "job_employment", job_board_name)
+                job_json_object["salary"] = getJobAttribute(driver.page_source, "job_pay", job_board_name)
+                job_json_object["description"] = getJobAttribute(driver.page_source, "job_description", job_board_name)
                 job_json_object["url"] = jobUrl
 
                 print("-"*20)
@@ -126,4 +159,4 @@ def getJobInfo(job_title:str, location:str, specified_job_boards:list[str] = [] 
     return job_json_object_list
 
 if __name__ == "__main__":
-    getJobInfo("Software Developer", "Toronto, On")
+    getJobInfo("Software Developer", "Toronto, On", ["Canadian Job Bank",] )
