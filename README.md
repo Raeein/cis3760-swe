@@ -21,6 +21,24 @@ To run the tests for the Java and Python applications, run the following command
 make test
 ```
 
+To only run the tests for the Python application, run the following command:
+
+```
+docker-compose -f test.yml up --build python-test
+```
+
+To only run the tests for the Java application, run the following command:
+
+```
+docker-compose -f test.yml up --build spring-test
+```
+
+If the user does not have make installed on their computer, please run this instead:
+
+```
+docker-compose -f test.yml up --build
+```
+
 ## Development Tips
-- Run `docker compose up --build` to rebuild and test the containers using the Java and Python testing frameworks
+- Run `docker compose up --build` to rebuild the containers
 - When developing the MariaDB database remove the volumes to reset the database or your changes will not be reflected `docker compose down -v`

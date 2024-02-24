@@ -10,13 +10,12 @@ services:
 #      - DB_DATABASE=test
 #      - DB_USER=sa
 #      - DB_PASSWORD=
-
-#  python-test:
-#    build: ./scraper
-#    command: pytest # Assuming you're using pytest for Python tests
-#    environment:
-#      - DB_ADDRESS=localhost
-#      - DB_DATABASE=testdb
-#      - DB_USER=test
-#      - DB_PASSWORD=test
-#      - DB_PORT=3306
+  python-test:
+    build: ./scraper
+    command: pytest test_scraper.py
+    environment:
+      - DB_ADDRESS=localhost
+      - DB_DATABASE=testdb
+      - DB_USER=test
+      - DB_PASSWORD=test
+      - DB_PORT=3306
