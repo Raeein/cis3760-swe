@@ -49,6 +49,7 @@ job_board_list_object = {
 
                             "job_company_element": "span",
                             "job_company_search_object": {"property": "hiringOrganization"},
+                            
 
                             "job_location_element": "span",
                             "job_location_search_object": {"property": "address"},
