@@ -5,6 +5,8 @@ services:
     build:
       context: ./spring
       dockerfile: Dockerfile.test
+    volumes:
+      - ./spring-test-results:/workspace/app/target/site/jacoco
 #    environment:
 #      - DB_ADDRESS=jdbc:h2:mem:testdb # Using in-memory H2 database for tests
 #      - DB_DATABASE=test
