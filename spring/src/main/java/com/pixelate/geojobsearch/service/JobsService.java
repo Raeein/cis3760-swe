@@ -1,6 +1,6 @@
-package com.pixelate.geojobsearch.jobs;
+package com.pixelate.geojobsearch.service;
 
-import com.pixelate.geojobsearch.jobs.models.Job;
+import com.pixelate.geojobsearch.models.Job;
 
 
 public interface JobsService {
