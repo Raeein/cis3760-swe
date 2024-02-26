@@ -1,6 +1,5 @@
 package com.pixelate.geojobsearch.models;
 
-import com.pixelate.geojobsearch.models.Job;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
