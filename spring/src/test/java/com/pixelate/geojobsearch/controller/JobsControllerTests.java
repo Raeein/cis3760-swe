@@ -47,6 +47,8 @@ public class JobsControllerTests {
         job.setJobTitle("Software Developer");
         job.setJobLocation("New York");
         job.setSalary("80000");
+        job.setJobDescription("Develop software applications");
+        job.setCompany("Pixelate");
     }
 
     @Test

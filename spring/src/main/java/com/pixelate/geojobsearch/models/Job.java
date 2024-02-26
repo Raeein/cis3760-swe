@@ -21,4 +21,10 @@ public class Job {
 
     @Column(name = "salary")
     private String salary;
+
+    @Column(name = "job_description")
+    private String jobDescription;
+
+    @Column(name = "company")
+    private String company;
 }
