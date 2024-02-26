@@ -4,14 +4,11 @@ import os
 import json
 import scraper
 
-
 user = os.getenv('DB_USER', 'default_user')
 password = os.getenv('DB_PASSWORD', 'default_password')
 host = os.getenv('DB_ADDRESS', 'default_host')
 port = int(os.getenv('DB_PORT', 'default_port'))
 database = os.getenv('DB_DATABASE', 'default_database')
-
-
 
 try:
     conn = mariadb.connect(
@@ -29,8 +26,8 @@ print("Connected to MariaDB Platform!")
 cur = conn.cursor()
 
 insert_statement = """
-    INSERT INTO job (jobid, job_title, job_location, salary)
-    VALUES (NULL, ?, ?, ?);
+    INSERT INTO job (jobid, job_title, job_location, salary, job_description, company)
+    VALUES (NULL, ?, ?, ?, ?, ?);
     """
 
 # uncomment the code below to use test data
@@ -47,23 +44,28 @@ insert_statement = """
 #             print("Error inserting data: ", job_title, job_location, salary)
 
 
-jobObjectList = scraper.getJobInfo("Software Developer", "Toronto, ON")
+jobObjectList = scraper.getJobInfo("Software Developer", "Toronto, ON", ["Canadian Job Bank", "Indeed"])
 for job in jobObjectList:
     job_title = job["title"]
     job_location = job["location"]
     salary = job.get("salary", "Negotiable")
-    res = cur.execute(insert_statement, (job_title, job_location, salary))
+    job_description = job.get("description", "list a job description here")
+    company = job["company"]
+    res = cur.execute(insert_statement, (job_title, job_location, salary, job_description, company))
 
-    if res == 0:
-        print("Error inserting data: ", job_title, job_location, salary)
+    if(job_title != "Unknown"):
+        res = cur.execute(insert_statement, (job_title, job_location, salary, job_description, company))
+
+        if res == 0:
+            print("Error inserting data: ", job_title, job_location, salary, job_description, company)
 
 
 conn.commit()
 print("Job database populated!")
 
-# Make sure the data is in the database
-# cur.execute("SELECT * FROM job")
-# for (jobid, job_title, job_location, salary) in cur:
-#     print(f"Job: {jobid}, {job_title}, {job_location}, {salary}")
+#Test if data is in database
+# cur.execute("SELECT jobid, job_title, job_location, salary, company FROM job")
+# for (jobid, job_title, job_location, salary, company) in cur:
+#     print(f"Job: {jobid}, {job_title}, {job_location}, {salary}, {company}")
 
 conn.close()
