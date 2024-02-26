@@ -1,4 +1,4 @@
-package com.pixelate.geojobsearch.jobs.models;
+package com.pixelate.geojobsearch.models;
 
 import com.pixelate.geojobsearch.models.Job;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,8 +20,8 @@ public class JobTest {
     @Test
     public void testSetIdOne(){
         //Arrange & Act
-        tester.setJobid(1);
-        Integer result = tester.getJobid();
+        tester.setJobId(1);
+        Integer result = tester.getJobId();
 
         //Assert
         assertEquals(Integer.valueOf(1), result);
@@ -30,8 +30,8 @@ public class JobTest {
     @Test
     public void testSetIdTwo(){
         //Arrange & Act
-        tester.setJobid(50);
-        Integer result = tester.getJobid();
+        tester.setJobId(50);
+        Integer result = tester.getJobId();
 
         //Assert
         assertEquals(Integer.valueOf(50), result);
@@ -40,10 +40,10 @@ public class JobTest {
     @Test
     public void testGetJobIdOne(){
         //Arrange
-        tester.setJobid(24);
+        tester.setJobId(24);
 
         //Act
-        Integer result = tester.getJobid();
+        Integer result = tester.getJobId();
 
         //Assert
         assertEquals(Integer.valueOf(24), result);
@@ -52,10 +52,10 @@ public class JobTest {
     @Test
     public void testGetJobIdTwo(){
         //Arrange
-        tester.setJobid(67);
+        tester.setJobId(67);
 
         //Act
-        Integer result = tester.getJobid();
+        Integer result = tester.getJobId();
 
         //Assert
         assertEquals(Integer.valueOf(67), result);
@@ -64,8 +64,8 @@ public class JobTest {
     @Test
     public void testSetJobTitleOne(){
         //Arrange & Act
-        tester.setJob_title("Plumber");
-        String result = tester.getJob_title();
+        tester.setJobTitle("Plumber");
+        String result = tester.getJobTitle();
 
         //Assert
         assertEquals("Plumber", result);
@@ -74,8 +74,8 @@ public class JobTest {
     @Test
     public void testSetJobTitleTwo(){
         //Arrange & Act
-        tester.setJob_title("Software Engineer");
-        String result = tester.getJob_title();
+        tester.setJobTitle("Software Engineer");
+        String result = tester.getJobTitle();
 
         //Assert
         assertEquals("Software Engineer", result);
@@ -84,10 +84,10 @@ public class JobTest {
     @Test
     public void testGetJobTitleOne(){
         //Arrange
-        tester.setJob_title("Mechanic");
+        tester.setJobTitle("Mechanic");
 
         //Act
-        String result = tester.getJob_title();
+        String result = tester.getJobTitle();
 
         //Assert
         assertEquals("Mechanic", result);
@@ -96,10 +96,10 @@ public class JobTest {
     @Test
     public void testGetJobTitleTwo(){
         //Arrange
-        tester.setJob_title(" ");
+        tester.setJobTitle(" ");
 
         //Act
-        String result = tester.getJob_title();
+        String result = tester.getJobTitle();
 
         //Assert
         assertEquals(" ", result);
@@ -108,8 +108,8 @@ public class JobTest {
     @Test
     public void testSetJobLocationOne(){
         //Arrange & Act
-        tester.setJob_location("Toronto, Ontario");
-        String result = tester.getJob_location();
+        tester.setJobLocation("Toronto, Ontario");
+        String result = tester.getJobLocation();
 
         //Assert
         assertEquals("Toronto, Ontario", result);
@@ -118,8 +118,8 @@ public class JobTest {
     @Test
     public void testSetJobLocationTwo(){
         //Arrange & Act
-        tester.setJob_location("Los Angeles, California, U.S.A.");
-        String result = tester.getJob_location();
+        tester.setJobLocation("Los Angeles, California, U.S.A.");
+        String result = tester.getJobLocation();
 
         //Assert
         assertEquals("Los Angeles, California, U.S.A.", result);
@@ -128,10 +128,10 @@ public class JobTest {
     @Test
     public void testGetJobLocationOne(){
         //Arrange
-        tester.setJob_location("Dubai, UAE");
+        tester.setJobLocation("Dubai, UAE");
 
         //Act
-        String result = tester.getJob_location();
+        String result = tester.getJobLocation();
 
         //Assert
         assertEquals("Dubai, UAE", result);
@@ -140,10 +140,10 @@ public class JobTest {
     @Test
     public void testGetJobLocationTwo(){
         //Arrange
-        tester.setJob_location(" ");
+        tester.setJobLocation(" ");
 
         //Act
-        String result = tester.getJob_location();
+        String result = tester.getJobLocation();
 
         //Assert
         assertEquals(" ", result);
@@ -192,5 +192,6 @@ public class JobTest {
         //Assert
         assertEquals(" ", result);
     }
+
 
 }

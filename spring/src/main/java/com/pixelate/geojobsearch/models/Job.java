@@ -1,9 +1,6 @@
 package com.pixelate.geojobsearch.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,8 +11,14 @@ import lombok.NoArgsConstructor;
 public class Job {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer jobid;
-    private String job_title;
-    private String job_location;
+    @Column(name = "jobid")
+    private Integer jobId;
+
+    @Column(name = "job_title")
+    private String jobTitle;
+    @Column(name = "job_location")
+    private String jobLocation;
+
+    @Column(name = "salary")
     private String salary;
 }
