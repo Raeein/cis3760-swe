@@ -44,7 +44,7 @@ insert_statement = """
 #             print("Error inserting data: ", job_title, job_location, salary)
 
 
-jobObjectList = scraper.getJobInfo("Software Developer", "Toronto, ON", ["Canadian Job Bank", "Indeed"])
+jobObjectList = scraper.get_job_info("Software Developer", "Toronto, ON", ["Canadian Job Bank", "Indeed"])
 for job in jobObjectList:
     job_title = job["title"]
     job_location = job["location"]
@@ -53,7 +53,7 @@ for job in jobObjectList:
     company = job["company"]
     res = cur.execute(insert_statement, (job_title, job_location, salary, job_description, company))
 
-    if(job_title != "Unknown"):
+    if job_title != "Unknown":
         res = cur.execute(insert_statement, (job_title, job_location, salary, job_description, company))
 
         if res == 0:
