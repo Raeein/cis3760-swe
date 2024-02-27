@@ -50,7 +50,6 @@ for job in jobObjectList:
     salary = job.get("salary", "Negotiable")
     job_description = job.get("description", "No description given")
     company = job["company"]
-    res = cur.execute(insert_statement, (job_title, job_location, salary, job_description, company))
 
     if(job_title != "Unknown"):
         res = cur.execute(insert_statement, (job_title, job_location, salary, job_description, company))
@@ -63,8 +62,8 @@ conn.commit()
 print("Job database populated!")
 
 # Make sure the data is in the database
-# cur.execute("SELECT jobid, job_title, job_location, salary, company FROM job")
-# for (jobid, job_title, job_location, salary, company) in cur:
-#     print(f"Job: {jobid}, {job_title}, {job_location}, {salary}, {company}")
+cur.execute("SELECT jobid, job_title, job_location, salary, company FROM job")
+for (jobid, job_title, job_location, salary, company) in cur:
+    print(f"Job: {jobid}, {job_title}, {job_location}, {salary}, {company}")
 
 conn.close()
