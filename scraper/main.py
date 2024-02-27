@@ -43,13 +43,12 @@ insert_statement = """
 #         if res == 0:
 #             print("Error inserting data: ", job_title, job_location, salary)
 
-
 jobObjectList = scraper.getJobInfo("Software Developer", "Toronto, ON", ["Canadian Job Bank", "Indeed"])
 for job in jobObjectList:
     job_title = job["title"]
     job_location = job["location"]
     salary = job.get("salary", "Negotiable")
-    job_description = job.get("description", "list a job description here")
+    job_description = job.get("description", "No description given")
     company = job["company"]
     res = cur.execute(insert_statement, (job_title, job_location, salary, job_description, company))
 
@@ -63,7 +62,7 @@ for job in jobObjectList:
 conn.commit()
 print("Job database populated!")
 
-#Test if data is in database
+# Make sure the data is in the database
 # cur.execute("SELECT jobid, job_title, job_location, salary, company FROM job")
 # for (jobid, job_title, job_location, salary, company) in cur:
 #     print(f"Job: {jobid}, {job_title}, {job_location}, {salary}, {company}")
