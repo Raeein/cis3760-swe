@@ -29,8 +29,8 @@ print("Connected to MariaDB Platform!")
 cur = conn.cursor()
 
 insert_statement = """
-    INSERT INTO job (jobid, job_title, job_location, salary)
-    VALUES (NULL, ?, ?, ?);
+    INSERT INTO job (jobid, job_title, job_location, salary, job_description, company)
+    VALUES (NULL, ?, ?, ?, ?, ?);
     """
 
 # uncomment the code below to use test data
@@ -52,20 +52,20 @@ for job in jobObjectList:
     job_title = job["title"]
     job_location = job["location"]
     salary = job.get("salary", "Negotiable")
+    job_description = job.get("description", "No description given")
+    company = job["company"]
 
     if(job_title != "Unknown"):
-        res = cur.execute(insert_statement, (job_title, job_location, salary))
+        res = cur.execute(insert_statement, (job_title, job_location, salary, job_description, company))
 
         if res == 0:
-            print("Error inserting data: ", job_title, job_location, salary)
+            print("Error inserting data: ", job_title, job_location, salary, job_description, company)
 
 
 conn.commit()
 print("Job database populated!")
-
-# Make sure the data is in the database
-# cur.execute("SELECT * FROM job")
-# for (jobid, job_title, job_location, salary) in cur:
-#     print(f"Job: {jobid}, {job_title}, {job_location}, {salary}")
+# cur.execute("SELECT jobid, job_title, job_location, salary, company FROM job")
+# for (jobid, job_title, job_location, salary, company) in cur:
+#     print(f"Job: {jobid}, {job_title}, {job_location}, {salary}, {company}")
 
 conn.close()

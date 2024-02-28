@@ -13,16 +13,20 @@ public class Job {
     private String job_title;
     private String job_location;
     private String salary;
+    private String job_description;
+    private String company;
 
     public Job() {
 
     }
 
-    public Job(Integer jobid, String job_title, String job_location, String salary) {
+    public Job(Integer jobid, String job_title, String job_location, String salary, String job_description, String company) {
         this.jobid = jobid;
         this.job_title = job_title;
         this.job_location = job_location;
         this.salary = salary;
+        this.job_description = job_description;
+        this.company = company;
     }
 
     public Integer getJobId() {
@@ -55,5 +59,21 @@ public class Job {
 
     public void setSalary(String salary) {
         this.salary = salary;
+    }
+
+    public String getDescription() {
+        return job_description;
+    }
+
+    public void setDescription(String new_description) {
+        this.job_description = new_description;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String new_company) {
+        this.company = new_company;
     }
 }
