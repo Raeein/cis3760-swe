@@ -3,7 +3,6 @@ import random
 from bs4 import BeautifulSoup
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service
-from webdriver_manager.firefox import GeckoDriverManager
 from selenium import webdriver
 
 job_board_list_object = {   
@@ -175,4 +174,4 @@ def getJobInfo(job_title:str, location:str, specified_job_boards:list[str] = [] 
     return job_json_object_list
 
 if __name__ == "__main__":
-    getJobInfo("Software Developer", "Toronto, On", ["Canadian Job Bank",] )
+    getJobInfo("Software Developer", "Toronto, On", ["Indeed"] )
