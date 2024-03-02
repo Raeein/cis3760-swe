@@ -29,8 +29,8 @@ print("Connected to MariaDB Platform!")
 cur = conn.cursor()
 
 insert_statement = """
-    INSERT INTO job (jobid, job_title, job_location, salary)
-    VALUES (NULL, ?, ?, ?);
+    INSERT INTO job (jobid, job_title, job_location, salary, job_description, company)
+    VALUES (NULL, ?, ?, ?, ?, ?);
     """
 
 # uncomment the code below to use test data
@@ -47,25 +47,25 @@ insert_statement = """
 #             print("Error inserting data: ", job_title, job_location, salary)
 
 
-count = 0
-jobObjectList = scraper.getJobInfo("Software Developer", "Toronto, ON")
+jobObjectList = scraper.getJobInfo("Software Developer", "Toronto, ON", ["Canadian Job Bank", "Indeed"])
 for job in jobObjectList:
     job_title = job["title"]
     job_location = job["location"]
     salary = job.get("salary", "Negotiable")
-    res = cur.execute(insert_statement, (job_title, job_location, salary))
+    job_description = job.get("description", "No description given")
+    company = job["company"]
 
-    if res == 0:
-        print("Error inserting data: ", job_title, job_location, salary)
-        count+=1
+    if(job_title != "Unknown"):
+        res = cur.execute(insert_statement, (job_title, job_location, salary, job_description, company))
+
+        if res == 0:
+            print("Error inserting data: ", job_title, job_location, salary, job_description, company)
 
 
 conn.commit()
-print(f"Job database populated! Populated {count} job(s)")
-
-# Make sure the data is in the database
-# cur.execute("SELECT * FROM job")
-# for (jobid, job_title, job_location, salary) in cur:
-#     print(f"Job: {jobid}, {job_title}, {job_location}, {salary}")
+print("Job database populated!")
+# cur.execute("SELECT jobid, job_title, job_location, salary, company FROM job")
+# for (jobid, job_title, job_location, salary, company) in cur:
+#     print(f"Job: {jobid}, {job_title}, {job_location}, {salary}, {company}")
 
 conn.close()
