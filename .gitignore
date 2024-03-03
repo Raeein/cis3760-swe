@@ -45,6 +45,7 @@ node_modules
 
 # testing
 coverage
+spring-test-results/
 
 # production
 build

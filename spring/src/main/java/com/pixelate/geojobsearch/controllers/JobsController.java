@@ -1,7 +1,7 @@
 package com.pixelate.geojobsearch.controllers;
 
-import com.pixelate.geojobsearch.jobs.JobsService;
-import com.pixelate.geojobsearch.jobs.models.Job;
+import com.pixelate.geojobsearch.service.JobsService;
+import com.pixelate.geojobsearch.models.Job;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;

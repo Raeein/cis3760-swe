@@ -47,7 +47,7 @@ insert_statement = """
 #             print("Error inserting data: ", job_title, job_location, salary)
 
 
-jobObjectList = scraper.getJobInfo("Software Developer", "Toronto, ON", ["Canadian Job Bank"])
+jobObjectList = scraper.get_job_info("Software Developer", "Toronto, ON", ["Canadian Job Bank", "Indeed"])
 for job in jobObjectList:
     job_title = job["title"]
     job_location = job["location"]
