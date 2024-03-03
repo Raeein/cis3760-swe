@@ -24,20 +24,22 @@ make test
 To only run the tests for the Python application, run the following command:
 
 ```
-docker-compose -f test.yml up --build python-test
+docker compose -f test.yml up --build python-test
 ```
 
 To only run the tests for the Java application, run the following command:
 
 ```
-docker-compose -f test.yml up --build spring-test
+docker compose -f test.yml up --build spring-test
 ```
 
 If the user does not have make installed on their computer, please run this instead:
 
 ```
-docker-compose -f test.yml up --build
+docker compose -f test.yml up --build
 ```
+
+The results of the Spring tests can be found in the spring-test-results folder in the root of the project directory after running the tests.
 
 ## Development Tips
 - Run `docker compose up --build` to rebuild the containers

@@ -1,20 +1,21 @@
-package com.pixelate.geojobsearch.jobs;
+package com.pixelate.geojobsearch.service.Impl;
 
-import com.pixelate.geojobsearch.jobs.models.Job;
+import com.pixelate.geojobsearch.models.Job;
+import com.pixelate.geojobsearch.service.JobsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.pixelate.geojobsearch.jobs.dao.JobsDao;
+import com.pixelate.geojobsearch.repository.JobsRepository;
 
 @Service
 public class JobsServiceImpl implements JobsService {
     @Autowired
-    private JobsDao jobsDao;
+    private JobsRepository jobsRepository;
 
     @Override
     public String addJob(Job newJob) {
         try {
-            jobsDao.save(newJob);
+            jobsRepository.save(newJob);
         } catch (Exception exception) {
             return exception.getMessage();
         }
@@ -23,13 +24,13 @@ public class JobsServiceImpl implements JobsService {
 
     @Override
     public Job getJob(Integer id) {
-        return jobsDao.findById(id).get();
+        return jobsRepository.findById(id).get();
     }
 
     @Override
     public String updateJob(Job updatedJob) {
         try {
-            jobsDao.save(updatedJob);
+            jobsRepository.save(updatedJob);
         } catch (Exception exception) {
             return exception.getMessage();
         }
@@ -39,7 +40,7 @@ public class JobsServiceImpl implements JobsService {
     @Override
     public String deleteJob(Integer id) {
         try {
-            jobsDao.deleteById(id);
+            jobsRepository.deleteById(id);
         } catch (Exception exception) {
             return exception.getMessage();
         }
@@ -48,11 +49,11 @@ public class JobsServiceImpl implements JobsService {
 
     @Override
     public Iterable<Job> allJobs() {
-        return jobsDao.findAll();
+        return jobsRepository.findAll();
     }
 
     @Override
     public Integer countJobs() {
-        return jobsDao.getJobCount();
+        return jobsRepository.getJobCount();
     }
 }
