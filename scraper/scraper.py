@@ -1,7 +1,8 @@
 import time
 import random
 from bs4 import BeautifulSoup
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.firefox.options import Options
+from selenium.webdriver.firefox.service import Service
 from selenium import webdriver
 
 job_board_list_object = {
@@ -62,17 +63,28 @@ job_board_list_object = {
     }
 }
 
-# set web driver options
-options = Options()
-options.add_argument("--headless")
-options.add_argument("--disable-blink-features=AutomationControlled")
-options.add_argument("--no-sandbox")
-options.add_argument("--disable-dev-shm-usage")
-# https://www.whatismybrowser.com/guides/the-latest-user-agent/chrome seem to be working
-options.add_argument(
-    """user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36""")
-driver = webdriver.Chrome(options=options)
-driver.implicitly_wait(10)
+
+def get_firefox_driver():
+    #set web driver options
+    options = Options()
+    options.add_argument("--headless")
+    options.add_argument("--disable-blink-features=AutomationControlled")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("""user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36""")
+
+    # check if geckodriver is installed, if not print an error message and exit
+    try:
+        service = Service('/usr/bin/geckodriver')
+    except Exception as e:
+        print("Error: ", e)
+        exit()
+    driver = webdriver.Firefox( options=options)
+    driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => null})")
+    driver.implicitly_wait(100)
+
+    return driver
+
 
 
 def get_job_cards_from_html(html_string: str, job_board_name: str):
@@ -108,6 +120,8 @@ def get_job_info(job_title: str, location: str, specified_job_boards: list[str] 
     job_json_object_list = []
     job_board_search_list = []
 
+    driver = get_firefox_driver()
+
     if (specified_job_boards == []):
         job_board_search_list = list(job_board_list_object.keys())
     else:
@@ -119,8 +133,10 @@ def get_job_info(job_title: str, location: str, specified_job_boards: list[str] 
         url = job_board_list_object[job_board_name]["job_board_search_url"].format(job_title=job_title,
                                                                                    location=location)
 
+        driver.implicitly_wait(random.randint(10, 20))
         driver.get(url=url)
-        time.sleep(random.randint(2, 6))
+        driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => null})")
+        time.sleep(random.randint(2, 5))
 
         job_cards = get_job_cards_from_html(driver.page_source, job_board_name)
 
@@ -133,7 +149,9 @@ def get_job_info(job_title: str, location: str, specified_job_boards: list[str] 
 
             if job_url is not None:
                 driver.get(url=job_url)
-                time.sleep(random.randint(2, 8))
+                driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => null})")
+                driver.implicitly_wait(random.randint(10, 20))
+                time.sleep(random.randint(2, 5))
 
                 job_json_object["title"] = get_job_attribute(driver.page_source, "job_title", job_board_name)
                 job_json_object["company"] = get_job_attribute(driver.page_source, "job_company", job_board_name)
@@ -159,4 +177,4 @@ def get_job_info(job_title: str, location: str, specified_job_boards: list[str] 
 
 
 if __name__ == "__main__":
-    get_job_info("Software Developer", "Toronto, On", ["Canadian Job Bank", ])
+    get_job_info("Software Developer", "Toronto, On", ["Canadian Job Bank", "Indeed"])
