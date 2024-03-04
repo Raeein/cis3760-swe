@@ -1,5 +1,6 @@
 import scraper
 import pytest
+from unittest.mock import MagicMock
 
 
 # testing getting the correct amount of job card
@@ -171,3 +172,35 @@ def testGetJobPayFromCanadaJob():
     job_file_1.close()
     assert pay1 == "$52.88HOUR hourly /   40 hours per week"
 
+def testGetWebDriver():
+    assert scraper.get_firefox_driver() != None
+
+
+def testGetJobJson():
+    job_file = open("testWebsite/canadian_job/CanadianJob1.txt", "r", encoding="utf8")
+    expected_json = {"title": "software engineer", "company": "Micharity Inc", "location": "Toronto, ON", "employment_type": "Permanent employmentFull time", "salary": "$52.88HOUR hourly /   40 hours per week"}
+    job_json = scraper.get_job_json(job_file.read(), "Canadian Job Bank")
+    
+    assert expected_json["title"] == job_json["title"]
+    assert expected_json["company"] == job_json["company"]
+    assert expected_json["location"] == job_json["location"]
+    assert expected_json["employment_type"] == job_json["employment_type"]
+    assert expected_json["salary"] == job_json["salary"]
+
+def testDatabase():
+    connection = MagicMock()
+    job_file = open("testWebsite/canadian_job/CanadianJob1.txt", "r", encoding="utf8")
+    job_json = scraper.get_job_json(job_file.read(), "Canadian Job Bank")
+    job_title = job_json["title"]
+    job_location = job_json["location"]
+    salary = job_json.get("salary", "Negotiable")
+    job_description = job_json.get("description", "No description given")
+    company = job_json["company"]
+    
+    cursor = connection.cursor.return_value
+    insert_statement = """
+                        INSERT INTO job (jobid, job_title, job_location, salary, job_description, company)
+                        VALUES (NULL, ?, ?, ?, ?, ?);
+                        """
+    cursor.execute(insert_statement, (job_title, job_location, salary, job_description, company))
+    cursor.execute.assert_called_once_with(insert_statement, (job_title, job_location, salary, job_description, company))
