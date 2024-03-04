@@ -95,6 +95,10 @@ def get_job_cards_from_html(html_string: str, job_board_name: str):
     job_board_object = job_board_list_object[job_board_name]
     job_cards = soup.find_all(job_board_object["job_card_element"], class_=job_board_object["job_card_class"])
 
+    for i in range(len(job_cards)):
+        job_cards[i] = "<div>" + str(job_cards[i]) + "</div>"
+        job_cards[i] = BeautifulSoup(job_cards[i], "html.parser")
+
     return job_cards
 
 
@@ -114,6 +118,17 @@ def get_job_attribute(html_string: str, attribute: str, job_board_name: str) -> 
         data = "Unknown"
 
     return data.strip()
+
+
+def get_job_json(page_source: str, job_board_name:str) -> dict:
+    job_json_object = {}
+    job_json_object["title"] = get_job_attribute(page_source, "job_title", job_board_name)
+    job_json_object["company"] = get_job_attribute(page_source, "job_company", job_board_name)
+    job_json_object["location"] = get_job_attribute(page_source, "job_location", job_board_name)
+    job_json_object["employment_type"] = get_job_attribute(page_source, "job_employment", job_board_name)
+    job_json_object["salary"] = get_job_attribute(page_source, "job_pay", job_board_name)
+    job_json_object["description"] = get_job_attribute(page_source, "job_description", job_board_name)
+    return job_json_object
 
 
 def get_job_info(job_title: str, location: str, specified_job_boards: list[str] = []) -> list[dict]:
@@ -142,8 +157,6 @@ def get_job_info(job_title: str, location: str, specified_job_boards: list[str] 
 
         for job_card in job_cards:
             job_json_object = {}
-            job_card = "<div>" + str(job_card) + "</div>"
-            job_card = BeautifulSoup(job_card, "html.parser")
 
             job_url = job_board_list_object[job_board_name]["job_board_base_url"] + job_card.find('a')['href']
 
@@ -152,14 +165,8 @@ def get_job_info(job_title: str, location: str, specified_job_boards: list[str] 
                 driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => null})")
                 driver.implicitly_wait(random.randint(10, 20))
                 time.sleep(random.randint(2, 5))
-
-                job_json_object["title"] = get_job_attribute(driver.page_source, "job_title", job_board_name)
-                job_json_object["company"] = get_job_attribute(driver.page_source, "job_company", job_board_name)
-                job_json_object["location"] = get_job_attribute(driver.page_source, "job_location", job_board_name)
-                job_json_object["employment_type"] = get_job_attribute(driver.page_source, "job_employment",
-                                                                       job_board_name)
-                job_json_object["salary"] = get_job_attribute(driver.page_source, "job_pay", job_board_name)
-                job_json_object["description"] = get_job_attribute(driver.page_source, "job_description", job_board_name)
+                
+                job_json_object = get_job_json(driver.page_source, job_board_name)
                 job_json_object["url"] = job_url
 
                 print("-" * 20)
@@ -171,10 +178,8 @@ def get_job_info(job_title: str, location: str, specified_job_boards: list[str] 
                 print("Description: ", job_json_object["description"])
                 print("Url: ", job_json_object["url"])
                 print("-" * 20)
+
                 job_json_object_list.append(job_json_object)
 
     return job_json_object_list
 
-
-if __name__ == "__main__":
-    get_job_info("Software Developer", "Toronto, On", ["Canadian Job Bank", "Indeed"])
