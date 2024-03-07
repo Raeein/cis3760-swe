@@ -5,14 +5,11 @@ services:
     build:
       context: ./spring
       dockerfile: Dockerfile.test
-#    environment:
-#      - DB_ADDRESS=jdbc:h2:mem:testdb # Using in-memory H2 database for tests
-#      - DB_DATABASE=test
-#      - DB_USER=sa
-#      - DB_PASSWORD=
+    volumes:
+      - ./spring-test-results:/workspace/app/target/site/jacoco
   python-test:
     build: ./scraper
-    command: pytest test_scraper.py
+    command: pytest --cov scraper
     environment:
       - DB_ADDRESS=localhost
       - DB_DATABASE=testdb

@@ -1,3 +1,4 @@
+version: '3.8'
 # List of Services
 services:
   spring:
@@ -39,17 +40,12 @@ services:
     environment:
       # Tell the react app that our spring server is running here
       - BACKEND_PROXY=http://spring:8080
-    develop:
-      watch:
-        - action: sync
-          path: ./react
-          target: /app
     networks:
       - spring-react    # Allow the react app to discover the spring app
 
   scraper:
     build: ./scraper  # Look for Dockerfile in this path
-    command: python main.py
+    command: python3 main.py
     environment:
       - DB_ADDRESS=mysql
       - DB_DATABASE=geo_job_search_db

@@ -1,8 +1,9 @@
 import mariadb
 import sys
 import os
-import json
+# import json
 import scraper
+import time
 
 
 user = os.getenv('DB_USER', 'default_user')
@@ -47,25 +48,25 @@ insert_statement = """
 #             print("Error inserting data: ", job_title, job_location, salary)
 
 
-jobObjectList = scraper.getJobInfo("Software Developer", "Toronto, ON", ["Canadian Job Bank", "Indeed"])
-for job in jobObjectList:
-    job_title = job["title"]
-    job_location = job["location"]
-    salary = job.get("salary", "Negotiable")
-    job_description = job.get("description", "No description given")
-    company = job["company"]
+while(True):
+    jobObjectList = scraper.get_job_info("Software Developer", "Toronto, ON", ["Canadian Job Bank", "Indeed"])
+    for job in jobObjectList:
+        job_title = job["title"]
+        job_location = job["location"]
+        salary = job.get("salary", "Negotiable")
+        job_description = job.get("description", "No description given")
+        company = job["company"]
 
-    if(job_title != "Unknown"):
-        res = cur.execute(insert_statement, (job_title, job_location, salary, job_description, company))
+        if(job_title != "Unknown"):
+            res = cur.execute(insert_statement, (job_title, job_location, salary, job_description, company))
 
-        if res == 0:
-            print("Error inserting data: ", job_title, job_location, salary, job_description, company)
+            if res == 0:
+                print("Error inserting data: ", job_title, job_location, salary, job_description, company)
 
 
-conn.commit()
-print("Job database populated!")
-# cur.execute("SELECT jobid, job_title, job_location, salary, company FROM job")
-# for (jobid, job_title, job_location, salary, company) in cur:
-#     print(f"Job: {jobid}, {job_title}, {job_location}, {salary}, {company}")
-
-conn.close()
+    conn.commit()
+    print("Job database populated!")
+    # cur.execute("SELECT jobid, job_title, job_location, salary, company FROM job")
+    # for (jobid, job_title, job_location, salary, company) in cur:
+    #     print(f"Job: {jobid}, {job_title}, {job_location}, {salary}, {company}")
+    time.sleep(5000)
