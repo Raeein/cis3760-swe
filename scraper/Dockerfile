@@ -3,7 +3,7 @@ FROM --platform=linux/amd64 python:${PYTHON_VERSION}-slim as base
 
 
 RUN apt-get update -y && \
-    apt-get install -y libmariadb-dev gcc
+    apt-get install -y libmariadb-dev gcc wget gnupg
 
 RUN apt-get update && apt-get install -y \
     firefox-esr \

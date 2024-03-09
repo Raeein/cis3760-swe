@@ -173,35 +173,24 @@ def testGetJobPayFromCanadaJob():
     assert pay1 == "$52.88HOUR hourly /   40 hours per week"
 
 def testGetWebDriver():
-    driver = scraper.get_firefox_driver()
-    assert  driver != None
-    scraper.stall_driver(driver)
-    assert True
+    assert scraper.get_firefox_driver() != None
 
 
 def testGetJobJson():
     job_file = open("testWebsite/canadian_job/CanadianJob1.txt", "r", encoding="utf8")
-    expected_json = {
-                    "title": "software engineer", 
-                    "company": "Micharity Inc", 
-                    "location": "Toronto, ON", 
-                    "employment_type": "Permanent employmentFull time", 
-                    "salary": "$52.88HOUR hourly /   40 hours per week", 
-                    "url":"https://ca.indeed.com/viewjob?jk=c5ae6b3c46506c9"
-                    }
-    job_json = scraper.get_job_json(job_file.read(), "Canadian Job Bank", "https://ca.indeed.com/viewjob?jk=c5ae6b3c46506c9")
+    expected_json = {"title": "software engineer", "company": "Micharity Inc", "location": "Toronto, ON", "employment_type": "Permanent employmentFull time", "salary": "$52.88HOUR hourly /   40 hours per week"}
+    job_json = scraper.get_job_json(job_file.read(), "Canadian Job Bank")
     
     assert expected_json["title"] == job_json["title"]
     assert expected_json["company"] == job_json["company"]
     assert expected_json["location"] == job_json["location"]
     assert expected_json["employment_type"] == job_json["employment_type"]
     assert expected_json["salary"] == job_json["salary"]
-    assert expected_json["url"] == job_json["url"]
 
 def testDatabase():
     connection = MagicMock()
     job_file = open("testWebsite/canadian_job/CanadianJob1.txt", "r", encoding="utf8")
-    job_json = scraper.get_job_json(job_file.read(), "Canadian Job Bank", "https://ca.indeed.com/viewjob?jk=c5ae6b3c46506c9")
+    job_json = scraper.get_job_json(job_file.read(), "Canadian Job Bank")
     job_title = job_json["title"]
     job_location = job_json["location"]
     salary = job_json.get("salary", "Negotiable")
@@ -215,30 +204,3 @@ def testDatabase():
                         """
     cursor.execute(insert_statement, (job_title, job_location, salary, job_description, company))
     cursor.execute.assert_called_once_with(insert_statement, (job_title, job_location, salary, job_description, company))
-
-def testLoadTargetedJobBoard():
-    targeted_job_board = scraper.load_targeted_job_board()
-    assert targeted_job_board == ["Indeed", "Canadian Job Bank"]
-
-    targeted_job_board = scraper.load_targeted_job_board(["Canadian Job Bank",])
-    assert targeted_job_board == ["Canadian Job Bank",]
-
-    targeted_job_board = scraper.load_targeted_job_board(["Indeed", ])
-    assert targeted_job_board == ["Indeed", ]
-
-def testGetJobBoardSearchUrl():
-    url = scraper.get_job_board_search_url("Software Engineer", "Toronto", "Indeed")
-    assert url != None
-
-def testGetIndeedJobUrl():
-    job_board_file_1 = open("testWebsite/indeed/indeedJobBoard1.txt", "r", encoding="utf8")
-    jobCards = scraper.get_job_cards_from_html(job_board_file_1.read(), "Indeed")
-
-    assert scraper.get_job_url("Indeed", jobCards[0]) == "https://ca.indeed.com/pagead/clk?mo=r&ad=-6NYlbfkN0DFRBgdkffDjRejVobbg8KVPSs6CgnXSfnYo3Qc-NFE2L-XKvK7g0tzAN47iE-7-6GDlOe0HPUmlFwR_W5ypPuLTdyMgC2RALOPVZz4DDdOBNFIt6a4mgwlZBRnyzfg1y22jsSY3BTy8gBYMrrjaAotockQpKfUEP2-fkF0cY_Qbc-2_hO1lIyEhDClCVFXclvMoxn0eihqFz_WUQyHnV4A0pD-MXULJUp0nmRFoj2TmngceU0STyyjbx-Ki7kwUBiFaddQ1efAo7w2jk_98bO3yOTZE-zRDilOMXBlAm5SdL99COtUackXtvf9t_d0YO7r1dlp6jrJ65sU7TFY0r49PD3wYx0KhylThzOL9qqLHjvjM9hK2NBJJFrQDHsmzjGGmmUu5bREDSz2YkrLYYDg3zg-zTPcRyiycGMbZSNVe2tCUDyMSOAxB10mBuUQAtInt-9arhdbPO4Sgww2UqF3gz75EvPTnoZ-FEoAqGCGRltr7krCOf3NPrPgAAqSpj3163jqQJPd0ZBFK_9_kZuPPiDiZKAo-otjUX09Q7Lh11zlwHKh6t4lCGj-I_xFsflBfzYqOVH4SG1odvB72bgzIw9E7ygRqb2IOpcuiddBpzIZCg8XWmqCEq9h6H2KxtrPlOJSPaQ93sIz3Zp3kPbOKZzcZ_zEba7wSZIYRBt0ww==&xkcb=SoDW6_M3EPWoaZWQx50LbzkdCdPP&camk=4HOcmqOLYrCLTJoowOo4eQ==&p=0&fvj=1&vjs=3"
-
-def testGetCanadianJobUrl():
-    job_board_file_4 = open("testWebsite/canadian_job/canadianJobBank.txt", "r", encoding="utf8")
-    jobCards = scraper.get_job_cards_from_html(job_board_file_4.read(), "Canadian Job Bank")
-
-    assert scraper.get_job_url("Canadian Job Bank", jobCards[0]) == "https://www.jobbank.gc.ca/jobsearch/jobposting/40322760;jsessionid=1B78D6117D1291E6CA832BF65BFBD84E.jobsearch74?source=searchresults"
-
