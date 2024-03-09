@@ -120,7 +120,7 @@ def get_job_attribute(html_string: str, attribute: str, job_board_name: str) -> 
     return data.strip()
 
 
-def get_job_json(page_source: str, job_board_name:str) -> dict:
+def get_job_json(page_source: str, job_board_name:str, job_url:str) -> dict:
     job_json_object = {}
     job_json_object["title"] = get_job_attribute(page_source, "job_title", job_board_name)
     job_json_object["company"] = get_job_attribute(page_source, "job_company", job_board_name)
@@ -128,56 +128,69 @@ def get_job_json(page_source: str, job_board_name:str) -> dict:
     job_json_object["employment_type"] = get_job_attribute(page_source, "job_employment", job_board_name)
     job_json_object["salary"] = get_job_attribute(page_source, "job_pay", job_board_name)
     job_json_object["description"] = get_job_attribute(page_source, "job_description", job_board_name)
+    job_json_object["url"] = job_url
+
+    print("-" * 20)
+    print("Title: ", job_json_object["title"])
+    print("Company: ", job_json_object["company"])
+    print("Location: ", job_json_object["location"])
+    print("Employment type: ", job_json_object["employment_type"])
+    print("Salary: ", job_json_object["salary"])
+    print("Description: ", job_json_object["description"])
+    print("Url: ", job_json_object["url"])
+    print("-" * 20)
     return job_json_object
 
 
-def get_job_info(job_title: str, location: str, specified_job_boards: list[str] = []) -> list[dict]:
-    job_json_object_list = []
+def load_targeted_job_board(specified_job_boards: list[str] = []):
     job_board_search_list = []
-
-    driver = get_firefox_driver()
-
     if (specified_job_boards == []):
         job_board_search_list = list(job_board_list_object.keys())
     else:
         for i in specified_job_boards:
             if i in list(job_board_list_object.keys()):
                 job_board_search_list.append(i)
+    return job_board_search_list
+
+def get_job_board_search_url(job_title, location, job_board_name):
+    url = job_board_list_object[job_board_name]["job_board_search_url"].format(job_title=job_title,location=location)
+    return url
+
+def get_job_url(job_board_name, job_card):
+    url = job_board_list_object[job_board_name]["job_board_base_url"] + job_card.find('a')['href']
+    return url
+
+def stall_driver(driver: webdriver.Firefox):
+    driver.implicitly_wait(random.randint(10, 20))
+    time.sleep(random.randint(2, 5))
+
+
+
+def get_job_info(job_title: str, location: str, specified_job_boards: list[str] = []) -> list[dict]:
+    job_json_object_list = []
+
+    job_board_search_list = load_targeted_job_board(specified_job_boards)
+    driver = get_firefox_driver()
 
     for job_board_name in job_board_search_list:
-        url = job_board_list_object[job_board_name]["job_board_search_url"].format(job_title=job_title,
-                                                                                   location=location)
+        url = get_job_board_search_url(job_title, location, job_board_name)
 
-        driver.implicitly_wait(random.randint(10, 20))
         driver.get(url=url)
-        driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => null})")
-        time.sleep(random.randint(2, 5))
+        stall_driver(driver)
 
         job_cards = get_job_cards_from_html(driver.page_source, job_board_name)
 
         for job_card in job_cards:
-            job_json_object = {}
 
-            job_url = job_board_list_object[job_board_name]["job_board_base_url"] + job_card.find('a')['href']
+            job_url = get_job_url(job_board_name, job_card)
 
             if job_url is not None:
-                driver.get(url=job_url)
-                driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => null})")
-                driver.implicitly_wait(random.randint(10, 20))
-                time.sleep(random.randint(2, 5))
-                
-                job_json_object = get_job_json(driver.page_source, job_board_name)
-                job_json_object["url"] = job_url
+                job_json_object = {}
 
-                print("-" * 20)
-                print("Title: ", job_json_object["title"])
-                print("Company: ", job_json_object["company"])
-                print("Location: ", job_json_object["location"])
-                print("Employment type: ", job_json_object["employment_type"])
-                print("Salary: ", job_json_object["salary"])
-                print("Description: ", job_json_object["description"])
-                print("Url: ", job_json_object["url"])
-                print("-" * 20)
+                driver.get(url=job_url)
+                stall_driver(driver)
+                
+                job_json_object = get_job_json(driver.page_source, job_board_name, job_url)
 
                 job_json_object_list.append(job_json_object)
 
