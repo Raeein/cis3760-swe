@@ -17,13 +17,13 @@
 }
 
 .logo {
-  color:#fff;
-  font: 'Roboto';
+  color: #fff;
+  font: "Roboto";
   font-size: 2.8rem;
   top: 0;
   font-weight: 1000;
   left: 0;
-  padding: 50px 50px 10px 10px; 
+  padding: 50px 50px 10px 10px;
 }
 
 .card-list {
@@ -101,7 +101,7 @@
 .search-bar {
   border-radius: 5px;
   padding: 10px;
-  max-width: 350px;
+  width: 60%;
   border: none;
   background-color: #383440;
   color: white;
@@ -126,7 +126,7 @@
 }
 
 .overlay {
-  background-color: transparent !important; 
+  background-color: transparent !important;
 }
 
 .slide-pane {
@@ -135,7 +135,6 @@
 
 .slide-pane__header {
   background: #2b2538 !important;
-  ;
 }
 
 .slider {
@@ -144,7 +143,7 @@
   min-width: 250px;
   padding: 1.5rem;
   border-radius: 16px;
-  color: white; 
+  color: white;
   transition-duration: 600ms;
   transition-timing-function: ease;
   position: relative;
@@ -157,4 +156,46 @@
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+.search-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.filter-icon {
+  width: 40px;
+  height: 40px; /* Set a height for better appearance */
+  background-color: white;
+  outline: none;
+  border: none; /* Remove default border */
+  border-radius: 5px;
+  align-items: center;
+  text-align: center;
+  margin-left: 20px;
+  cursor: pointer; /* Set cursor to pointer for better UX */
+}
+
+input {
+  width: 60px;
+}
+
+.values-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0;
+  margin: 0;
+  border-radius: 5px;
+}
+
+.filters-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 0;
+  margin: 0;
+  border-radius: 5px;
 }
