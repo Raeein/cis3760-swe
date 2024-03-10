@@ -6,6 +6,7 @@ import "react-sliding-pane/dist/react-sliding-pane.css";
 export default function JobTable({ data }) {
   const [search, setSearch] = useState("");
   const [salary, setSalary] = useState({ min: 0, max: 200000 });
+  const [employType, setEmployType] = useState([]);
   const [detailsPane, setDetailsPane] = useState({
     visible: false,
     data: null,
@@ -26,6 +27,14 @@ export default function JobTable({ data }) {
   function handleMaxSalaryChange(event) {
     setSalary({ min: salary.min, max: parseInt(event.target.value) });
   }
+
+  function handleEmployTypeChange(value) {
+    // const newEmployType = value;
+    // setEmployType([...employType, newEmployType]);
+    setSearch(value);
+  }
+
+  console.log("TYPE IS" + employType);
 
   // console.log(salary);
   // console.log(data);
@@ -50,9 +59,13 @@ export default function JobTable({ data }) {
           {data
             .filter((item) => {
               return (
-                search.toLowerCase() === "" ||
+                (employType.length === 0 && search.toLowerCase() === "") ||
                 item.jobTitle.toLowerCase().includes(search.toLowerCase()) ||
-                item.jobLocation.toLowerCase().includes(search.toLowerCase())
+                item.jobLocation.toLowerCase().includes(search.toLowerCase()) ||
+                item.employmentType.toLowerCase().includes(search.toLowerCase())
+                // employType.some((type) =>
+                //   item.employment_type.toLowerCase().includes(type)
+                // )
               );
             })
             .map((job) => (
@@ -85,7 +98,7 @@ export default function JobTable({ data }) {
             <p>Location: {detailsPane.data.jobLocation}</p>
             <p>Company: {detailsPane.data.company}</p>
             <p>Description: {detailsPane.data.jobDescription}</p>
-            <p>Employment type:  {detailsPane.data.employmentType}</p>
+            <p>Employment type: {detailsPane.data.employmentType}</p>
             {/* <p>{detailsPane.data}</p> */}
           </div>
         </SlidingPane>
@@ -124,9 +137,10 @@ export default function JobTable({ data }) {
                   <label htmlFor="full-time">
                     <input
                       type="checkbox"
-                      id="full-time"
-                      name="full-time"
-                      value="full-time"
+                      id="full time"
+                      name="full time"
+                      value="full time"
+                      onChange={() => handleEmployTypeChange("full time")}
                     />
                     Full Time
                   </label>
@@ -134,9 +148,10 @@ export default function JobTable({ data }) {
                   <label htmlFor="part-time">
                     <input
                       type="checkbox"
-                      id="part-time"
-                      name="part-time"
-                      value="part-time"
+                      id="part time"
+                      name="part time"
+                      value="part time"
+                      onChange={() => handleEmployTypeChange("part time")}
                     />
                     Part Time
                   </label>
