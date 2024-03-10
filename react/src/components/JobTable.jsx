@@ -6,7 +6,6 @@ import "react-sliding-pane/dist/react-sliding-pane.css";
 export default function JobTable({ data }) {
   const [search, setSearch] = useState("");
   const [salary, setSalary] = useState({ min: 0, max: 200000 });
-  const [employType, setEmployType] = useState([]);
   const [detailsPane, setDetailsPane] = useState({
     visible: false,
     data: null,
@@ -29,12 +28,14 @@ export default function JobTable({ data }) {
   }
 
   function handleEmployTypeChange(value) {
-    // const newEmployType = value;
-    // setEmployType([...employType, newEmployType]);
-    setSearch(value);
+    if (value === search) {
+      setSearch("");
+    } else {
+      setSearch(value);
+    }
   }
 
-  console.log("TYPE IS" + employType);
+  // console.log("TYPE IS" + employType);
 
   // console.log(salary);
   // console.log(data);
@@ -59,7 +60,7 @@ export default function JobTable({ data }) {
           {data
             .filter((item) => {
               return (
-                (employType.length === 0 && search.toLowerCase() === "") ||
+                search.toLowerCase() === "" ||
                 item.jobTitle.toLowerCase().includes(search.toLowerCase()) ||
                 item.jobLocation.toLowerCase().includes(search.toLowerCase()) ||
                 item.employmentType.toLowerCase().includes(search.toLowerCase())
@@ -140,6 +141,7 @@ export default function JobTable({ data }) {
                       id="full time"
                       name="full time"
                       value="full time"
+                      checked={search.includes("full time")}
                       onChange={() => handleEmployTypeChange("full time")}
                     />
                     Full Time
@@ -151,6 +153,7 @@ export default function JobTable({ data }) {
                       id="part time"
                       name="part time"
                       value="part time"
+                      checked={search.includes("part time")}
                       onChange={() => handleEmployTypeChange("part time")}
                     />
                     Part Time
