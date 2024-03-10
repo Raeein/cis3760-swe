@@ -12,8 +12,6 @@ host = os.getenv('DB_ADDRESS', 'default_host')
 port = int(os.getenv('DB_PORT', 'default_port'))
 database = os.getenv('DB_DATABASE', 'default_database')
 
-
-
 try:
     conn = mariadb.connect(
         user=user,
@@ -30,8 +28,8 @@ print("Connected to MariaDB Platform!")
 cur = conn.cursor()
 
 insert_statement = """
-    INSERT INTO job (jobid, job_title, job_location, salary, job_description, company)
-    VALUES (NULL, ?, ?, ?, ?, ?);
+    INSERT INTO job (jobid, job_title, job_location, salary, job_description, company, employment_type)
+    VALUES (NULL, ?, ?, ?, ?, ?, ?);
     """
 
 # uncomment the code below to use test data
@@ -56,17 +54,18 @@ while(True):
         salary = job.get("salary", "Negotiable")
         job_description = job.get("description", "No description given")
         company = job["company"]
+        employment_type = job["employment_type"]
 
         if(job_title != "Unknown"):
-            res = cur.execute(insert_statement, (job_title, job_location, salary, job_description, company))
+            res = cur.execute(insert_statement, (job_title, job_location, salary, job_description, company, employment_type))
 
             if res == 0:
-                print("Error inserting data: ", job_title, job_location, salary, job_description, company)
+                print("Error inserting data: ", job_title, job_location, salary, job_description, company, employment_type)
 
 
     conn.commit()
     print("Job database populated!")
-    # cur.execute("SELECT jobid, job_title, job_location, salary, company FROM job")
-    # for (jobid, job_title, job_location, salary, company) in cur:
-    #     print(f"Job: {jobid}, {job_title}, {job_location}, {salary}, {company}")
+    cur.execute("SELECT jobid, job_title, job_location, salary, company, employment_type FROM job")
+    for (jobid, job_title, job_location, salary, company, employment_type) in cur:
+        print(f"Job: {jobid}, {job_title}, {job_location}, {salary}, {company}, {employment_type}")
     time.sleep(5000)

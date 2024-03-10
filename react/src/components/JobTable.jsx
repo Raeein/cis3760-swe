@@ -85,6 +85,7 @@ export default function JobTable({ data }) {
             <p>Location: {detailsPane.data.jobLocation}</p>
             <p>Company: {detailsPane.data.company}</p>
             <p>Description: {detailsPane.data.jobDescription}</p>
+            <p>Employment type:  {detailsPane.data.employmentType}</p>
             {/* <p>{detailsPane.data}</p> */}
           </div>
         </SlidingPane>
