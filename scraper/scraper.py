@@ -24,13 +24,13 @@ job_board_list_object = {
         "job_location_element": "div",
         "job_location_search_object": {"data-testid": "inlineHeader-companyLocation"},
 
-        "job_employment_element": "div",
-        "job_employment_search_object": {"aria-label": "Job type"},
-        "job_employment_string_parse": 8,
+        "employment_type_element": "div",
+        "employment_type_search_object": {"aria-label": "Job type"},
+        "employment_type_string_parse": 8,
 
-        "job_pay_element": "div",
-        "job_pay_search_object": {"aria-label": "Pay"},
-        "job_pay_string_parse": 3,
+        "job_salary_element": "div",
+        "job_salary_search_object": {"aria-label": "Pay"},
+        "job_salary_string_parse": 3,
 
         "job_description_element": "div",
         "job_description_search_object": {"id": "jobDescriptionText"},
@@ -52,11 +52,11 @@ job_board_list_object = {
         "job_location_element": "span",
         "job_location_search_object": {"property": "address"},
 
-        "job_employment_element": "span",
-        "job_employment_search_object": {"property": "employmentType"},
+        "employment_type_element": "span",
+        "employment_type_search_object": {"property": "employmentType"},
 
-        "job_pay_element": "span",
-        "job_pay_search_object": {"property": "baseSalary"},
+        "job_salary_element": "span",
+        "job_salary_search_object": {"property": "baseSalary"},
 
         "job_description_element": "div",
         "job_description_search_object": {"id": "comparisonchart"},
@@ -125,8 +125,8 @@ def get_job_json(page_source: str, job_board_name:str, job_url:str) -> dict:
     job_json_object["title"] = get_job_attribute(page_source, "job_title", job_board_name)
     job_json_object["company"] = get_job_attribute(page_source, "job_company", job_board_name)
     job_json_object["location"] = get_job_attribute(page_source, "job_location", job_board_name)
-    job_json_object["employment_type"] = parse_employment_type( get_job_attribute(page_source, "job_employment", job_board_name) )
-    job_json_object["salary"] = get_job_attribute(page_source, "job_pay", job_board_name)
+    job_json_object["employment_type"] = parse_employment_type( get_job_attribute(page_source, "employment_type", job_board_name) )
+    job_json_object["salary"] = get_job_attribute(page_source, "job_salary", job_board_name)
     job_json_object["description"] = get_job_attribute(page_source, "job_description", job_board_name)
     job_json_object["url"] = job_url
 
@@ -156,7 +156,7 @@ def stall_driver(driver: webdriver.Firefox):
     time.sleep(random.randint(2, 5))
 
 def parse_employment_type(employment_type:str )-> str:
-    employment_types = ["Full Time", "Part Time", "Permament", "Temporary", "Contract", "Internship"]
+    employment_types = ["Full Time", "Part Time", "Permanent", "Temporary", "Contract", "Internship"]
     employment_data = []
 
     for i in employment_types:
@@ -165,6 +165,38 @@ def parse_employment_type(employment_type:str )-> str:
 
     return ",".join( tuple(employment_data) )
 
+def insert_into_database(job_object:dict, connection, cursor):
+    job_title = job_object["title"]
+    job_location = job_object["location"]
+    salary = job_object.get("salary", "Negotiable")
+    job_description = job_object.get("description", "No description given")
+    company = job_object["company"]
+    employment_type = job_object["employment_type"]
+
+    if(job_title != "Unknown"):
+        get_statemet = f"""SELECT job_description FROM job
+                                WHERE job_title = '{job_title}' AND salary = '{salary}'
+                                AND company = '{company}' AND employment_type = '{employment_type}';
+                        """
+        cursor.execute(get_statemet)
+
+        duplicate = False
+
+        for i in cursor.fetchall():
+            if (i[0] == job_description):
+                duplicate = True
+                break
+                
+        if(not duplicate):
+            insert_statement = """INSERT INTO job (jobid, job_title, job_location, salary, job_description, company, employment_type)VALUES (NULL, ?, ?, ?, ?, ?, ?);"""
+            res = cursor.execute(insert_statement, (job_title, job_location, salary, job_description, company, employment_type))
+            if res == 0:
+                print("Error inserting data: ", job_title, job_location, salary, job_description, company, employment_type)
+                return 0
+        else:
+            return -1
+        connection.commit()
+    return 1
 
 
 

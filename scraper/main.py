@@ -53,38 +53,12 @@ while(True):
     job_object_generator = scraper.get_job_info("Software Developer", "Toronto, ON", ["Canadian Job Bank", "Indeed"])
     job_object = next(job_object_generator)
     while(job_object != None):
-        job_title = job_object["title"]
-        job_location = job_object["location"]
-        salary = job_object.get("salary", "Negotiable")
-        job_description = job_object.get("description", "No description given")
-        company = job_object["company"]
-        employment_type = job_object["employment_type"]
-
-        if(job_title != "Unknown"):
-            get_statemet = f"""SELECT job_description FROM job
-                                    WHERE job_title = '{job_title}' AND salary = '{salary}'
-                                    AND company = '{company}' AND employment_type = '{employment_type}';
-                            """
-            cur.execute(get_statemet)
-
-            duplicate = False
-
-            for i in cur.fetchall():
-                if (i[0] == job_description):
-                    duplicate = True
-                    break
-                    
-            if(not duplicate):
-                res = cur.execute(insert_statement, (job_title, job_location, salary, job_description, company, employment_type))
-                if res == 0:
-                    print("Error inserting data: ", job_title, job_location, salary, job_description, company, employment_type)
-                
-
-            conn.commit()
+        res = scraper.insert_into_database(job_object, conn, cur)
+        if res == 0:
+            print("Error inserting data: ", job_object["title"], job_object["location"], 
+                job_object["salary"], job_object["description"], job_object["company"], job_object["employment_type"])
         job_object = next(job_object_generator)
 
-
-    
     print("Finish scraping for this session. Next session starts in 1 hour")
     # cur.execute("SELECT jobid, job_title, job_location, salary, company FROM job")
     # for (jobid, job_title, job_location, salary, company) in cur:
