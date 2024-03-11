@@ -5,6 +5,8 @@ import os
 import scraper
 import time
 
+from helper import formatEmploymentType
+
 
 user = os.getenv('DB_USER', 'default_user')
 password = os.getenv('DB_PASSWORD', 'default_password')
@@ -54,7 +56,7 @@ while(True):
         salary = job.get("salary", "Negotiable")
         job_description = job.get("description", "No description given")
         company = job["company"]
-        employment_type = job["employment_type"]
+        employment_type = formatEmploymentType(job["employment_type"])
 
         if(job_title != "Unknown"):
             res = cur.execute(insert_statement, (job_title, job_location, salary, job_description, company, employment_type))

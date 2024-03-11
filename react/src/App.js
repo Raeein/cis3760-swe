@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import "./App.css";
 import JobTable from "./components/JobTable.jsx";
-import fakejobs from "./test.json";
+// import fakejobs from "./test.json";
 
 export default function App() {
   const [jobData, setJobData] = useState([]);
