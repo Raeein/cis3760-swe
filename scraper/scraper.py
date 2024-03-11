@@ -1,5 +1,6 @@
 import time
 import random
+import platform
 from bs4 import BeautifulSoup
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service
@@ -73,18 +74,22 @@ def get_firefox_driver():
     options.add_argument("--disable-dev-shm-usage")
     options.add_argument("""user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36""")
 
-    # check if geckodriver is installed, if not print an error message and exit
+    gecko_driver_path = ''
+
+    if platform.machine() == 'aarch64':
+        gecko_driver_path = '/usr/bin/geckodriver-arm'
+    else:
+        gecko_driver_path = '/usr/bin/geckodriver'
+
     try:
-        service = Service('/usr/bin/geckodriver')
+        service = Service(gecko_driver_path)
+        driver = webdriver.Firefox(service=service, options=options)
+        driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
+        driver.implicitly_wait(10)
+        return driver
     except Exception as e:
-        print("Error: ", e)
+        print(f"Error initializing Firefox WebDriver: {e}")
         exit()
-    driver = webdriver.Firefox( options=options)
-    driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => null})")
-    driver.implicitly_wait(100)
-
-    return driver
-
 
 
 def get_job_cards_from_html(html_string: str, job_board_name: str):
