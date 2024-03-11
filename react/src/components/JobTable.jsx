@@ -158,6 +158,18 @@ export default function JobTable({ data }) {
                     />
                     Part Time
                   </label>
+
+                  <label htmlFor="internship">
+                    <input
+                      type="checkbox"
+                      id="internship"
+                      name="internship"
+                      value="internship"
+                      checked={search.includes("internship")}
+                      onChange={() => handleEmployTypeChange("internship")}
+                    />
+                    internship
+                  </label>
                 </div>
               </div>
             </div>
