@@ -35,6 +35,13 @@ export default function JobTable({ data }) {
     }
   }
 
+  //create an array of objects or strings that stores every unique location in data.jobLocation in it
+  //then map over that array to create a list of checkboxes
+
+  const jobLocation = data.map((job) => job.jobLocation);
+  const uniquejobLocation = [...new Set(jobLocation)];
+  console.log(uniquejobLocation);
+
   // console.log("TYPE IS" + employType);
 
   // console.log(salary);
@@ -170,6 +177,17 @@ export default function JobTable({ data }) {
                     />
                     internship
                   </label>
+                </div>
+              </div>
+              <div className="locations">
+                <p>Location</p>
+                <div className="location-wrapper">
+                  {uniquejobLocation.map((location) => (
+                    <label>
+                      <input type="checkbox"></input>
+                      {location}
+                    </label>
+                  ))}
                 </div>
               </div>
             </div>

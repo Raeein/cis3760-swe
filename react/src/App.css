@@ -203,3 +203,14 @@ input {
   position: relative;
   height: 100%;
 }
+
+.location-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 0;
+  margin: 0;
+  border-radius: 5px;
+  max-width: 350px;
+  overflow-x: hidden;
+}
