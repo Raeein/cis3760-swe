@@ -179,7 +179,7 @@ export default function JobTable({ data }) {
                   </label>
                 </div>
               </div>
-              <div className="locations">
+              {/* <div className="locations">
                 <p>Location</p>
                 <div className="location-wrapper">
                   {uniquejobLocation.map((location) => (
@@ -189,7 +189,7 @@ export default function JobTable({ data }) {
                     </label>
                   ))}
                 </div>
-              </div>
+              </div> */}
             </div>
           </div>
         </SlidingPane>
