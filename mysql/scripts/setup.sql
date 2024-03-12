@@ -13,5 +13,6 @@ create table job
     job_location VARCHAR(255) NOT NULL,
     salary VARCHAR(255) NOT NULL,
     job_description TEXT NOT NULL,
-    company VARCHAR(255) NOT NULL
+    company VARCHAR(255) NOT NULL,
+    employment_type VARCHAR(255) NOT NULL
 );
