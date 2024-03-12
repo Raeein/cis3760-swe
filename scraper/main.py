@@ -5,14 +5,11 @@ import os
 import scraper
 import time
 
-
 user = os.getenv('DB_USER', 'default_user')
 password = os.getenv('DB_PASSWORD', 'default_password')
 host = os.getenv('DB_ADDRESS', 'default_host')
 port = int(os.getenv('DB_PORT', 'default_port'))
 database = os.getenv('DB_DATABASE', 'default_database')
-
-
 
 try:
     conn = mariadb.connect(
@@ -48,7 +45,7 @@ insert_statement = """
 #             print("Error inserting data: ", job_title, job_location, salary)
 
 
-while(True):
+while (True):
     jobObjectList = scraper.get_job_info("Software Developer", "Toronto, ON", ["Canadian Job Bank", "Indeed"])
     for job in jobObjectList:
         job_title = job["title"]
@@ -57,12 +54,11 @@ while(True):
         job_description = job.get("description", "No description given")
         company = job["company"]
 
-        if(job_title != "Unknown"):
+        if (job_title != "Unknown"):
             res = cur.execute(insert_statement, (job_title, job_location, salary, job_description, company))
 
             if res == 0:
                 print("Error inserting data: ", job_title, job_location, salary, job_description, company)
-
 
     conn.commit()
     print("Job database populated!")

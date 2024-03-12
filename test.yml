@@ -9,7 +9,7 @@ services:
       - ./spring-test-results:/workspace/app/target/site/jacoco
   python-test:
     build: ./scraper
-    command: pytest --cov scraper
+    command: poetry run pytest --cov scraper
     environment:
       - DB_ADDRESS=localhost
       - DB_DATABASE=testdb

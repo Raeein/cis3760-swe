@@ -66,13 +66,14 @@ job_board_list_object = {
 
 
 def get_firefox_driver():
-    #set web driver options
+    # set web driver options
     options = Options()
     options.add_argument("--headless")
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("""user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36""")
+    options.add_argument(
+        """user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36""")
 
     gecko_driver_path = ''
 
@@ -119,13 +120,14 @@ def get_job_attribute(html_string: str, attribute: str, job_board_name: str) -> 
         if (attribute + "_string_parse" in job_board_list_object[job_board_name]):
             data = data[job_board_list_object[job_board_name][attribute + "_string_parse"]:]
 
-    except:
+    except Exception as e:
+        print(f"Error getting {attribute} from {job_board_name}: {e}")
         data = "Unknown"
 
     return data.strip()
 
 
-def get_job_json(page_source: str, job_board_name:str, job_url:str) -> dict:
+def get_job_json(page_source: str, job_board_name: str, job_url: str) -> dict:
     job_json_object = {}
     job_json_object["title"] = get_job_attribute(page_source, "job_title", job_board_name)
     job_json_object["company"] = get_job_attribute(page_source, "job_company", job_board_name)
@@ -157,18 +159,20 @@ def load_targeted_job_board(specified_job_boards: list[str] = []):
                 job_board_search_list.append(i)
     return job_board_search_list
 
+
 def get_job_board_search_url(job_title, location, job_board_name):
-    url = job_board_list_object[job_board_name]["job_board_search_url"].format(job_title=job_title,location=location)
+    url = job_board_list_object[job_board_name]["job_board_search_url"].format(job_title=job_title, location=location)
     return url
+
 
 def get_job_url(job_board_name, job_card):
     url = job_board_list_object[job_board_name]["job_board_base_url"] + job_card.find('a')['href']
     return url
 
+
 def stall_driver(driver: webdriver.Firefox):
     driver.implicitly_wait(random.randint(10, 20))
     time.sleep(random.randint(2, 5))
-
 
 
 def get_job_info(job_title: str, location: str, specified_job_boards: list[str] = []) -> list[dict]:
@@ -194,10 +198,9 @@ def get_job_info(job_title: str, location: str, specified_job_boards: list[str] 
 
                 driver.get(url=job_url)
                 stall_driver(driver)
-                
+
                 job_json_object = get_job_json(driver.page_source, job_board_name, job_url)
 
                 job_json_object_list.append(job_json_object)
 
     return job_json_object_list
-
