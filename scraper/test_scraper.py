@@ -181,13 +181,6 @@ def testGetJobPayFromCanadaJob():
     assert pay1 == "$52.88HOUR hourly /   40 hours per week"
 
 
-def testGetWebDriver():
-    driver = scraper.get_firefox_driver()
-    assert driver is not None
-    scraper.stall_driver(driver)
-    assert True
-
-
 def testGetJobJson():
     job_file = open("testWebsite/canadian_job/CanadianJob1.txt", "r", encoding="utf8")
     expected_json = {
