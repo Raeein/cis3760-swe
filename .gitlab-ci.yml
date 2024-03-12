@@ -16,7 +16,7 @@ build-python:
   script:
     - cd scraper
     - pip install poetry==1.7.1
-    - poetry install # Doesnt actually install anything, just installs the dependencies
+    - poetry install # Doesnt build anything, just installs the dependencies
 
 python-lint:
   stage: lint

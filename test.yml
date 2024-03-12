@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+  # Spring test also runs checkstyle
   spring-test:
     build:
       context: ./spring
@@ -16,3 +17,7 @@ services:
       - DB_USER=test
       - DB_PASSWORD=test
       - DB_PORT=3306
+
+  python-lint:
+    build: ./scraper
+    command: poetry run flake8
