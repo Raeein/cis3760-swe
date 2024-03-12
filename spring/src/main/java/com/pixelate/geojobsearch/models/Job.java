@@ -27,4 +27,7 @@ public class Job {
 
     @Column(name = "company")
     private String company;
+
+    @Column(name = "employment_type")
+    private String employmentType;
 }
