@@ -1,13 +1,14 @@
 ARG PYTHON_VERSION=3.12
-FROM --platform=linux/amd64 python:${PYTHON_VERSION}-slim as base
+FROM python:${PYTHON_VERSION}-slim as base
 
 
 RUN apt-get update -y && \
-    apt-get install -y libmariadb-dev gcc
+    apt-get install -y libmariadb-dev gcc firefox-esr
 
-RUN apt-get update && apt-get install -y \
-    firefox-esr \
-    && rm -rf /var/lib/apt/lists/*
+COPY geckodriver-v0.34.0-linux-aarch64.tar.gz /usr/bin/
+RUN tar -xvzf /usr/bin/geckodriver-v0.34.0-linux-aarch64.tar.gz -C /usr/bin/
+RUN mv /usr/bin/geckodriver /usr/bin/geckodriver-arm
+RUN chmod +x /usr/bin/geckodriver-arm
 
 COPY geckodriver-v0.34.0-linux64.tar.gz /usr/bin/
 RUN tar -xvzf /usr/bin/geckodriver-v0.34.0-linux64.tar.gz -C /usr/bin/
