@@ -12,7 +12,7 @@ job_board_objects = {
         "search_url": """
                         https://ca.indeed.com/jobs?
                         q={job_title}&l={location}
-                    """.replace("\n", ""),
+                    """.replace("\n", "").replace(" ", ""),
 
         "card_element": "div",
         "card_class": "job_seen_beacon",
@@ -38,7 +38,7 @@ job_board_objects = {
 
         "salary_element": "div",
         "salary_search_object": {"aria-label": "Pay"},
-        "job_salary_string_parse": 3,
+        "salary_string_parse": 3,
 
         "description_element": "div",
         "description_search_object": {"id": "jobDescriptionText"},
@@ -49,7 +49,7 @@ job_board_objects = {
         "search_url": """
                         https://www.jobbank.gc.ca/jobsearch/jobsearch?
                         searchstring={job_title}&locationstring={location}
-                    """.replace("\n", ""),
+                    """.replace("\n", "").replace(" ", ""),
 
         "card_element": "a",
         "card_class": "resultJobItem",
@@ -95,7 +95,7 @@ def get_firefox_driver():
                             (Windows NT 10.0; Win64; x64)
                             AppleWebKit/537.36 (KHTML, like Gecko)
                             Chrome/121.0.0.0 Safari/537.36
-                        """.replace("\n", ""))
+                        """.replace("\n", "").replace(" ", ""))
 
     gecko_driver_path = ''
 

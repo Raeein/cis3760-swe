@@ -88,7 +88,7 @@ def test_get_web_driver():
     assert True
 
 
-def testLoadTargetedJobBoard():
+def test_load_targeted_job_board():
     targeted_job_board = scraper.load_targeted_job_board()
     assert targeted_job_board == ["Indeed", "Canadian Job Bank"]
 
@@ -101,14 +101,21 @@ def testLoadTargetedJobBoard():
     assert targeted_job_board == ["Indeed", ]
 
 
-def testGetJobBoardSearchUrl():
-    url = scraper.get_job_board_search_url(
-        "Software Engineer", "Toronto", "Indeed"
+def test_get_job_board_search_url():
+    url = scraper.get_search_url(
+        "Engineer", "Toronto", "Indeed"
     )
-    assert url is not None
+    assert url == "https://ca.indeed.com/jobs?q=Engineer&l=Toronto"
+    url = scraper.get_search_url(
+        "Engineer", "Toronto", "Canadian Job Bank"
+    )
+    assert url == """
+                        https://www.jobbank.gc.ca/jobsearch/jobsearch?
+                        searchstring=Engineer&locationstring=Toronto
+                """.replace("\n", "").replace(" ", "")
 
 
-def testGetIndeedJobUrl():
+def test_get_indeed_job_url():
     job_board_file_1 = open(
         "testWebsite/indeed/indeedJobBoard1.txt", "r", encoding="utf8"
     )
@@ -131,12 +138,12 @@ def testGetIndeedJobUrl():
                     zIZCg8XWmqCEq9h6H2KxtrPlOJSPaQ93sIz3Zp3kPbOKZzcZ_zEba7wSZI
                     YRBt0ww==&xkcb=SoDW6_M3EPWoaZWQx50LbzkdCdPP&camk=4HOcmqOLY
                     rCLTJoowOo4eQ==&p=0&fvj=1&vjs=3
-                """.replace("\n", "")
+                """.replace("\n", "").replace(" ", "")
 
     assert scraper.get_job_url("Indeed", jobCards[0]) == indeed_link
 
 
-def testGetCanadianJobUrl():
+def test_get_canadian_job_url():
     job_board_file_4 = open(
         "testWebsite/canadian_job/canadianJobBank.txt", "r", encoding="utf8"
     )
@@ -148,7 +155,7 @@ def testGetCanadianJobUrl():
                             https://www.jobbank.gc.ca/jobsearch/jobposting/
                             40322760;jsessionid=1B78D6117D1291E6CA832BF65BFB
                             D84E.jobsearch74?source=searchresults
-                        """.replace("\n", "")
+                        """.replace("\n", "").replace(" ", "")
 
     assert scraper.get_job_url(
         "Canadian Job Bank", jobCards[0]
