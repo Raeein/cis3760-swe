@@ -29,34 +29,34 @@ def test_get_job_card(file_location: str, job_board: str, length: int):
     """file_location, job_board, title, company,
     location, employment_type, salary""", [
         (
-            "testWebsite/indeed/indeedJob1.txt", "Indeed",
-            "Cloud Solutions Engineer - .NET and Azure",
-            "Aviso Wealth", "151 Yonge Street, Toronto, ON",
-            "Full Time", "$105,000–$117,000 a year"
+                "testWebsite/indeed/indeedJob1.txt", "Indeed",
+                "Cloud Solutions Engineer - .NET and Azure",
+                "Aviso Wealth", "151 Yonge Street, Toronto, ON",
+                "Full Time", "$105,000–$117,000 a year"
         ),
         (
-            "testWebsite/indeed/indeedJob2.txt", "Indeed",
-            "Junior Java Developer",
-            "Triunity Software", "Toronto, ON",
-            "Full Time", "$70,000 a year"
+                "testWebsite/indeed/indeedJob2.txt", "Indeed",
+                "Junior Java Developer",
+                "Triunity Software", "Toronto, ON",
+                "Full Time", "$70,000 a year"
         ),
         (
-            "testWebsite/indeed/indeedJob3.txt", "Indeed",
-            "Senior Software Engineer | Python Developer",
-            "Scotiabank", "40 King Street West, Toronto, ON",
-            "Permanent", "Unknown"
+                "testWebsite/indeed/indeedJob3.txt", "Indeed",
+                "Senior Software Engineer | Python Developer",
+                "Scotiabank", "40 King Street West, Toronto, ON",
+                "Permanent", "Unknown"
         ),
         (
-            "testWebsite/canadian_job/CanadianJob1.txt", "Canadian Job Bank",
-            "software engineer",
-            "Micharity Inc", "Toronto, ON",
-            "Full Time,Permanent", "$52.88HOUR hourly /   40 hours per week"
+                "testWebsite/canadian_job/CanadianJob1.txt", "Canadian Job Bank",
+                "software engineer",
+                "Micharity Inc", "Toronto, ON",
+                "Full Time,Permanent", "$52.88HOUR hourly /   40 hours per week"
         )
     ]
 )
 def test_get_and_insert_job_data(
-    file_location: str, job_board: str, title: str, company: str,
-    location: str, employment_type: str, salary: str, mock_connection
+        file_location: str, job_board: str, title: str, company: str,
+        location: str, employment_type: str, salary: str, mock_connection
 ):
     connection, cursor = mock_connection
     insert_statement = scraper.insert_statement
@@ -88,7 +88,7 @@ def test_get_web_driver():
     assert True
 
 
-def testLoadTargetedJobBoard():
+def test_load_targeted_job_board():
     targeted_job_board = scraper.load_targeted_job_board()
     assert targeted_job_board == ["Indeed", "Canadian Job Bank"]
 
@@ -101,14 +101,21 @@ def testLoadTargetedJobBoard():
     assert targeted_job_board == ["Indeed", ]
 
 
-def testGetJobBoardSearchUrl():
-    url = scraper.get_job_board_search_url(
-        "Software Engineer", "Toronto", "Indeed"
+def test_get_job_board_search_url():
+    url = scraper.get_search_url(
+        "Engineer", "Toronto", "Indeed"
     )
-    assert url is not None
+    assert url == "https://ca.indeed.com/jobs?q=Engineer&l=Toronto"
+    url = scraper.get_search_url(
+        "Engineer", "Toronto", "Canadian Job Bank"
+    )
+    assert url == """
+                        https://www.jobbank.gc.ca/jobsearch/jobsearch?
+                        searchstring=Engineer&locationstring=Toronto
+                """.replace("\n", "").replace(" ", "")
 
 
-def testGetIndeedJobUrl():
+def test_get_indeed_job_url():
     job_board_file_1 = open(
         "testWebsite/indeed/indeedJobBoard1.txt", "r", encoding="utf8"
     )
@@ -131,12 +138,12 @@ def testGetIndeedJobUrl():
                     zIZCg8XWmqCEq9h6H2KxtrPlOJSPaQ93sIz3Zp3kPbOKZzcZ_zEba7wSZI
                     YRBt0ww==&xkcb=SoDW6_M3EPWoaZWQx50LbzkdCdPP&camk=4HOcmqOLY
                     rCLTJoowOo4eQ==&p=0&fvj=1&vjs=3
-                """.replace("\n", "")
+                """.replace("\n", "").replace(" ", "")
 
     assert scraper.get_job_url("Indeed", jobCards[0]) == indeed_link
 
 
-def testGetCanadianJobUrl():
+def test_get_canadian_job_url():
     job_board_file_4 = open(
         "testWebsite/canadian_job/canadianJobBank.txt", "r", encoding="utf8"
     )
@@ -148,7 +155,7 @@ def testGetCanadianJobUrl():
                             https://www.jobbank.gc.ca/jobsearch/jobposting/
                             40322760;jsessionid=1B78D6117D1291E6CA832BF65BFB
                             D84E.jobsearch74?source=searchresults
-                        """.replace("\n", "")
+                        """.replace("\n", "").replace(" ", "")
 
     assert scraper.get_job_url(
         "Canadian Job Bank", jobCards[0]

@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "scraper"
+version = "0.1.0"
+description = "Scraper for geo-job-search"
+authors = ["Raeein Bagheri <raeeinbagheri80@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+mariadb = "^1.1.9"
+webdriver-manager = "^4.0.1"
+beautifulsoup4 = "^4.12.3"
+selenium = "^4.18.1"
+pytest = "^8.1.1"
+pytest-cov = "^4.1.0"
+flake8 = "^7.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -12,7 +12,7 @@ job_board_objects = {
         "search_url": """
                         https://ca.indeed.com/jobs?
                         q={job_title}&l={location}
-                    """.replace("\n", ""),
+                    """.replace("\n", "").replace(" ", ""),
 
         "card_element": "div",
         "card_class": "job_seen_beacon",
@@ -38,7 +38,7 @@ job_board_objects = {
 
         "salary_element": "div",
         "salary_search_object": {"aria-label": "Pay"},
-        "job_salary_string_parse": 3,
+        "salary_string_parse": 3,
 
         "description_element": "div",
         "description_search_object": {"id": "jobDescriptionText"},
@@ -49,7 +49,7 @@ job_board_objects = {
         "search_url": """
                         https://www.jobbank.gc.ca/jobsearch/jobsearch?
                         searchstring={job_title}&locationstring={location}
-                    """.replace("\n", ""),
+                    """.replace("\n", "").replace(" ", ""),
 
         "card_element": "a",
         "card_class": "resultJobItem",
@@ -95,7 +95,7 @@ def get_firefox_driver():
                             (Windows NT 10.0; Win64; x64)
                             AppleWebKit/537.36 (KHTML, like Gecko)
                             Chrome/121.0.0.0 Safari/537.36
-                        """.replace("\n", ""))
+                        """.replace("\n", "").replace(" ", ""))
 
     gecko_driver_path = ''
 
@@ -140,7 +140,7 @@ def get_job_attribute(
         html_string: str,
         attr: str,
         job_board_name: str
-        ) -> str:
+) -> str:
     job_soup = BeautifulSoup(html_string, "html.parser")
 
     try:
@@ -150,8 +150,8 @@ def get_job_attribute(
         ).text
         if (attr + "_string_parse" in job_board_objects[job_board_name]):
             data = data[
-                job_board_objects[job_board_name][attr + "_string_parse"]:
-            ]
+                   job_board_objects[job_board_name][attr + "_string_parse"]:
+                   ]
 
     except Exception:
         data = "Unknown"
@@ -195,9 +195,9 @@ def load_targeted_job_board(specified_job_boards: list[str] = []):
 
 
 def get_search_url(
-    job_title: str,
-    location: str,
-    job_board_name: str
+        job_title: str,
+        location: str,
+        job_board_name: str
 ) -> str:
     url = job_board_objects[job_board_name]["search_url"].format(
         job_title=job_title, location=location
@@ -272,9 +272,9 @@ def insert_into_database(job_object: dict, connection, cursor):
 
 
 def get_job_info(
-    job_title: str,
-    location: str,
-    specified_job_boards: list[str] = []
+        job_title: str,
+        location: str,
+        specified_job_boards: list[str] = []
 ):
 
     driver = get_firefox_driver()
@@ -285,7 +285,7 @@ def get_job_info(
         stall_driver(driver)
 
         for job_card in get_job_cards_from_html(
-            driver.page_source, job_board_name
+                driver.page_source, job_board_name
         ):
 
             job_url = get_job_url(job_board_name, job_card)
