@@ -1,90 +1,120 @@
 import time
 import random
+import platform
 from bs4 import BeautifulSoup
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.firefox.service import Service
 from selenium import webdriver
 
-job_board_list_object = {
+job_board_objects = {
     "Indeed": {
-        "job_board_base_url": "https://ca.indeed.com",
-        "job_board_search_url": "https://ca.indeed.com/jobs?q={job_title}&l={location}",
+        "base_url": "https://ca.indeed.com",
+        "search_url": """
+                        https://ca.indeed.com/jobs?
+                        q={job_title}&l={location}
+                    """.replace("\n", "").replace(" ", ""),
 
-        "job_card_element": "div",
-        "job_card_class": "job_seen_beacon",
+        "card_element": "div",
+        "card_class": "job_seen_beacon",
 
         # job page attribute start
-        # string parse will be parsing beginning and end of string. Positive will remove character from beginning, negative remove character from end
-        "job_title_element": "h1",
-        "job_title_search_object": {"class": "jobsearch-JobInfoHeader-title"},
+        # string parse will be parsing beginning and end of string.
+        # Positive will remove character from beginning,
+        # negative remove character from end
+        "title_element": "h1",
+        "title_search_object": {"class": "jobsearch-JobInfoHeader-title"},
 
-        "job_company_element": "div",
-        "job_company_search_object": {"data-company-name": "true"},
+        "company_element": "div",
+        "company_search_object": {"data-company-name": "true"},
 
-        "job_location_element": "div",
-        "job_location_search_object": {"data-testid": "inlineHeader-companyLocation"},
+        "location_element": "div",
+        "location_search_object": {
+            "data-testid": "inlineHeader-companyLocation"
+        },
 
-        "job_employment_element": "div",
-        "job_employment_search_object": {"aria-label": "Job type"},
-        "job_employment_string_parse": 8,
+        "employment_type_element": "div",
+        "employment_type_search_object": {"aria-label": "Job type"},
+        "employment_type_string_parse": 8,
 
-        "job_pay_element": "div",
-        "job_pay_search_object": {"aria-label": "Pay"},
-        "job_pay_string_parse": 3,
+        "salary_element": "div",
+        "salary_search_object": {"aria-label": "Pay"},
+        "salary_string_parse": 3,
 
-        "job_description_element": "div",
-        "job_description_search_object": {"id": "jobDescriptionText"},
+        "description_element": "div",
+        "description_search_object": {"id": "jobDescriptionText"},
         # job page attribute ends
     },
     "Canadian Job Bank": {
-        "job_board_base_url": "https://www.jobbank.gc.ca",
-        "job_board_search_url": "https://www.jobbank.gc.ca/jobsearch/jobsearch?searchstring={job_title}&locationstring={location}",
+        "base_url": "https://www.jobbank.gc.ca",
+        "search_url": """
+                        https://www.jobbank.gc.ca/jobsearch/jobsearch?
+                        searchstring={job_title}&locationstring={location}
+                    """.replace("\n", "").replace(" ", ""),
 
-        "job_card_element": "a",
-        "job_card_class": "resultJobItem",
+        "card_element": "a",
+        "card_class": "resultJobItem",
 
-        "job_title_element": "span",
-        "job_title_search_object": {"property": "title"},
+        "title_element": "span",
+        "title_search_object": {"property": "title"},
 
-        "job_company_element": "span",
-        "job_company_search_object": {"property": "hiringOrganization"},
+        "company_element": "span",
+        "company_search_object": {"property": "hiringOrganization"},
 
-        "job_location_element": "span",
-        "job_location_search_object": {"property": "address"},
+        "location_element": "span",
+        "location_search_object": {"property": "address"},
 
-        "job_employment_element": "span",
-        "job_employment_search_object": {"property": "employmentType"},
+        "employment_type_element": "span",
+        "employment_type_search_object": {"property": "employmentType"},
 
-        "job_pay_element": "span",
-        "job_pay_search_object": {"property": "baseSalary"},
+        "salary_element": "span",
+        "salary_search_object": {"property": "baseSalary"},
 
-        "job_description_element": "div",
-        "job_description_search_object": {"id": "comparisonchart"},
+        "description_element": "div",
+        "description_search_object": {"id": "comparisonchart"},
     }
 }
+insert_statement = """
+INSERT INTO job (
+    jobid, job_title, job_location,
+    salary, job_description, company,
+    employment_type
+)
+VALUES (NULL, ?, ?, ?, ?, ?, ?);
+"""
 
 
 def get_firefox_driver():
-    #set web driver options
+
     options = Options()
     options.add_argument("--headless")
     options.add_argument("--disable-blink-features=AutomationControlled")
     options.add_argument("--no-sandbox")
     options.add_argument("--disable-dev-shm-usage")
-    options.add_argument("""user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36""")
+    options.add_argument("""
+                            user-agent=Mozilla/5.0
+                            (Windows NT 10.0; Win64; x64)
+                            AppleWebKit/537.36 (KHTML, like Gecko)
+                            Chrome/121.0.0.0 Safari/537.36
+                        """.replace("\n", "").replace(" ", ""))
 
-    # check if geckodriver is installed, if not print an error message and exit
+    gecko_driver_path = ''
+
+    if platform.machine() == 'aarch64':
+        gecko_driver_path = '/usr/bin/geckodriver-arm'
+    else:
+        gecko_driver_path = '/usr/bin/geckodriver'
+
     try:
-        service = Service('/usr/bin/geckodriver')
+        service = Service(gecko_driver_path)
+        driver = webdriver.Firefox(service=service, options=options)
+        driver.execute_script(
+            "Object.defineProperty(navigator,'webdriver',{get:()=>undefined})"
+        )
+        driver.implicitly_wait(10)
+        return driver
     except Exception as e:
-        print("Error: ", e)
+        print(f"Error initializing Firefox WebDriver: {e}")
         exit()
-    driver = webdriver.Firefox( options=options)
-    driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => null})")
-    driver.implicitly_wait(100)
-
-    return driver
-
 
 
 def get_job_cards_from_html(html_string: str, job_board_name: str):
@@ -92,8 +122,12 @@ def get_job_cards_from_html(html_string: str, job_board_name: str):
 
     soup = BeautifulSoup(html_string, "html.parser")
 
-    job_board_object = job_board_list_object[job_board_name]
-    job_cards = soup.find_all(job_board_object["job_card_element"], class_=job_board_object["job_card_class"])
+    job_board_object = job_board_objects[job_board_name]
+
+    job_cards = soup.find_all(
+        job_board_object["card_element"],
+        class_=job_board_object["card_class"]
+    )
 
     for i in range(len(job_cards)):
         job_cards[i] = "<div>" + str(job_cards[i]) + "</div>"
@@ -102,84 +136,168 @@ def get_job_cards_from_html(html_string: str, job_board_name: str):
     return job_cards
 
 
-# attribute will be the string defined in the attribute section of the job list object subtracting the suffix
-def get_job_attribute(html_string: str, attribute: str, job_board_name: str) -> str:
+def get_job_attribute(
+        html_string: str,
+        attr: str,
+        job_board_name: str
+) -> str:
     job_soup = BeautifulSoup(html_string, "html.parser")
 
     try:
         data = job_soup.find(
-            job_board_list_object[job_board_name][attribute + "_element"],
-            job_board_list_object[job_board_name][attribute + "_search_object"]
+            job_board_objects[job_board_name][attr + "_element"],
+            job_board_objects[job_board_name][attr + "_search_object"]
         ).text
-        if (attribute + "_string_parse" in job_board_list_object[job_board_name]):
-            data = data[job_board_list_object[job_board_name][attribute + "_string_parse"]:]
+        if (attr + "_string_parse" in job_board_objects[job_board_name]):
+            data = data[
+                   job_board_objects[job_board_name][attr + "_string_parse"]:
+                   ]
 
-    except:
+    except Exception:
         data = "Unknown"
 
     return data.strip()
 
 
-def get_job_json(page_source: str, job_board_name:str) -> dict:
+def get_job_json(page_source: str, job_board_name: str, job_url: str) -> dict:
     job_json_object = {}
-    job_json_object["title"] = get_job_attribute(page_source, "job_title", job_board_name)
-    job_json_object["company"] = get_job_attribute(page_source, "job_company", job_board_name)
-    job_json_object["location"] = get_job_attribute(page_source, "job_location", job_board_name)
-    job_json_object["employment_type"] = get_job_attribute(page_source, "job_employment", job_board_name)
-    job_json_object["salary"] = get_job_attribute(page_source, "job_pay", job_board_name)
-    job_json_object["description"] = get_job_attribute(page_source, "job_description", job_board_name)
+    job_json_object["title"] = get_job_attribute(
+        page_source, "title", job_board_name
+    )
+    job_json_object["company"] = get_job_attribute(
+        page_source, "company", job_board_name
+    )
+    job_json_object["location"] = get_job_attribute(
+        page_source, "location", job_board_name
+    )
+    job_json_object["employment_type"] = parse_employment_type(
+        get_job_attribute(page_source, "employment_type", job_board_name)
+    )
+    job_json_object["salary"] = get_job_attribute(
+        page_source, "salary", job_board_name
+    )
+    job_json_object["description"] = get_job_attribute(
+        page_source, "description", job_board_name
+    )
+    job_json_object["url"] = job_url
     return job_json_object
 
 
-def get_job_info(job_title: str, location: str, specified_job_boards: list[str] = []) -> list[dict]:
-    job_json_object_list = []
+def load_targeted_job_board(specified_job_boards: list[str] = []):
     job_board_search_list = []
+    if (specified_job_boards == []):
+        job_board_search_list = list(job_board_objects.keys())
+    else:
+        for i in specified_job_boards:
+            if i in list(job_board_objects.keys()):
+                job_board_search_list.append(i)
+    return job_board_search_list
+
+
+def get_search_url(
+        job_title: str,
+        location: str,
+        job_board_name: str
+) -> str:
+    url = job_board_objects[job_board_name]["search_url"].format(
+        job_title=job_title, location=location
+    )
+    return url
+
+
+def get_job_url(job_board_name: str, job_card: str) -> str:
+    url = job_board_objects[job_board_name]["base_url"]
+    url += job_card.find('a')['href']
+    return url
+
+
+def stall_driver(driver: webdriver.Firefox):
+    driver.implicitly_wait(random.randint(10, 20))
+    time.sleep(random.randint(2, 5))
+
+
+def parse_employment_type(employment_type: str) -> str:
+    employment_types = [
+        "Full Time", "Part Time", "Permanent",
+        "Temporary", "Contract", "Internship"
+    ]
+    employment_data = []
+
+    for i in employment_types:
+        if i.lower() in employment_type.replace("-", " ").lower():
+            employment_data.append(i)
+
+    return ",".join(tuple(employment_data))
+
+
+def insert_into_database(job_object: dict, connection, cursor):
+    job_title = job_object["title"]
+    job_location = job_object["location"]
+    salary = job_object.get("salary", "Negotiable")
+    job_description = job_object.get("description", "No description given")
+    company = job_object["company"]
+    employment_type = job_object["employment_type"]
+
+    if (job_title != "Unknown"):
+        get_statemet = f"""SELECT job_description FROM job
+                            WHERE job_title = '{job_title}'
+                            AND salary = '{salary}'
+                            AND company = '{company}'
+                            AND employment_type = '{employment_type}';
+                        """
+        cursor.execute(get_statemet)
+
+        duplicate = False
+
+        for i in cursor.fetchall():
+            if (i[0] == job_description):
+                duplicate = True
+                break
+
+        if (not duplicate):
+            res = cursor.execute(insert_statement, (
+                job_title, job_location, salary,
+                job_description, company, employment_type
+            ))
+            if res == 0:
+                print(
+                    "Error inserting data: ", job_title, job_location,
+                    salary, job_description, company, employment_type
+                )
+                return 0
+        else:
+            return -1
+        connection.commit()
+    return 1
+
+
+def get_job_info(
+        job_title: str,
+        location: str,
+        specified_job_boards: list[str] = []
+):
 
     driver = get_firefox_driver()
 
-    if (specified_job_boards == []):
-        job_board_search_list = list(job_board_list_object.keys())
-    else:
-        for i in specified_job_boards:
-            if i in list(job_board_list_object.keys()):
-                job_board_search_list.append(i)
+    for job_board_name in load_targeted_job_board(specified_job_boards):
 
-    for job_board_name in job_board_search_list:
-        url = job_board_list_object[job_board_name]["job_board_search_url"].format(job_title=job_title,
-                                                                                   location=location)
+        driver.get(url=get_search_url(job_title, location, job_board_name))
+        stall_driver(driver)
 
-        driver.implicitly_wait(random.randint(10, 20))
-        driver.get(url=url)
-        driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => null})")
-        time.sleep(random.randint(2, 5))
+        for job_card in get_job_cards_from_html(
+                driver.page_source, job_board_name
+        ):
 
-        job_cards = get_job_cards_from_html(driver.page_source, job_board_name)
-
-        for job_card in job_cards:
-            job_json_object = {}
-
-            job_url = job_board_list_object[job_board_name]["job_board_base_url"] + job_card.find('a')['href']
+            job_url = get_job_url(job_board_name, job_card)
 
             if job_url is not None:
+
                 driver.get(url=job_url)
-                driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => null})")
-                driver.implicitly_wait(random.randint(10, 20))
-                time.sleep(random.randint(2, 5))
-                
-                job_json_object = get_job_json(driver.page_source, job_board_name)
-                job_json_object["url"] = job_url
+                stall_driver(driver)
+                job_json = get_job_json(
+                    driver.page_source,
+                    job_board_name, job_url
+                )
+                yield job_json
 
-                print("-" * 20)
-                print("Title: ", job_json_object["title"])
-                print("Company: ", job_json_object["company"])
-                print("Location: ", job_json_object["location"])
-                print("Employment type: ", job_json_object["employment_type"])
-                print("Salary: ", job_json_object["salary"])
-                print("Description: ", job_json_object["description"])
-                print("Url: ", job_json_object["url"])
-                print("-" * 20)
-
-                job_json_object_list.append(job_json_object)
-
-    return job_json_object_list
-
+    yield None

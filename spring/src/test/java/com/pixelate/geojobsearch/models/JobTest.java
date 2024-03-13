@@ -235,4 +235,50 @@ public class JobTest {
         //Assert
         assertEquals(" ", result);
     }
+
+// -----
+
+    @Test
+    public void testSetEmploymentTypeOne(){
+         //Arrange & Act
+        tester.setEmploymentType("Full time");
+        String result = tester.getEmploymentType();
+
+        //Assert
+        assertEquals("Full time", result);
+    }
+
+    @Test
+    public void testSetEmploymentTypeTwo(){
+         //Arrange & Act
+        tester.setEmploymentType("Part time");
+        String result = tester.getEmploymentType();
+
+        //Assert
+        assertEquals("Part time", result);
+    }
+
+    @Test
+    public void testEmploymentTypeOne(){
+        //Arrange
+        tester.setEmploymentType("Internship / Co-op");
+
+        //Act
+        String result = tester.getEmploymentType();
+
+        //Assert
+        assertEquals("Internship / Co-op", result);
+    }
+
+    @Test
+    public void testEmploymentTypeTwo(){
+        //Arrange
+        tester.setEmploymentType(" ");
+
+        //Act
+        String result = tester.getEmploymentType();
+
+        //Assert
+        assertEquals(" ", result);
+    }
 }

@@ -3,7 +3,9 @@ body {
   justify-content: center; */
   /* align-items: center; */
   height: 100vh;
-  margin: 0;
+  max-height: 100vh;
+  overflow-y: hidden;
+  margin: 3px;
   font-family: sans-serif;
   background-color: black;
 }
