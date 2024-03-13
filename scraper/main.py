@@ -5,7 +5,6 @@ import os
 import scraper
 import time
 
-
 user = os.getenv('DB_USER', 'default_user')
 password = os.getenv('DB_PASSWORD', 'default_password')
 host = os.getenv('DB_ADDRESS', 'default_host')

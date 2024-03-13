@@ -179,12 +179,14 @@
 
 input {
   width: 60px;
+  margin-right: 5px;
+  border-radius: 6px;
 }
 
 .values-wrapper {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: flex-start;
   align-items: center;
   padding: 0;
   margin: 0;
@@ -198,4 +200,27 @@ input {
   padding: 0;
   margin: 0;
   border-radius: 5px;
+  position: relative;
+  height: 100%;
 }
+
+.location-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 0;
+  margin: 0;
+  border-radius: 5px;
+  max-width: 350px;
+  overflow-x: hidden;
+}
+
+.employment-type-wrapper label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.employment-type-wrapper label input[type="checkbox"] {
+  margin-right: 5px;
+}
+

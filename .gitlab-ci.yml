@@ -12,7 +12,6 @@ build-java:
   rules:
     - when: always
 
-
 build-python:
   stage: build
   image: python:3.12
@@ -49,7 +48,8 @@ react-lint:
   script:
     - cd react
     - npm install
-    - npx eslint .
+    - npx eslint . --ext .js,.jsx
+
   rules:
     - when: always
   allow_failure: false
