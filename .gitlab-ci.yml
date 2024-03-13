@@ -11,7 +11,7 @@ build-java:
     - mvn clean install -DskipTests
   rules:
     - when: always
-
+  allow_failure: false
 
 build-python:
   stage: build
@@ -22,6 +22,7 @@ build-python:
     - poetry install # Doesnt build anything, just installs the dependencies
   rules:
     - when: always
+  allow_failure: false
 
 python-lint:
   stage: lint
@@ -33,6 +34,7 @@ python-lint:
     - poetry run flake8
   rules:
     - when: always
+  allow_failure: false
 
 java-lint:
   stage: lint
@@ -42,6 +44,7 @@ java-lint:
     - mvn checkstyle:check
   rules:
     - when: always
+  allow_failure: false
 
 react-lint:
   stage: lint
@@ -53,6 +56,7 @@ react-lint:
   rules:
     - when: always
   allow_failure: false
+
 python-test:
   stage: test
   image: python:3.12
