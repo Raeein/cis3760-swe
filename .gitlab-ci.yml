@@ -9,6 +9,9 @@ build-java:
   script:
     - cd spring
     - mvn clean install -DskipTests
+  rules:
+    - when: always
+
 
 build-python:
   stage: build
@@ -17,6 +20,8 @@ build-python:
     - cd scraper
     - pip install poetry==1.7.1
     - poetry install # Doesnt build anything, just installs the dependencies
+  rules:
+    - when: always
 
 python-lint:
   stage: lint
@@ -26,6 +31,8 @@ python-lint:
     - pip install poetry==1.7.1
     - poetry install
     - poetry run flake8
+  rules:
+    - when: always
 
 java-lint:
   stage: lint
@@ -33,6 +40,8 @@ java-lint:
   script:
     - cd spring
     - mvn checkstyle:check
+  rules:
+    - when: always
 
 react-lint:
   stage: lint
