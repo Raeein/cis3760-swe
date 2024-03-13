@@ -48,7 +48,8 @@ react-lint:
   script:
     - cd react
     - npm install
-    - npx eslint .
+    - npx eslint . --ext .js,.jsx
+
   rules:
     - when: always
   allow_failure: false
