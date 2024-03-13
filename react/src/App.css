@@ -214,3 +214,13 @@ input {
   max-width: 350px;
   overflow-x: hidden;
 }
+
+.employment-type-wrapper label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.employment-type-wrapper label input[type="checkbox"] {
+  margin-right: 5px;
+}
+

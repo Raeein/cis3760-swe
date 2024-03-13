@@ -189,6 +189,28 @@ export default function JobTable({ data }) {
                                         />
                                     Permanent
                                     </label>
+                                    <label htmlFor="temporary">
+                                        <input
+                                            type="checkbox"
+                                            id="temporary"
+                                            name="temporary"
+                                            value="temporary"
+                                            checked={search.includes("temporary")}
+                                            onChange={() => handleEmployTypeChange("temporary")}
+                                        />
+                                    Temporary
+                                    </label>
+                                    <label htmlFor="contract">
+                                        <input
+                                            type="checkbox"
+                                            id="contract"
+                                            name="contract"
+                                            value="contract"
+                                            checked={search.includes("contract")}
+                                            onChange={() => handleEmployTypeChange("contract")}
+                                        />
+                                    Contract
+                                    </label>
                                 </div>
                             </div>
                             {/* <div className="locations">
