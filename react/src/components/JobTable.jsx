@@ -151,7 +151,7 @@ export default function JobTable({ data }) {
                                             checked={search.includes("full time")}
                                             onChange={() => handleEmployTypeChange("full time")}
                                         />
-                    Full Time
+                                    Full Time
                                     </label>
 
                                     <label htmlFor="part-time">
@@ -163,7 +163,7 @@ export default function JobTable({ data }) {
                                             checked={search.includes("part time")}
                                             onChange={() => handleEmployTypeChange("part time")}
                                         />
-                    Part Time
+                                    Part Time
                                     </label>
 
                                     <label htmlFor="internship">
@@ -175,7 +175,19 @@ export default function JobTable({ data }) {
                                             checked={search.includes("internship")}
                                             onChange={() => handleEmployTypeChange("internship")}
                                         />
-                    internship
+                                    Internship
+                                    </label>
+
+                                    <label htmlFor="permanent">
+                                        <input
+                                            type="checkbox"
+                                            id="permanent"
+                                            name="permanent"
+                                            value="permanent"
+                                            checked={search.includes("permanent")}
+                                            onChange={() => handleEmployTypeChange("permanent")}
+                                        />
+                                    Permanent
                                     </label>
                                 </div>
                             </div>
