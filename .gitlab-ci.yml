@@ -55,12 +55,13 @@ react-lint:
 
 python-test:
   stage: test
-  image: selenium/standalone-firefox:123.0
+  image: python:3.12
   script:
     - cd scraper
-#    - apt-get update && apt-get install -y firefox-esr
-#    - chmod +x install.sh && ./install.sh
-    - pip install poetry==1.7.1
+    - apt-get update && apt-get install -y firefox-esr
+    - chmod +x install.sh && ./install.sh
+    - curl -sSL https://install.python-poetry.org | python3 -
+    - export PATH="/root/.local/bin:$PATH" # Doesnt have to persist
     - poetry install
     - poetry run pytest --cov scraper --cov-fail-under=75
   rules:
