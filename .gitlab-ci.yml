@@ -49,10 +49,10 @@ react-lint:
     - cd react
     - npm install
     - npx eslint . --ext .js,.jsx
-
   rules:
     - when: always
   allow_failure: false
+  
 python-test:
   stage: test
   image: python:3.12
@@ -62,7 +62,7 @@ python-test:
     - chmod +x install.sh && ./install.sh
     - pip install poetry==1.7.1
     - poetry install
-    - poetry run pytest --cov scraper
+    - poetry run pytest --cov scraper --cov-fail-under=75
   rules:
     - when: always
   allow_failure: false
