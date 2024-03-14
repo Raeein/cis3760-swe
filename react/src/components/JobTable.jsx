@@ -3,8 +3,6 @@ import SearchBar from "./SearchBar";
 import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
 
-// import { Link } from "react-router-dom";
-
 export default function JobTable({ data }) {
     const [search, setSearch] = useState("");
     const [salary, setSalary] = useState({ min: 0, max: 200000 });
@@ -45,6 +43,7 @@ export default function JobTable({ data }) {
     console.log(uniquejobLocation);
 
     // console.log("TYPE IS" + employType);
+
     // console.log(salary);
     // console.log(data);
 
