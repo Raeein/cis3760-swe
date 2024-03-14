@@ -76,7 +76,7 @@ java-test:
     - mvn test
   artifacts:
     paths:
-      - ./
+      - ./spring/target/site/jacoco/
   rules:
     - when: always
   allow_failure: false
