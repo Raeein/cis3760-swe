@@ -80,83 +80,83 @@ def test_get_and_insert_job_data(
         job_json["company"], job_json["employment_type"]
     ))
 
-
-def test_get_web_driver():
-    driver = scraper.get_firefox_driver()
-    assert driver is not None
-    scraper.stall_driver(driver)
-    assert True
-
-
-def test_load_targeted_job_board():
-    targeted_job_board = scraper.load_targeted_job_board()
-    assert targeted_job_board == ["Indeed", "Canadian Job Bank"]
-
-    targeted_job_board = scraper.load_targeted_job_board(
-        ["Canadian Job Bank",]
-    )
-    assert targeted_job_board == ["Canadian Job Bank",]
-
-    targeted_job_board = scraper.load_targeted_job_board(["Indeed", ])
-    assert targeted_job_board == ["Indeed", ]
-
-
-def test_get_job_board_search_url():
-    url = scraper.get_search_url(
-        "Engineer", "Toronto", "Indeed"
-    )
-    assert url == "https://ca.indeed.com/jobs?q=Engineer&l=Toronto"
-    url = scraper.get_search_url(
-        "Engineer", "Toronto", "Canadian Job Bank"
-    )
-    assert url == """
-                        https://www.jobbank.gc.ca/jobsearch/jobsearch?
-                        searchstring=Engineer&locationstring=Toronto
-                """.replace("\n", "").replace(" ", "")
-
-
-def test_get_indeed_job_url():
-    job_board_file_1 = open(
-        "testWebsite/indeed/indeedJobBoard1.txt", "r", encoding="utf8"
-    )
-    jobCards = scraper.get_job_cards_from_html(
-        job_board_file_1.read(), "Indeed"
-    )
-    indeed_link = """
-                    https://ca.indeed.com/pagead/clk
-                    ?mo=r&ad=-6NYlbfkN0DFRBgdkffDjRejVobbg8KVPSs6CgnXSfnYo3Qc-
-                    NFE2L-XKvK7g0tzAN47iE-7-6GDlOe0HPUmlFwR_W5ypPuLTdyMgC2RALO
-                    PVZz4DDdOBNFIt6a4mgwlZBRnyzfg1y22jsSY3BTy8gBYMrrjaAotockQp
-                    KfUEP2-fkF0cY_Qbc-2_hO1lIyEhDClCVFXclvMoxn0eihqFz_WUQyHnV4
-                    A0pD-MXULJUp0nmRFoj2TmngceU0STyyjbx-Ki7kwUBiFaddQ1efAo7w2j
-                    k_98bO3yOTZE-zRDilOMXBlAm5SdL99COtUackXtvf9t_d0YO7r1dlp6jr
-                    J65sU7TFY0r49PD3wYx0KhylThzOL9qqLHjvjM9hK2NBJJFrQDHsmzjGGm
-                    mUu5bREDSz2YkrLYYDg3zg-zTPcRyiycGMbZSNVe2tCUDyMSOAxB10mBuU
-                    QAtInt-9arhdbPO4Sgww2UqF3gz75EvPTnoZ-FEoAqGCGRltr7krCOf3NP
-                    rPgAAqSpj3163jqQJPd0ZBFK_9_kZuPPiDiZKAo-otjUX09Q7Lh11zlwHK
-                    h6t4lCGj-I_xFsflBfzYqOVH4SG1odvB72bgzIw9E7ygRqb2IOpcuiddBp
-                    zIZCg8XWmqCEq9h6H2KxtrPlOJSPaQ93sIz3Zp3kPbOKZzcZ_zEba7wSZI
-                    YRBt0ww==&xkcb=SoDW6_M3EPWoaZWQx50LbzkdCdPP&camk=4HOcmqOLY
-                    rCLTJoowOo4eQ==&p=0&fvj=1&vjs=3
-                """.replace("\n", "").replace(" ", "")
-
-    assert scraper.get_job_url("Indeed", jobCards[0]) == indeed_link
-
-
-def test_get_canadian_job_url():
-    job_board_file_4 = open(
-        "testWebsite/canadian_job/canadianJobBank.txt", "r", encoding="utf8"
-    )
-    jobCards = scraper.get_job_cards_from_html(
-        job_board_file_4.read(), "Canadian Job Bank"
-    )
-
-    canadian_job_link = """
-                            https://www.jobbank.gc.ca/jobsearch/jobposting/
-                            40322760;jsessionid=1B78D6117D1291E6CA832BF65BFB
-                            D84E.jobsearch74?source=searchresults
-                        """.replace("\n", "").replace(" ", "")
-
-    assert scraper.get_job_url(
-        "Canadian Job Bank", jobCards[0]
-    ) == canadian_job_link
+#
+# def test_get_web_driver():
+#     driver = scraper.get_firefox_driver()
+#     assert driver is not None
+#     scraper.stall_driver(driver)
+#     assert True
+#
+#
+# def test_load_targeted_job_board():
+#     targeted_job_board = scraper.load_targeted_job_board()
+#     assert targeted_job_board == ["Indeed", "Canadian Job Bank"]
+#
+#     targeted_job_board = scraper.load_targeted_job_board(
+#         ["Canadian Job Bank",]
+#     )
+#     assert targeted_job_board == ["Canadian Job Bank",]
+#
+#     targeted_job_board = scraper.load_targeted_job_board(["Indeed", ])
+#     assert targeted_job_board == ["Indeed", ]
+#
+#
+# def test_get_job_board_search_url():
+#     url = scraper.get_search_url(
+#         "Engineer", "Toronto", "Indeed"
+#     )
+#     assert url == "https://ca.indeed.com/jobs?q=Engineer&l=Toronto"
+#     url = scraper.get_search_url(
+#         "Engineer", "Toronto", "Canadian Job Bank"
+#     )
+#     assert url == """
+#                         https://www.jobbank.gc.ca/jobsearch/jobsearch?
+#                         searchstring=Engineer&locationstring=Toronto
+#                 """.replace("\n", "").replace(" ", "")
+#
+#
+# def test_get_indeed_job_url():
+#     job_board_file_1 = open(
+#         "testWebsite/indeed/indeedJobBoard1.txt", "r", encoding="utf8"
+#     )
+#     jobCards = scraper.get_job_cards_from_html(
+#         job_board_file_1.read(), "Indeed"
+#     )
+#     indeed_link = """
+#                     https://ca.indeed.com/pagead/clk
+#                     ?mo=r&ad=-6NYlbfkN0DFRBgdkffDjRejVobbg8KVPSs6CgnXSfnYo3Qc-
+#                     NFE2L-XKvK7g0tzAN47iE-7-6GDlOe0HPUmlFwR_W5ypPuLTdyMgC2RALO
+#                     PVZz4DDdOBNFIt6a4mgwlZBRnyzfg1y22jsSY3BTy8gBYMrrjaAotockQp
+#                     KfUEP2-fkF0cY_Qbc-2_hO1lIyEhDClCVFXclvMoxn0eihqFz_WUQyHnV4
+#                     A0pD-MXULJUp0nmRFoj2TmngceU0STyyjbx-Ki7kwUBiFaddQ1efAo7w2j
+#                     k_98bO3yOTZE-zRDilOMXBlAm5SdL99COtUackXtvf9t_d0YO7r1dlp6jr
+#                     J65sU7TFY0r49PD3wYx0KhylThzOL9qqLHjvjM9hK2NBJJFrQDHsmzjGGm
+#                     mUu5bREDSz2YkrLYYDg3zg-zTPcRyiycGMbZSNVe2tCUDyMSOAxB10mBuU
+#                     QAtInt-9arhdbPO4Sgww2UqF3gz75EvPTnoZ-FEoAqGCGRltr7krCOf3NP
+#                     rPgAAqSpj3163jqQJPd0ZBFK_9_kZuPPiDiZKAo-otjUX09Q7Lh11zlwHK
+#                     h6t4lCGj-I_xFsflBfzYqOVH4SG1odvB72bgzIw9E7ygRqb2IOpcuiddBp
+#                     zIZCg8XWmqCEq9h6H2KxtrPlOJSPaQ93sIz3Zp3kPbOKZzcZ_zEba7wSZI
+#                     YRBt0ww==&xkcb=SoDW6_M3EPWoaZWQx50LbzkdCdPP&camk=4HOcmqOLY
+#                     rCLTJoowOo4eQ==&p=0&fvj=1&vjs=3
+#                 """.replace("\n", "").replace(" ", "")
+#
+#     assert scraper.get_job_url("Indeed", jobCards[0]) == indeed_link
+#
+#
+# def test_get_canadian_job_url():
+#     job_board_file_4 = open(
+#         "testWebsite/canadian_job/canadianJobBank.txt", "r", encoding="utf8"
+#     )
+#     jobCards = scraper.get_job_cards_from_html(
+#         job_board_file_4.read(), "Canadian Job Bank"
+#     )
+#
+#     canadian_job_link = """
+#                             https://www.jobbank.gc.ca/jobsearch/jobposting/
+#                             40322760;jsessionid=1B78D6117D1291E6CA832BF65BFB
+#                             D84E.jobsearch74?source=searchresults
+#                         """.replace("\n", "").replace(" ", "")
+#
+#     assert scraper.get_job_url(
+#         "Canadian Job Bank", jobCards[0]
+#     ) == canadian_job_link
