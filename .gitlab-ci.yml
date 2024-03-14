@@ -3,7 +3,8 @@ stages:
   - lint
   - test
 
-build-java:
+# BUILD STAGE
+build-spring:
   stage: build
   image: maven:3.8.4-openjdk-17
   script:
@@ -22,18 +23,20 @@ build-python:
   rules:
     - when: always
 
-python-lint:
+# LINT STAGE
+lint-python:
   stage: lint
   image: python:3.12
   script:
     - cd scraper
-    - pip install poetry==1.7.1
+    - curl -sSL https://install.python-poetry.org | python3 -
+    - export PATH="/root/.local/bin:$PATH" # Doesnt have to persist
     - poetry install
     - poetry run flake8
   rules:
     - when: always
 
-java-lint:
+lint-spring:
   stage: lint
   image: maven:3.8.4-openjdk-17
   script:
@@ -42,7 +45,7 @@ java-lint:
   rules:
     - when: always
 
-react-lint:
+lint-react:
   stage: lint
   image: node:16
   script:
@@ -53,7 +56,8 @@ react-lint:
     - when: always
   allow_failure: false
 
-python-test:
+# TEST STAGE
+test-python:
   stage: test
   image: python:3.12
   script:
@@ -68,7 +72,7 @@ python-test:
     - when: always
   allow_failure: false
 
-java-test:
+test-spring:
   stage: test
   image: maven:3.8.4-openjdk-17
   script:
