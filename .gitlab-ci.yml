@@ -52,7 +52,7 @@ react-lint:
   rules:
     - when: always
   allow_failure: false
-  
+
 python-test:
   stage: test
   image: python:3.12
@@ -74,6 +74,9 @@ java-test:
     - echo "Running Java Spring tests"
     - cd spring
     - mvn test
+  artifacts:
+    paths:
+      - ./
   rules:
     - when: always
   allow_failure: false
