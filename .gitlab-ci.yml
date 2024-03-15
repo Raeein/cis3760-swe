@@ -88,7 +88,7 @@ test-spring:
     #Run Maven tests
     - mvn verify
     #Calculate code coverage
-    - awk -F"," '{ instructions += $4 + $5; covered += $5 } END { print covered, "/", instructions, " instructions covered"; print "Total coverage:\s", 100*covered/instructions,  "%"}' target/site/jacoco/jacoco.csv
+    - awk -F"," '{ instructions += $4 + $5; covered += $5 } END { print covered, "/", instructions, " instructions covered"; print "Total coverage:", 100*covered/instructions,  "%"}' target/site/jacoco/jacoco.csv
 
   artifacts:
     paths:
