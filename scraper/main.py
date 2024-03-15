@@ -31,22 +31,22 @@ insert_statement = """
 """
 
 
-while (True):
-    print("Start job scraping session")
-    job_object_generator = scraper.get_job_info(
-        "Software Developer", "Toronto, ON", ["Canadian Job Bank", "Indeed"]
-    )
+print("Start job scraping session")
+job_object_generator = scraper.get_job_info(
+    "Software Developer", "Toronto, ON", ["Canadian Job Bank", ]
+)
+job_object = next(job_object_generator)
+while (job_object is not None):
+    res = scraper.insert_into_database(job_object, conn, cur)
+    if res == 0:
+        print(
+            "Error inserting data: ", job_object["title"],
+            job_object["location"], job_object["salary"],
+            job_object["description"], job_object["company"],
+            job_object["employment_type"]
+        )
     job_object = next(job_object_generator)
-    while (job_object is not None):
-        res = scraper.insert_into_database(job_object, conn, cur)
-        if res == 0:
-            print(
-                "Error inserting data: ", job_object["title"],
-                job_object["location"], job_object["salary"],
-                job_object["description"], job_object["company"],
-                job_object["employment_type"]
-            )
-        job_object = next(job_object_generator)
 
-    print("Finish scraping for this session. Next session starts in 1 hour")
-    time.sleep(3600)
+print("Finish scraping for this session. Next session starts at 12:00 am")
+conn.close()
+time.sleep(5)
