@@ -45,7 +45,6 @@ services:
 
   scraper:
     build: ./scraper  # Look for Dockerfile in this path
-    command: poetry run python main.py
     environment:
       - DB_ADDRESS=mysql
       - DB_DATABASE=geo_job_search_db
