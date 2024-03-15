@@ -33,7 +33,7 @@ insert_statement = """
 
 print("Start job scraping session")
 job_object_generator = scraper.get_job_info(
-    "Software Developer", "Toronto, ON", ["Canadian Job Bank", ]
+    "Software Developer", "Toronto, ON", ["Canadian Job Bank", "Indeed"]
 )
 job_object = next(job_object_generator)
 while (job_object is not None):
