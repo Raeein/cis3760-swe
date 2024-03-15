@@ -1,3 +1,6 @@
+variables:
+  JACOCO_CSV_LOCATION: 'spring/target/site/jacoco/jacoco.csv'
+
 stages:
   - build
   - lint
@@ -72,16 +75,24 @@ test-python:
     - when: always
   allow_failure: false
 
+#Test for spring boot application
 test-spring:
   stage: test
   image: maven:3.8.4-openjdk-17
+  #Regex to parse the test coverage artifact
+  coverage: '/Total.*?([0-9]{1,3})%/'
+  #Script to execute test
   script:
     - echo "Running Java Spring tests"
     - cd spring
-    - mvn test
+    #Run Maven tests
+    - mvn verify
+    #Calculate code coverage
+    - awk -F"," '{ instructions += $4 + $5; covered += $5 } END { print covered, "/", instructions, " instructions covered"; print "Total coverage:", 100*covered/instructions,  "%"}' target/site/jacoco/jacoco.csv
+
   artifacts:
     paths:
-      - ./spring/target/site/jacoco/
+      - spring/target/site/jacoco/jacoco.csv
   rules:
     - when: always
   allow_failure: false
