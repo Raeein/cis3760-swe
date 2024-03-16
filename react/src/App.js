@@ -2,7 +2,6 @@ import React from "react";
 import { useState, useEffect } from "react";
 import "./App.css";
 import JobTable from "./components/JobTable.jsx";
-import { Route, Routes } from "react-router-dom";
 // import fakejobs from "./test.json";
 
 export default function App() {
@@ -15,13 +14,10 @@ export default function App() {
     }, []);
 
     // console log the infomration in the json file as a string
-    // console.log(jobData);
+    console.log(jobData);
 
     return (
         <div className="container">
-            <Routes>
-                <Route path="/search/:keyword" element={<JobTable />} />
-            </Routes>
             <JobTable data={jobData} />
             <div className="map">
                 <h1>MAP</h1>

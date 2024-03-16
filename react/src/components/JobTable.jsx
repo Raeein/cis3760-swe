@@ -17,14 +17,12 @@ export default function JobTable({ data }) {
         data: null,
     });
 
-    const { keyword } = useParams();
-    console.log("KEYWORD IS " + keyword);
+    const { keyword } = useParams(); 
 
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (keyword && keyword != undefined) {
-            // Ensure keyword is a string
+        if (keyword) {
             setSearch(keyword);
         }
     }, [keyword]);
@@ -87,10 +85,6 @@ export default function JobTable({ data }) {
 
     // console.log(salary);
     // console.log(data);
-
-    if (!data) {
-        return <div>Loading...</div>;
-    }
 
     return (
         <>
