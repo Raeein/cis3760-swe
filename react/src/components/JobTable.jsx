@@ -48,9 +48,9 @@ export default function JobTable({ data }) {
         "contract",
     ];
 
-    const jobLocation = data.map((job) => job.jobLocation);
-    const uniquejobLocation = [...new Set(jobLocation)];
-    console.log(uniquejobLocation);
+    // const jobLocation = data.map((job) => job.jobLocation);
+    // const uniquejobLocation = [...new Set(jobLocation)];
+    // console.log(uniquejobLocation);
 
     // console.log("TYPE IS" + employType);
 
