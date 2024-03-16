@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import SearchBar from "./SearchBar";
 import majorCities from "../cities";
+import { useNavigate } from "react-router-dom";
 import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
 
@@ -28,12 +29,25 @@ export default function JobTable({ data }) {
         setSalary({ min: salary.min, max: parseInt(event.target.value) });
     }
 
-    function handleEmployTypeChange(value) {
+    function handleJobCardClick(job, index) {
+        console.log(job);
+        setDetailsPane({ visible: true, data: job });
+        navigate(`/api/jobs/get/${index}`);
+    }
+
+    function handleEmployTypeChange(value, url) {
         if (value === search) {
             setSearch("");
+            navigate("/jobs/all");
         } else {
             setSearch(value);
+            navigate(`/${url}/${value}`);
         }
+    }
+
+    function handleFilterclick() {
+        setfilterPane({ visible: true, data: null });
+        navigate("/filter");
     }
 
     const navigate = useNavigate();
@@ -72,12 +86,7 @@ export default function JobTable({ data }) {
             <div className="JobTable">
                 <div className="search-container">
                     <SearchBar onSearched={searchBarChange} />
-                    <button
-                        className="filter-icon"
-                        onClick={() =>
-                            setfilterPane({ visible: true, data: null })
-                        }
-                    >
+                    <button className="filter-icon" onClick={handleFilterclick}>
                         filter
                     </button>
                 </div>
@@ -97,13 +106,11 @@ export default function JobTable({ data }) {
                                     .includes(search.toLowerCase())
                             );
                         })
-                        .map((job) => (
+                        .map((job, index) => (
                             <article
                                 className="card"
                                 key={job.jobId}
-                                onClick={() =>
-                                    setDetailsPane({ visible: true, data: job })
-                                }
+                                onClick={() => handleJobCardClick(job, index)}
                             >
                                 <h1>{job.jobTitle}</h1>
                                 <p>Salary: {job.salary}</p>
@@ -180,7 +187,10 @@ export default function JobTable({ data }) {
                                                 value={type}
                                                 checked={search.includes(type)}
                                                 onChange={() =>
-                                                    handleEmployTypeChange(type)
+                                                    handleEmployTypeChange(
+                                                        type,
+                                                        "employment"
+                                                    )
                                                 }
                                             />
                                             {type}
@@ -198,7 +208,8 @@ export default function JobTable({ data }) {
                                                     type="checkbox"
                                                     onChange={() =>
                                                         handleEmployTypeChange(
-                                                            location
+                                                            location,
+                                                            "location"
                                                         )
                                                     }
                                                     checked={search.includes(
