@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SearchBar from "./SearchBar";
 import majorCities from "../cities";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
 
@@ -17,15 +17,19 @@ export default function JobTable({ data }) {
         data: null,
     });
 
-    const { keyword } = useParams(); 
-
     const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
-        if (keyword) {
-            setSearch(keyword);
+        if (location.pathname) {
+            const pathParts = location.pathname.split("/");
+
+            if (pathParts[1] === "search") {
+                setSearch(pathParts[2]);
+            }
         }
-    }, [keyword]);
+    }, [location.pathname]);
+
 
     function searchBarChange(event) {
         setSearch(event.target.value);
