@@ -1,0 +1,91 @@
+version: '3.8'
+# List of Services
+services:
+  swag: #reverse proxy
+    image: lscr.io/linuxserver/swag:latest
+    container_name: swag
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - URL=pixelate.socs.uoguelph.ca
+      - VALIDATION=http
+      - STAGING=false #optional
+    volumes:
+      - ./swag/config:/config
+    ports:
+      - 443:443
+      - 80:80 #optional
+    depends_on:
+      - react
+    networks:
+      - swag-react
+    restart: unless-stopped
+
+  spring:
+    build: ./spring   # Look for Dockerfile in this path
+    
+    environment:
+      # These are used in apllication.property to setup DB connection
+      - DB_ADDRESS=jdbc:mysql://mysql:3306
+      - DB_DATABASE=geo_job_search_db
+      - DB_USER=root
+      - DB_PASSWORD=pwd
+    networks:
+      - spring-mysql    # Allow the spring app to discover the mysql app
+      - spring-react    # Allow the spring app to talk to the react app
+
+  mysql:
+    build: ./mysql    # Look for Dockerfile in this path
+    environment:
+      # Mysql docker image env vars
+      - MYSQL_ROOT_PASSWORD=pwd
+      - MYSQL_DATABASE=geo_job_search_db
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    healthcheck:
+      # Make sure the mysql container is healthy before starting the spring app
+      test: [ "CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized" ]
+      interval: 2s
+      retries: 10
+    networks:
+      - spring-mysql    # Allow the mysql app to talk to the spring app
+      - scraper-mysql   # Allow the mysql app to discover the scraper app
+
+  react:
+    build: ./react    # Look for Dockerfile in this path
+    command: npm start
+
+    environment:
+      # Tell the react app that our spring server is running here
+      - BACKEND_PROXY=http://spring:8080
+    networks:
+      - spring-react    # Allow the react app to discover the spring app
+      - swag-react
+
+  scraper:
+    build: ./scraper  # Look for Dockerfile in this path
+    environment:
+      - DB_ADDRESS=mysql
+      - DB_DATABASE=geo_job_search_db
+      - DB_USER=root
+      - DB_PASSWORD=pwd
+      - DB_PORT=3306
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - spring-mysql    # Allow the scraper app to talk to the mysql app
+      - scraper-mysql   # Allow the scraper app to discover the mysql app
+
+volumes:
+  mariadb_data:
+
+# List of Networks
+networks:
+  spring-mysql:
+  spring-react:
+  scraper-mysql:
+  swag-react:
