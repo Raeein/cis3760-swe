@@ -19,6 +19,7 @@ export default function JobTable({ data }) {
 
     function searchBarChange(event) {
         setSearch(event.target.value);
+        navigate(`/search/${event.target.value}`);
     }
 
     function handleMinSalaryChange(event) {
