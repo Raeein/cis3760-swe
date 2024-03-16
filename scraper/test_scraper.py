@@ -105,13 +105,13 @@ def test_get_job_board_search_url():
     url = scraper.get_search_url(
         "Engineer", "Toronto", "Indeed"
     )
-    assert url == "https://ca.indeed.com/jobs?q=Engineer&l=Toronto"
+    assert url == "https://ca.indeed.com/jobs?q=Engineer&l=Toronto&sort=date"
     url = scraper.get_search_url(
         "Engineer", "Toronto", "Canadian Job Bank"
     )
     assert url == """
                         https://www.jobbank.gc.ca/jobsearch/jobsearch?
-                        searchstring=Engineer&locationstring=Toronto
+                        searchstring=Engineer&locationstring=Toronto&sort=D
                 """.replace("\n", "").replace(" ", "")
 
 

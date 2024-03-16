@@ -11,7 +11,7 @@ job_board_objects = {
         "base_url": "https://ca.indeed.com",
         "search_url": """
                         https://ca.indeed.com/jobs?
-                        q={job_title}&l={location}
+                        q={job_title}&l={location}&sort=date
                     """.replace("\n", "").replace(" ", ""),
 
         "card_element": "div",
@@ -49,6 +49,7 @@ job_board_objects = {
         "search_url": """
                         https://www.jobbank.gc.ca/jobsearch/jobsearch?
                         searchstring={job_title}&locationstring={location}
+                        &sort=D
                     """.replace("\n", "").replace(" ", ""),
 
         "card_element": "a",

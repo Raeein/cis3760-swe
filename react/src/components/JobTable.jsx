@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SearchBar from "./SearchBar";
-import { useNavigate } from "react-router-dom";
+import majorCities from "../cities";
 import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
 
@@ -44,6 +44,15 @@ export default function JobTable({ data }) {
 
     //create an array of objects or strings that stores every unique location in data.jobLocation in it
     //then map over that array to create a list of checkboxes
+
+    const employment_types = [
+        "Full time",
+        "Part time",
+        "internship",
+        "permanent",
+        "temporary",
+        "contract",
+    ];
 
     // const jobLocation = data.map((job) => job.jobLocation);
     // const uniquejobLocation = [...new Set(jobLocation)];
@@ -162,124 +171,46 @@ export default function JobTable({ data }) {
                             <div className="employment-wrapper">
                                 <p>Employment Type</p>
                                 <div className="employment-type-wrapper">
-                                    <label htmlFor="full-time">
-                                        <input
-                                            type="checkbox"
-                                            id="full time"
-                                            name="full time"
-                                            value="full time"
-                                            checked={search.includes(
-                                                "full time"
-                                            )}
-                                            onChange={() =>
-                                                handleEmployTypeChange(
-                                                    "full time"
-                                                )
-                                            }
-                                        />
-                                        Full Time
-                                    </label>
-
-                                    <label htmlFor="part-time">
-                                        <input
-                                            type="checkbox"
-                                            id="part time"
-                                            name="part time"
-                                            value="part time"
-                                            checked={search.includes(
-                                                "part time"
-                                            )}
-                                            onChange={() =>
-                                                handleEmployTypeChange(
-                                                    "part time"
-                                                )
-                                            }
-                                        />
-                                        Part Time
-                                    </label>
-
-                                    <label htmlFor="internship">
-                                        <input
-                                            type="checkbox"
-                                            id="internship"
-                                            name="internship"
-                                            value="internship"
-                                            checked={search.includes(
-                                                "internship"
-                                            )}
-                                            onChange={() =>
-                                                handleEmployTypeChange(
-                                                    "internship"
-                                                )
-                                            }
-                                        />
-                                        Internship
-                                    </label>
-
-                                    <label htmlFor="permanent">
-                                        <input
-                                            type="checkbox"
-                                            id="permanent"
-                                            name="permanent"
-                                            value="permanent"
-                                            checked={search.includes(
-                                                "permanent"
-                                            )}
-                                            onChange={() =>
-                                                handleEmployTypeChange(
-                                                    "permanent"
-                                                )
-                                            }
-                                        />
-                                        Permanent
-                                    </label>
-                                    <label htmlFor="temporary">
-                                        <input
-                                            type="checkbox"
-                                            id="temporary"
-                                            name="temporary"
-                                            value="temporary"
-                                            checked={search.includes(
-                                                "temporary"
-                                            )}
-                                            onChange={() =>
-                                                handleEmployTypeChange(
-                                                    "temporary"
-                                                )
-                                            }
-                                        />
-                                        Temporary
-                                    </label>
-                                    <label htmlFor="contract">
-                                        <input
-                                            type="checkbox"
-                                            id="contract"
-                                            name="contract"
-                                            value="contract"
-                                            checked={search.includes(
-                                                "contract"
-                                            )}
-                                            onChange={() =>
-                                                handleEmployTypeChange(
-                                                    "contract"
-                                                )
-                                            }
-                                        />
-                                        Contract
-                                    </label>
+                                    {employment_types.map((type) => (
+                                        <label htmlFor={type} key={type}>
+                                            <input
+                                                type="checkbox"
+                                                id={type}
+                                                name={type}
+                                                value={type}
+                                                checked={search.includes(type)}
+                                                onChange={() =>
+                                                    handleEmployTypeChange(type)
+                                                }
+                                            />
+                                            {type}
+                                        </label>
+                                    ))}
                                 </div>
                             </div>
-                            {/* <div className="locations">
-                <p>Location</p>
-                <div className="location-wrapper">
-                  {uniquejobLocation.map((location) => (
-                    <label>
-                      <input type="checkbox"></input>
-                      {location}
-                    </label>
-                  ))}
-                </div>
-              </div> */}
+                            <div className="locations">
+                                <p>Location</p>
+                                <div className="location-wrapper">
+                                    {majorCities.major_cities.map(
+                                        (location) => (
+                                            <label key={location}>
+                                                <input
+                                                    type="checkbox"
+                                                    onChange={() =>
+                                                        handleEmployTypeChange(
+                                                            location
+                                                        )
+                                                    }
+                                                    checked={search.includes(
+                                                        location
+                                                    )}
+                                                ></input>
+                                                {location}
+                                            </label>
+                                        )
+                                    )}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </SlidingPane>
