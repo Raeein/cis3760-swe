@@ -199,7 +199,7 @@ public class JobTest {
         String result = tester.getJobDescription();
 
         //Assert
-        assertEquals("Come join our security team at Vtech", result);
+        assertEquals("Come join our security team at Vtech!", result);
     }
 
     @Test
