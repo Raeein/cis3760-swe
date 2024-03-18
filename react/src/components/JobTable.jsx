@@ -47,7 +47,7 @@ export default function JobTable({ data }) {
     function handleJobCardClick(job, index) {
         console.log(job);
         setDetailsPane({ visible: true, data: job });
-        navigate(`/api/jobs/get/${index}`);
+        navigate(`/jobs/get/${index}`);
     }
 
     function handleEmployTypeChange(value, url) {
