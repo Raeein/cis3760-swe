@@ -6,7 +6,7 @@ import "react-sliding-pane/dist/react-sliding-pane.css";
 
 export default function JobTable({ data }) {
     const [search, setSearch] = useState("");
-    const [salary, setSalary] = useState({ min: 0, max: 200000 });
+    // const [salary, setSalary] = useState({ min: 0, max: 200000 });
     const [detailsPane, setDetailsPane] = useState({
         visible: false,
         data: null,
@@ -20,13 +20,13 @@ export default function JobTable({ data }) {
         setSearch(event.target.value);
     }
 
-    function handleMinSalaryChange(event) {
-        setSalary({ min: parseInt(event.target.value), max: salary.max });
-    }
+    // function handleMinSalaryChange(event) {
+    //     setSalary({ min: parseInt(event.target.value), max: salary.max });
+    // }
 
-    function handleMaxSalaryChange(event) {
-        setSalary({ min: salary.min, max: parseInt(event.target.value) });
-    }
+    // function handleMaxSalaryChange(event) {
+    //     setSalary({ min: salary.min, max: parseInt(event.target.value) });
+    // }
 
     function handleEmployTypeChange(value) {
         if (value === search) {
@@ -147,7 +147,7 @@ export default function JobTable({ data }) {
                 >
                     <div className="slider-details">
                         <div className="filters-wrapper">
-                            <div className="salary-wrapper">
+                            {/* <div className="salary-wrapper">
                                 <p>Salary</p>
                                 <div className="values-wrapper">
                                     <input
@@ -161,7 +161,7 @@ export default function JobTable({ data }) {
                                         onChange={handleMaxSalaryChange}
                                     />
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="employment-wrapper">
                                 <p>Employment Type</p>
                                 <div className="employment-type-wrapper">
