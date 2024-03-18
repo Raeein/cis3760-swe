@@ -27,4 +27,6 @@ public interface JobsService {
     public String getCompany(Integer id);
   
     public String getEmploymentType(Integer id);
+
+    public Iterable<Job> searchJobs(String keyword);
 }

@@ -84,4 +84,9 @@ public class JobsController {
     private @ResponseBody String getEmploymentType(@PathVariable Integer id) {
         return jobsService.getEmploymentType(id); 
     }
+
+    @GetMapping("/searches/{keyword}")
+    private @ResponseBody Iterable<Job> searchJobs(@PathVariable String keyword) {
+        return jobsService.searchJobs(keyword);
+    }
 }

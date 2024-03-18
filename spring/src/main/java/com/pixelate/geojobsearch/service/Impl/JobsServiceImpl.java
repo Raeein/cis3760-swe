@@ -88,4 +88,9 @@ public class JobsServiceImpl implements JobsService {
     public String getEmploymentType(Integer id) {
         return jobsRepository.findById(id).map(Job::getEmploymentType).orElse("Job not found");
     }
+
+    @Override
+    public Iterable<Job> searchJobs(String keyword) {
+        return jobsRepository.searchJobs(keyword);
+    }
 }
