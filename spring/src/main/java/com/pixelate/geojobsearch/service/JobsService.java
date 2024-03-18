@@ -16,11 +16,15 @@ public interface JobsService {
 
     public Integer countJobs();
 
-    // START
     public String getJobTitle(Integer id);
 
-    // public Job getJobLocation(Integer id);
+    public String getJobLocation(Integer id);
     
-    // public Job getSalary(Integer id);
-    // END
+    public String getSalary(Integer id);
+    
+    public String getJobDescription(Integer id);
+
+    public String getCompany(Integer id);
+  
+    public String getEmploymentType(Integer id);
 }
