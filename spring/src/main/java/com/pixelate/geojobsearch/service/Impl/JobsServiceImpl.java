@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service;
 
 import com.pixelate.geojobsearch.repository.JobsRepository;
 
+// START
+import java.util.Optional;
+// END
+
 @Service
 public class JobsServiceImpl implements JobsService {
     @Autowired
@@ -56,4 +60,12 @@ public class JobsServiceImpl implements JobsService {
     public Integer countJobs() {
         return jobsRepository.getJobCount();
     }
+
+    // START
+    @Override
+    public String getJobTitle(Integer id) {
+        Optional<Job> optionalJob = jobsRepository.findById(id);
+        return optionalJob.map(Job::getJobTitle).orElse("Job not found");
+    }
+    // END
 }

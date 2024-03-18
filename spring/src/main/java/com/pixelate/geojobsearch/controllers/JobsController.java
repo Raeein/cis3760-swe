@@ -54,4 +54,21 @@ public class JobsController {
     private @ResponseBody Integer countJobs() {
         return jobsService.countJobs();
     }
+
+    // START
+    @GetMapping("/get/{id}/title")
+    private @ResponseBody String getJobTitle(@PathVariable Integer id) {
+        return jobsService.getJobTitle(id);
+    }
+
+    // @GetMapping("/get/{id}/location")
+    // private @ResponseBody Job getJobLocation(@PathVariable Integer id) {
+    //     return jobsService.getJobLocation(id);
+    // }
+
+    // @GetMapping("/get/{id}/salary")
+    // private @ResponseBody Job getSalary(@PathVariable Integer id) {
+    //     return jobsService.getSalary(id);
+    // }
+    // END
 }

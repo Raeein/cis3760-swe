@@ -15,4 +15,12 @@ public interface JobsService {
     public Iterable<Job> allJobs();
 
     public Integer countJobs();
+
+    // START
+    public String getJobTitle(Integer id);
+
+    // public Job getJobLocation(Integer id);
+    
+    // public Job getSalary(Integer id);
+    // END
 }
