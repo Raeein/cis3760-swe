@@ -27,7 +27,7 @@ To only run the tests for the Python application, run the following command:
 docker compose -f test.yml up --build python-test
 ```
 
-To run the test for the Python application locally (without docker), run the following command:
+To run the test for the Python application locally (without docker), run the following command (bs4, pytest, and pytest-cov need to be installed):
 
 ```
 pytest --cov scraper
