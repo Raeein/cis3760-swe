@@ -1,0 +1,98 @@
+variables:
+  JACOCO_CSV_LOCATION: 'spring/target/site/jacoco/jacoco.csv'
+
+stages:
+  - build
+  - lint
+  - test
+
+# BUILD STAGE
+build-spring:
+  stage: build
+  image: maven:3.8.4-openjdk-17
+  script:
+    - cd spring
+    - mvn clean install -DskipTests
+  rules:
+    - when: always
+
+build-python:
+  stage: build
+  image: python:3.12
+  script:
+    - cd scraper
+    - pip install poetry==1.7.1
+    - poetry install # Doesnt build anything, just installs the dependencies
+  rules:
+    - when: always
+
+# LINT STAGE
+lint-python:
+  stage: lint
+  image: python:3.12
+  script:
+    - cd scraper
+    - curl -sSL https://install.python-poetry.org | python3 -
+    - export PATH="/root/.local/bin:$PATH" # Doesnt have to persist
+    - poetry install
+    - poetry run flake8
+  rules:
+    - when: always
+
+lint-spring:
+  stage: lint
+  image: maven:3.8.4-openjdk-17
+  script:
+    - cd spring
+    - mvn checkstyle:check
+  rules:
+    - when: always
+
+lint-react:
+  stage: lint
+  image: node:16
+  script:
+    - cd react
+    - npm install
+    - npx eslint . --ext .js,.jsx
+  rules:
+    - when: always
+  allow_failure: false
+
+# TEST STAGE
+test-python:
+  stage: test
+  image: python:3.12
+  script:
+    - cd scraper
+    - apt-get update && apt-get install -y firefox-esr
+    - chmod +x install.sh && ./install.sh
+    - curl -sSL https://install.python-poetry.org | python3 -
+    - export PATH="/root/.local/bin:$PATH" # Doesnt have to persist
+    - poetry install
+    - poetry run pytest --cov scraper --cov-fail-under=75
+  rules:
+    - when: always
+  allow_failure: false
+
+#Test for spring boot application
+test-spring:
+  stage: test
+  image: maven:3.8.4-openjdk-17
+  #Regex to parse the test coverage artifact
+  coverage: '/Total.*?([0-9]{1,3})%/'
+  #Script to execute test
+  script:
+    - echo "Running Java Spring tests"
+    - cd spring
+    #Run Maven tests
+    - mvn verify
+    #Calculate code coverage
+    - awk -F"," '{ instructions += $4 + $5; covered += $5 } END { print covered, "/", instructions, " instructions covered"; print "Total coverage:", 100*covered/instructions,  "%"}' target/site/jacoco/jacoco.csv
+
+  artifacts:
+    paths:
+      - spring/target/site/jacoco/jacoco.csv
+  rules:
+    - when: always
+  allow_failure: false

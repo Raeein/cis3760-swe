@@ -27,6 +27,12 @@ To only run the tests for the Python application, run the following command:
 docker compose -f test.yml up --build python-test
 ```
 
+To run the test for the Python application locally (without docker), run the following command:
+
+```
+pytest --cov scraper
+```
+
 To only run the tests for the Java application, run the following command:
 
 ```

@@ -1,7 +1,7 @@
-const { createProxyMiddleware } = require('http-proxy-middleware');
+const { createProxyMiddleware } = require("http-proxy-middleware");
 module.exports = function (app) {
     app.use(
-        '/api',
+        "/api",
         createProxyMiddleware({
             target: process.env.BACKEND_PROXY,
             changeOrigin: true,
