@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import SearchBar from "./SearchBar";
+import majorCities from "../cities";
 import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
 
 export default function JobTable({ data }) {
     const [search, setSearch] = useState("");
-    const [salary, setSalary] = useState({ min: 0, max: 200000 });
+    // const [salary, setSalary] = useState({ min: 0, max: 200000 });
     const [detailsPane, setDetailsPane] = useState({
         visible: false,
         data: null,
@@ -19,13 +20,13 @@ export default function JobTable({ data }) {
         setSearch(event.target.value);
     }
 
-    function handleMinSalaryChange(event) {
-        setSalary({ min: parseInt(event.target.value), max: salary.max });
-    }
+    // function handleMinSalaryChange(event) {
+    //     setSalary({ min: parseInt(event.target.value), max: salary.max });
+    // }
 
-    function handleMaxSalaryChange(event) {
-        setSalary({ min: salary.min, max: parseInt(event.target.value) });
-    }
+    // function handleMaxSalaryChange(event) {
+    //     setSalary({ min: salary.min, max: parseInt(event.target.value) });
+    // }
 
     function handleEmployTypeChange(value) {
         if (value === search) {
@@ -38,9 +39,18 @@ export default function JobTable({ data }) {
     //create an array of objects or strings that stores every unique location in data.jobLocation in it
     //then map over that array to create a list of checkboxes
 
-    const jobLocation = data.map((job) => job.jobLocation);
-    const uniquejobLocation = [...new Set(jobLocation)];
-    console.log(uniquejobLocation);
+    const employment_types = [
+        "Full time",
+        "Part time",
+        "internship",
+        "permanent",
+        "temporary",
+        "contract",
+    ];
+
+    // const jobLocation = data.map((job) => job.jobLocation);
+    // const uniquejobLocation = [...new Set(jobLocation)];
+    // console.log(uniquejobLocation);
 
     // console.log("TYPE IS" + employType);
 
@@ -58,9 +68,11 @@ export default function JobTable({ data }) {
                     <SearchBar onSearched={searchBarChange} />
                     <button
                         className="filter-icon"
-                        onClick={() => setfilterPane({ visible: true, data: null })}
+                        onClick={() =>
+                            setfilterPane({ visible: true, data: null })
+                        }
                     >
-            filter
+                        filter
                     </button>
                 </div>
                 <div className="card-list">
@@ -68,19 +80,24 @@ export default function JobTable({ data }) {
                         .filter((item) => {
                             return (
                                 search.toLowerCase() === "" ||
-                item.jobTitle.toLowerCase().includes(search.toLowerCase()) ||
-                item.jobLocation.toLowerCase().includes(search.toLowerCase()) ||
-                item.employmentType.toLowerCase().includes(search.toLowerCase())
-                // employType.some((type) =>
-                //   item.employment_type.toLowerCase().includes(type)
-                // )
+                                item.jobTitle
+                                    .toLowerCase()
+                                    .includes(search.toLowerCase()) ||
+                                item.jobLocation
+                                    .toLowerCase()
+                                    .includes(search.toLowerCase()) ||
+                                item.employmentType
+                                    .toLowerCase()
+                                    .includes(search.toLowerCase())
                             );
                         })
                         .map((job) => (
                             <article
                                 className="card"
                                 key={job.jobId}
-                                onClick={() => setDetailsPane({ visible: true, data: job })}
+                                onClick={() =>
+                                    setDetailsPane({ visible: true, data: job })
+                                }
                             >
                                 <h1>{job.jobTitle}</h1>
                                 <p>Salary: {job.salary}</p>
@@ -95,7 +112,9 @@ export default function JobTable({ data }) {
                 <SlidingPane
                     isOpen={detailsPane.visible}
                     title={detailsPane.data.jobTitle}
-                    onRequestClose={() => setDetailsPane({ visible: false, data: null })}
+                    onRequestClose={() =>
+                        setDetailsPane({ visible: false, data: null })
+                    }
                     from="left"
                     width="30%"
                     overlayClassName="overlay"
@@ -106,7 +125,9 @@ export default function JobTable({ data }) {
                         <p>Location: {detailsPane.data.jobLocation}</p>
                         <p>Company: {detailsPane.data.company}</p>
                         <p>Description: {detailsPane.data.jobDescription}</p>
-                        <p>Employment type: {detailsPane.data.employmentType}</p>
+                        <p>
+                            Employment type: {detailsPane.data.employmentType}
+                        </p>
                         {/* <p>{detailsPane.data}</p> */}
                     </div>
                 </SlidingPane>
@@ -116,7 +137,9 @@ export default function JobTable({ data }) {
                 <SlidingPane
                     isOpen={filterPane.visible}
                     title="Filter Options"
-                    onRequestClose={() => setfilterPane({ visible: false, data: null })}
+                    onRequestClose={() =>
+                        setfilterPane({ visible: false, data: null })
+                    }
                     from="left"
                     width="30%"
                     overlayClassName="overlay"
@@ -124,7 +147,7 @@ export default function JobTable({ data }) {
                 >
                     <div className="slider-details">
                         <div className="filters-wrapper">
-                            <div className="salary-wrapper">
+                            {/* <div className="salary-wrapper">
                                 <p>Salary</p>
                                 <div className="values-wrapper">
                                     <input
@@ -138,92 +161,50 @@ export default function JobTable({ data }) {
                                         onChange={handleMaxSalaryChange}
                                     />
                                 </div>
-                            </div>
+                            </div> */}
                             <div className="employment-wrapper">
                                 <p>Employment Type</p>
                                 <div className="employment-type-wrapper">
-                                    <label htmlFor="full-time">
-                                        <input
-                                            type="checkbox"
-                                            id="full time"
-                                            name="full time"
-                                            value="full time"
-                                            checked={search.includes("full time")}
-                                            onChange={() => handleEmployTypeChange("full time")}
-                                        />
-                                    Full Time
-                                    </label>
-
-                                    <label htmlFor="part-time">
-                                        <input
-                                            type="checkbox"
-                                            id="part time"
-                                            name="part time"
-                                            value="part time"
-                                            checked={search.includes("part time")}
-                                            onChange={() => handleEmployTypeChange("part time")}
-                                        />
-                                    Part Time
-                                    </label>
-
-                                    <label htmlFor="internship">
-                                        <input
-                                            type="checkbox"
-                                            id="internship"
-                                            name="internship"
-                                            value="internship"
-                                            checked={search.includes("internship")}
-                                            onChange={() => handleEmployTypeChange("internship")}
-                                        />
-                                    Internship
-                                    </label>
-
-                                    <label htmlFor="permanent">
-                                        <input
-                                            type="checkbox"
-                                            id="permanent"
-                                            name="permanent"
-                                            value="permanent"
-                                            checked={search.includes("permanent")}
-                                            onChange={() => handleEmployTypeChange("permanent")}
-                                        />
-                                    Permanent
-                                    </label>
-                                    <label htmlFor="temporary">
-                                        <input
-                                            type="checkbox"
-                                            id="temporary"
-                                            name="temporary"
-                                            value="temporary"
-                                            checked={search.includes("temporary")}
-                                            onChange={() => handleEmployTypeChange("temporary")}
-                                        />
-                                    Temporary
-                                    </label>
-                                    <label htmlFor="contract">
-                                        <input
-                                            type="checkbox"
-                                            id="contract"
-                                            name="contract"
-                                            value="contract"
-                                            checked={search.includes("contract")}
-                                            onChange={() => handleEmployTypeChange("contract")}
-                                        />
-                                    Contract
-                                    </label>
+                                    {employment_types.map((type) => (
+                                        <label htmlFor={type} key={type}>
+                                            <input
+                                                type="checkbox"
+                                                id={type}
+                                                name={type}
+                                                value={type}
+                                                checked={search.includes(type)}
+                                                onChange={() =>
+                                                    handleEmployTypeChange(type)
+                                                }
+                                            />
+                                            {type}
+                                        </label>
+                                    ))}
                                 </div>
                             </div>
-                            {/* <div className="locations">
-                <p>Location</p>
-                <div className="location-wrapper">
-                  {uniquejobLocation.map((location) => (
-                    <label>
-                      <input type="checkbox"></input>
-                      {location}
-                    </label>
-                  ))}
-                </div>
-              </div> */}
+                            <div className="locations">
+                                <p>Location</p>
+                                <div className="location-wrapper">
+                                    {majorCities.major_cities.map(
+                                        (location) => (
+                                            <label key={location}>
+                                                <input
+                                                    type="checkbox"
+                                                    onChange={() =>
+                                                        handleEmployTypeChange(
+                                                            location
+                                                        )
+                                                    }
+                                                    checked={search.includes(
+                                                        location
+                                                    )}
+                                                ></input>
+                                                {location}
+                                            </label>
+                                        )
+                                    )}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </SlidingPane>
