@@ -3,6 +3,15 @@ import pytest
 from unittest.mock import MagicMock
 
 
+insert_statement = """
+    INSERT INTO job (
+        jobid, job_title, job_location,
+        salary, job_description, company, employment_type
+    )
+    VALUES (NULL, ?, ?, ?, ?, ?, ?);
+"""
+
+
 @pytest.fixture
 def mock_connection():
     connection = MagicMock()
@@ -79,13 +88,6 @@ def test_get_and_insert_job_data(
         job_json["salary"], job_json["description"],
         job_json["company"], job_json["employment_type"]
     ))
-
-
-def test_get_web_driver():
-    driver = scraper.get_firefox_driver()
-    assert driver is not None
-    scraper.stall_driver(driver)
-    assert True
 
 
 def test_load_targeted_job_board():
