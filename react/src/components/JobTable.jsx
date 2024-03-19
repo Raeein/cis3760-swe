@@ -4,7 +4,7 @@ import majorCities from "../cities";
 import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
 
-export default function JobTable({ data }) {
+export default function JobTable({ data, handleEndpointChange }) {
     const [search, setSearch] = useState("");
     // const [salary, setSalary] = useState({ min: 0, max: 200000 });
     const [detailsPane, setDetailsPane] = useState({
@@ -18,6 +18,7 @@ export default function JobTable({ data }) {
 
     function searchBarChange(event) {
         setSearch(event.target.value);
+        handleEndpointChange(`api/jobs/searches/${event.target.value}`);
     }
 
     // function handleMinSalaryChange(event) {
@@ -77,20 +78,20 @@ export default function JobTable({ data }) {
                 </div>
                 <div className="card-list">
                     {data
-                        .filter((item) => {
-                            return (
-                                search.toLowerCase() === "" ||
-                                item.jobTitle
-                                    .toLowerCase()
-                                    .includes(search.toLowerCase()) ||
-                                item.jobLocation
-                                    .toLowerCase()
-                                    .includes(search.toLowerCase()) ||
-                                item.employmentType
-                                    .toLowerCase()
-                                    .includes(search.toLowerCase())
-                            );
-                        })
+                        // .filter((item) => {
+                        //     return (
+                        //         search.toLowerCase() === "" ||
+                        //         item.jobTitle
+                        //             .toLowerCase()
+                        //             .includes(search.toLowerCase()) ||
+                        //         item.jobLocation
+                        //             .toLowerCase()
+                        //             .includes(search.toLowerCase()) ||
+                        //         item.employmentType
+                        //             .toLowerCase()
+                        //             .includes(search.toLowerCase())
+                        //     );
+                        // })
                         .map((job) => (
                             <article
                                 className="card"
