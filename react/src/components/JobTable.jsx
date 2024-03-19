@@ -25,27 +25,27 @@ export default function JobTable({ data, handleEndpointChange }) {
     }
 
     function handleEmployTypeChange(value) {
-        if (value === search) {
-            setSearch("");
-        } else {
-            setSearch(value);
-        }
         handleEndpointChange(`api/jobs/filter/employments/${value}`);
-        if (search === "") {
-            handleEndpointChange("api/jobs/all");
-        }
+        setSearch((prevSearch) => {
+            if (value === prevSearch) {
+                handleEndpointChange("api/jobs/all");
+                return "";
+            } else {
+                return value;
+            }
+        });
     }
 
     function handleLocationChange(value) {
-        if (value === search) {
-            setSearch("");
-        } else {
-            setSearch(value);
-        }
         handleEndpointChange(`api/jobs/filter/locations/${value}`);
-        if (search === "") {
-            handleEndpointChange("api/jobs/all");
-        }
+        setSearch((prevSearch) => {
+            if (value === prevSearch) {
+                handleEndpointChange("api/jobs/all");
+                return "";
+            } else {
+                return value;
+            }
+        });
     }
 
     // function handleMinSalaryChange(event) {
