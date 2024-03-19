@@ -10,4 +10,10 @@ public interface JobsRepository extends JpaRepository<Job, Integer> {
     
     @Query(value = "SELECT * FROM job WHERE LOWER(job_title) LIKE %:keyword%", nativeQuery = true)
     Iterable<Job> searchJobs(@Param("keyword")String keyword); 
+
+    @Query(value = "SELECT * FROM job WHERE LOWER(employment_type) LIKE %:type%", nativeQuery = true)
+    Iterable<Job> filterEmploymentType(@Param("type")String type); 
+
+    @Query(value = "SELECT * FROM job WHERE LOWER(job_location) LIKE %:location%", nativeQuery = true)
+    Iterable<Job> filterLocation(@Param("location")String location); 
 }

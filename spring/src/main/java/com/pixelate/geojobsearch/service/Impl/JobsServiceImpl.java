@@ -93,4 +93,14 @@ public class JobsServiceImpl implements JobsService {
     public Iterable<Job> searchJobs(String keyword) {
         return jobsRepository.searchJobs(keyword);
     }
+
+    @Override
+    public Iterable<Job> filterEmploymentType(String type) {
+        return jobsRepository.filterEmploymentType(type);
+    }
+
+    @Override
+    public Iterable<Job> filterLocation(String location) {
+        return jobsRepository.filterLocation(location);
+    }
 }

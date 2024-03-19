@@ -89,4 +89,14 @@ public class JobsController {
     private @ResponseBody Iterable<Job> searchJobs(@PathVariable String keyword) {
         return jobsService.searchJobs(keyword);
     }
+
+    @GetMapping("/filter/employments/{type}")
+    private @ResponseBody Iterable<Job> filterEmploymentType(@PathVariable String type) {
+        return jobsService.filterEmploymentType(type);
+    }
+
+    @GetMapping("/filter/locations/{location}")
+    private @ResponseBody Iterable<Job> filterLocation(@PathVariable String location) {
+        return jobsService.filterLocation(location);
+    }
 }
