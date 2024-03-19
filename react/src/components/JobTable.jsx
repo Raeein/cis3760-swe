@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import SearchBar from "./SearchBar";
 import majorCities from "../cities";
 import SlidingPane from "react-sliding-pane";
@@ -16,20 +16,6 @@ export default function JobTable({ data }) {
         data: null,
     });
 
-    const navigate = useNavigate();
-    const location = useLocation();
-
-    useEffect(() => {
-        if (location.pathname) {
-            const pathParts = location.pathname.split("/");
-
-            if (pathParts[1] === "search") {
-                setSearch(pathParts[2]);
-            }
-        }
-    }, [location.pathname]);
-
-
     function searchBarChange(event) {
         setSearch(event.target.value);
     }
@@ -45,21 +31,10 @@ export default function JobTable({ data }) {
     function handleEmployTypeChange(value) {
         if (value === search) {
             setSearch("");
-            navigate("/jobs/all");
         } else {
             setSearch(value);
-            navigate(`/${url}/${value}`);
         }
     }
-
-    function handleFilterclick() {
-        setfilterPane({ visible: true, data: null });
-        navigate("/filter");
-    }
-
-    // useEffect(() => {
-    //     navigate("/jobs/all");
-    // }, []);
 
     //create an array of objects or strings that stores every unique location in data.jobLocation in it
     //then map over that array to create a list of checkboxes
@@ -116,7 +91,7 @@ export default function JobTable({ data }) {
                                     .includes(search.toLowerCase())
                             );
                         })
-                        .map((job, index) => (
+                        .map((job) => (
                             <article
                                 className="card"
                                 key={job.jobId}
