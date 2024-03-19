@@ -24,6 +24,30 @@ export default function JobTable({ data, handleEndpointChange }) {
         }
     }
 
+    function handleEmployTypeChange(value) {
+        if (value === search) {
+            setSearch("");
+        } else {
+            setSearch(value);
+        }
+        handleEndpointChange(`api/jobs/filter/employments/${value}`);
+        if (search === "") {
+            handleEndpointChange("api/jobs/all");
+        }
+    }
+
+    function handleLocationChange(value) {
+        if (value === search) {
+            setSearch("");
+        } else {
+            setSearch(value);
+        }
+        handleEndpointChange(`api/jobs/filter/locations/${value}`);
+        if (search === "") {
+            handleEndpointChange("api/jobs/all");
+        }
+    }
+
     // function handleMinSalaryChange(event) {
     //     setSalary({ min: parseInt(event.target.value), max: salary.max });
     // }
@@ -31,14 +55,6 @@ export default function JobTable({ data, handleEndpointChange }) {
     // function handleMaxSalaryChange(event) {
     //     setSalary({ min: salary.min, max: parseInt(event.target.value) });
     // }
-
-    function handleEmployTypeChange(value) {
-        if (value === search) {
-            setSearch("");
-        } else {
-            setSearch(value);
-        }
-    }
 
     //create an array of objects or strings that stores every unique location in data.jobLocation in it
     //then map over that array to create a list of checkboxes
@@ -195,7 +211,7 @@ export default function JobTable({ data, handleEndpointChange }) {
                                                 <input
                                                     type="checkbox"
                                                     onChange={() =>
-                                                        handleEmployTypeChange(
+                                                        handleLocationChange(
                                                             location
                                                         )
                                                     }
