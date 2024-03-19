@@ -54,4 +54,49 @@ public class JobsController {
     private @ResponseBody Integer countJobs() {
         return jobsService.countJobs();
     }
+
+    @GetMapping("/get/{id}/title")
+    private @ResponseBody String getJobTitle(@PathVariable Integer id) {
+        return jobsService.getJobTitle(id);
+    }
+
+    @GetMapping("/get/{id}/location")
+    private @ResponseBody String getJobLocation(@PathVariable Integer id) {
+        return jobsService.getJobLocation(id);
+    }
+
+    @GetMapping("/get/{id}/salary")
+    private @ResponseBody String getSalary(@PathVariable Integer id) {
+        return jobsService.getSalary(id);
+    }
+
+    @GetMapping("/get/{id}/description")
+    private @ResponseBody String getJobDescription(@PathVariable Integer id) {
+        return jobsService.getJobDescription(id);
+    }
+
+    @GetMapping("/get/{id}/company")
+    private @ResponseBody String getCompany(@PathVariable Integer id) {
+        return jobsService.getCompany(id);
+    }
+
+    @GetMapping("/get/{id}/employment-type")
+    private @ResponseBody String getEmploymentType(@PathVariable Integer id) {
+        return jobsService.getEmploymentType(id); 
+    }
+
+    @GetMapping("/searches/{keyword}")
+    private @ResponseBody Iterable<Job> searchJobs(@PathVariable String keyword) {
+        return jobsService.searchJobs(keyword);
+    }
+
+    @GetMapping("/filter/employments/{type}")
+    private @ResponseBody Iterable<Job> filterEmploymentType(@PathVariable String type) {
+        return jobsService.filterEmploymentType(type);
+    }
+
+    @GetMapping("/filter/locations/{location}")
+    private @ResponseBody Iterable<Job> filterLocation(@PathVariable String location) {
+        return jobsService.filterLocation(location);
+    }
 }
