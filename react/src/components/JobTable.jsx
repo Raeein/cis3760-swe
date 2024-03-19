@@ -19,6 +19,9 @@ export default function JobTable({ data, handleEndpointChange }) {
     function searchBarChange(event) {
         setSearch(event.target.value);
         handleEndpointChange(`api/jobs/searches/${event.target.value}`);
+        if (event.target.value === "") {
+            handleEndpointChange("api/jobs/all");
+        }
     }
 
     // function handleMinSalaryChange(event) {
