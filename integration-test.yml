@@ -1,0 +1,56 @@
+version: '3.8'
+# List of Services
+services:
+  spring:
+    build: 
+      context: ./spring   # Look for Dockerfile in this path
+      dockerfile: Dockerfile.integrate
+    ports:
+      - "8080:8080"   # Expose port 8080
+    environment:
+      # These are used in apllication.property to setup DB connection
+      - DB_ADDRESS=jdbc:mysql://mysql:3306
+      - DB_DATABASE=geo_job_search_db
+      - DB_USER=root
+      - DB_PASSWORD=pwd
+    networks:
+      - spring-mysql    # Allow the spring app to discover the mysql app
+      - spring-react    # Allow the spring app to talk to the react app
+
+  mysql:
+    build: 
+      context: ./mysql    # Look for Dockerfile in this path
+      dockerfile: Dockerfile.integrate
+    environment:
+      # Mysql docker image env vars
+      - MYSQL_ROOT_PASSWORD=pwd
+      - MYSQL_DATABASE=geo_job_search_db
+    volumes:
+      - mariadb_data:/var/lib/mysql
+    healthcheck:
+      # Make sure the mysql container is healthy before starting the spring app
+      test: [ "CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized" ]
+      interval: 2s
+      retries: 10
+    networks:
+      - spring-mysql    # Allow the mysql app to talk to the spring app
+
+
+  react:
+    build: ./react    # Look for Dockerfile in this path
+    command: npm start
+    ports:
+      - "3000:3000"   # Expose port 3000
+    environment:
+      # Tell the react app that our spring server is running here
+      - BACKEND_PROXY=http://spring:8080
+    networks:
+      - spring-react    # Allow the react app to discover the spring app
+
+volumes:
+  mariadb_data:
+
+# List of Networks
+networks:
+  spring-mysql:
+  spring-react:
