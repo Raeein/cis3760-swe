@@ -39,10 +39,22 @@ To only run the tests for the Java application, run the following command:
 docker compose -f test.yml up --build spring-test
 ```
 
+To run the test for the Spring application locally, navigate to the spring folder and run the following command:
+
+```
+./mvnw test -Dtest=!JobIntegrationTest -B
+```
+
 If the user does not have make installed on their computer, please run this instead:
 
 ```
 docker compose -f test.yml up --build
+```
+
+To run the integration test, run the following command:
+
+```
+docker compose -f integration-test.yml up --build
 ```
 
 The results of the Spring tests can be found in the spring-test-results folder in the root of the project directory after running the tests.

@@ -39,6 +39,7 @@ public class JobsServiceTests {
         job.setSalary("100000");
         job.setJobDescription("Develop software applications");
         job.setCompany("Pixelate");
+        job.setEmploymentType("Full time");
     }
 
     @Test
@@ -58,7 +59,8 @@ public class JobsServiceTests {
                 () -> Assertions.assertThat(result.getJobLocation()).isEqualTo("New York"),
                 () -> Assertions.assertThat(result.getSalary()).isEqualTo("100000"),
                 () -> Assertions.assertThat(result.getJobDescription()).isEqualTo("Develop software applications"),
-                () -> Assertions.assertThat(result.getCompany()).isEqualTo("Pixelate")
+                () -> Assertions.assertThat(result.getCompany()).isEqualTo("Pixelate"),
+                () -> Assertions.assertThat(result.getEmploymentType()).isEqualTo("Full time")
         );
     }
 

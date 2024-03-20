@@ -76,23 +76,24 @@ public class JobIntegrationTest {
     //     }
     // }
 
-    // @Test
-    // public void testJobPostingsExist() throws SQLException {
-    //     try (Connection connection = DriverManager.getConnection("jdbc:mysql://mysql:3306/geo_job_search_db",
-    //             "root", "pwd");
-    //             Statement statement = connection.createStatement()
-    //     ){
-    //         ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM job");
-    //         resultSet.next();
-            
-    //         int count = resultSet.getInt(1);
-    //         assertEquals(9, count, "Expected 11 job postings in the database");
-    //     }
-    // }
+    @Test
+    public void testJobPostingsExist() throws SQLException {
+        //verify the content exist
+        try (Connection connection = DriverManager.getConnection("jdbc:mysql://mysql:3306/geo_job_search_db",
+                "root", "pwd");
+                Statement statement = connection.createStatement()
+        ){
+            ResultSet resultSet = statement.executeQuery("SELECT COUNT(*) FROM job");
+            resultSet.next();
+            int count = resultSet.getInt(1);
+            assertEquals(9, count, "Expected 11 job postings in the database");
+        }
+    }
 
 
     @Test
     public void testGetAllJob() throws Exception {
+        //test api/jobs/all
         given(jobsService.countJobs()).willReturn(9);
 
         int numJobs = jobsService.countJobs();
@@ -169,4 +170,62 @@ public class JobIntegrationTest {
         assertEquals(job.getEmploymentType(), "Full Time,Permament");
     }
 
+
+    @Test
+    public void testGetJobTitleById() throws Exception {
+        //test api/jobs/get/{id}/title
+        given(jobsService.getJobTitle(1) ).willReturn("Frontend Software Developer");
+        String jobTitle = jobsService.getJobTitle(1);
+        assertEquals(jobTitle, "Frontend Software Developer");
+    }
+
+
+    @Test
+    public void testGetJobLocationById() throws Exception {
+        //test api/jobs/get/{id}/location
+        given(jobsService.getJobLocation(1) ).willReturn("Toronto, ON");
+        String jobLocation = jobsService.getJobLocation(1);
+        assertEquals(jobLocation, "Toronto, ON");
+    }
+
+
+    @Test
+    public void testGetJobSalaryById() throws Exception {
+        //test api/jobs/get/{id}/salary
+        given(jobsService.getSalary(1) ).willReturn("$89,000");
+        String jobSalary = jobsService.getSalary(1);
+        assertEquals(jobSalary, "$89,000");
+    }
+
+
+    @Test
+    public void testGetJobDescriptionById() throws Exception {
+        //test api/jobs/get/{id}/description
+        given(jobsService.getJobDescription(1) )
+            .willReturn("Knowledge with developing using React and TypeScript");
+        String jobDescription = jobsService.getJobDescription(1);
+        assertEquals(
+            jobDescription,
+            "Knowledge with developing using React and TypeScript"
+        );
+    }
+
+
+    @Test
+    public void testGetJobCompanyById() throws Exception {
+        //test api/jobs/get/{id}/company
+        given(jobsService.getCompany(1) ).willReturn("DataCat");
+        String jobTitle = jobsService.getCompany(1);
+        assertEquals(jobTitle, "DataCat");
+    }
+
+
+    @Test
+    public void testGetJobEmploymentTypeById() throws Exception {
+        //test api/jobs/get/{id}/employment-type
+        given(jobsService.getEmploymentType(1) )
+            .willReturn("Frontend Software Developer");
+        String jobTitle = jobsService.getEmploymentType(1);
+        assertEquals(jobTitle, "Frontend Software Developer");
+    }
 }
