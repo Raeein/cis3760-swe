@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 
 import com.pixelate.geojobsearch.repository.JobsRepository;
 
+import java.util.Optional;
+
 @Service
 public class JobsServiceImpl implements JobsService {
     @Autowired
@@ -55,5 +57,50 @@ public class JobsServiceImpl implements JobsService {
     @Override
     public Integer countJobs() {
         return jobsRepository.getJobCount();
+    }
+
+    @Override
+    public String getJobTitle(Integer id) {
+        return jobsRepository.findById(id).map(Job::getJobTitle).orElse("Job not found");
+    }
+
+    @Override
+    public String getJobLocation(Integer id) {
+        return jobsRepository.findById(id).map(Job::getJobLocation).orElse("Job not found");
+    }
+
+    @Override
+    public String getSalary(Integer id) {
+        return jobsRepository.findById(id).map(Job::getSalary).orElse("Job not found");
+    }
+
+    @Override
+    public String getJobDescription(Integer id) {
+        return jobsRepository.findById(id).map(Job::getJobDescription).orElse("Job not found");
+    }
+
+    @Override
+    public String getCompany(Integer id) {
+        return jobsRepository.findById(id).map(Job::getCompany).orElse("Job not found");
+    }
+
+    @Override
+    public String getEmploymentType(Integer id) {
+        return jobsRepository.findById(id).map(Job::getEmploymentType).orElse("Job not found");
+    }
+
+    @Override
+    public Iterable<Job> searchJobs(String keyword) {
+        return jobsRepository.searchJobs(keyword);
+    }
+
+    @Override
+    public Iterable<Job> filterEmploymentType(String type) {
+        return jobsRepository.filterEmploymentType(type);
+    }
+
+    @Override
+    public Iterable<Job> filterLocation(String location) {
+        return jobsRepository.filterLocation(location);
     }
 }

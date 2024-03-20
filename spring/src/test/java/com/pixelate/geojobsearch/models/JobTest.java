@@ -193,6 +193,50 @@ public class JobTest {
     }
 
     @Test
+    public void testSetJobDescriptionOne(){
+        //Arrange & Act
+        tester.setJobDescription("Come join our security team at Vtech!");
+        String result = tester.getJobDescription();
+
+        //Assert
+        assertEquals("Come join our security team at Vtech!", result);
+    }
+
+    @Test
+    public void testSetJobDescriptionTwo(){
+        //Arrange & Act
+        tester.setJobDescription("We're looking for passionate game developers");
+        String result = tester.getJobDescription();
+
+        //Assert
+        assertEquals("We're looking for passionate game developers", result);
+    }
+
+    @Test
+    public void testGetJobDescriptionOne(){
+        //Arrange
+        tester.setJobDescription("Join our team as a Software Developer");
+
+        //Act
+        String result = tester.getJobDescription();
+
+        //Assert
+        assertEquals("Join our team as a Software Developer", result);
+    }
+
+    @Test
+    public void testGetJobDescriptionTwo(){
+        //Arrange
+        tester.setJobDescription(" ");
+
+        //Act
+        String result = tester.getJobDescription();
+
+        //Assert
+        assertEquals(" ", result);
+    }
+
+    @Test
     public void testSetCompanyOne(){
          //Arrange & Act
         tester.setCompany("Google");
@@ -235,8 +279,6 @@ public class JobTest {
         //Assert
         assertEquals(" ", result);
     }
-
-// -----
 
     @Test
     public void testSetEmploymentTypeOne(){
