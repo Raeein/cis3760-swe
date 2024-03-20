@@ -4,7 +4,7 @@ import majorCities from "../cities";
 import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
 
-export default function JobTable({ data }) {
+export default function JobTable({ data, handleEndpointChange }) {
     const [search, setSearch] = useState("");
     // const [salary, setSalary] = useState({ min: 0, max: 200000 });
     const [detailsPane, setDetailsPane] = useState({
@@ -18,6 +18,34 @@ export default function JobTable({ data }) {
 
     function searchBarChange(event) {
         setSearch(event.target.value);
+        handleEndpointChange(`api/jobs/searches/${event.target.value}`);
+        if (event.target.value === "") {
+            handleEndpointChange("api/jobs/all");
+        }
+    }
+
+    function handleEmployTypeChange(value) {
+        handleEndpointChange(`api/jobs/filter/employments/${value}`);
+        setSearch((prevSearch) => {
+            if (value === prevSearch) {
+                handleEndpointChange("api/jobs/all");
+                return "";
+            } else {
+                return value;
+            }
+        });
+    }
+
+    function handleLocationChange(value) {
+        handleEndpointChange(`api/jobs/filter/locations/${value}`);
+        setSearch((prevSearch) => {
+            if (value === prevSearch) {
+                handleEndpointChange("api/jobs/all");
+                return "";
+            } else {
+                return value;
+            }
+        });
     }
 
     // function handleMinSalaryChange(event) {
@@ -27,14 +55,6 @@ export default function JobTable({ data }) {
     // function handleMaxSalaryChange(event) {
     //     setSalary({ min: salary.min, max: parseInt(event.target.value) });
     // }
-
-    function handleEmployTypeChange(value) {
-        if (value === search) {
-            setSearch("");
-        } else {
-            setSearch(value);
-        }
-    }
 
     //create an array of objects or strings that stores every unique location in data.jobLocation in it
     //then map over that array to create a list of checkboxes
@@ -77,20 +97,20 @@ export default function JobTable({ data }) {
                 </div>
                 <div className="card-list">
                     {data
-                        .filter((item) => {
-                            return (
-                                search.toLowerCase() === "" ||
-                                item.jobTitle
-                                    .toLowerCase()
-                                    .includes(search.toLowerCase()) ||
-                                item.jobLocation
-                                    .toLowerCase()
-                                    .includes(search.toLowerCase()) ||
-                                item.employmentType
-                                    .toLowerCase()
-                                    .includes(search.toLowerCase())
-                            );
-                        })
+                        // .filter((item) => {
+                        //     return (
+                        //         search.toLowerCase() === "" ||
+                        //         item.jobTitle
+                        //             .toLowerCase()
+                        //             .includes(search.toLowerCase()) ||
+                        //         item.jobLocation
+                        //             .toLowerCase()
+                        //             .includes(search.toLowerCase()) ||
+                        //         item.employmentType
+                        //             .toLowerCase()
+                        //             .includes(search.toLowerCase())
+                        //     );
+                        // })
                         .map((job) => (
                             <article
                                 className="card"
@@ -191,7 +211,7 @@ export default function JobTable({ data }) {
                                                 <input
                                                     type="checkbox"
                                                     onChange={() =>
-                                                        handleEmployTypeChange(
+                                                        handleLocationChange(
                                                             location
                                                         )
                                                     }
