@@ -119,6 +119,7 @@
     justify-content: center;
     background-color: grey;
     max-height: 100vh;
+    flex-direction: column;
 }
 
 .map > h1 {
