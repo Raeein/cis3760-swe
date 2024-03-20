@@ -31,6 +31,7 @@ export default function App() {
             />
             <div className="map">
                 <h1>MAP</h1>
+                <p>(in progress not currently functional)</p>
             </div>
         </div>
     );
