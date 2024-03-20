@@ -31,6 +31,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Arrays;
 
 
 @WebMvcTest(controllers = JobsController.class)
@@ -90,59 +91,82 @@ public class JobIntegrationTest {
     // }
 
 
+    @Test
+    public void testGetAllJob() throws Exception {
+        given(jobsService.countJobs()).willReturn(9);
 
+        int numJobs = jobsService.countJobs();
+        assertEquals(9, numJobs);
+    }
 
-    // @Test
-    // public void testGetAllJob() throws Exception {
-    //     given(jobsService.countJobs()).willReturn(9);
+    @Test
+    public void testSearchJob() throws Exception {
+        //test api/jobs/searches/{keyword}
+        Job job = new Job(1, 
+        "Frontend Software Developer", 
+        "Toronto, ON", 
+        "$89,000", 
+        "Knowledge with developing using React and TypeScript",
+        "DataCat", 
+        "Full Time,Permament"
+        );
 
-    //     int numJobs = jobsService.countJobs();
-    //     assertEquals(9, numJobs);
-    // }
+        when(jobsService.searchJobs("Frontend Software Developer")).thenReturn(Arrays.asList(job));
 
+        Iterable<Job> jobs = jobsService.searchJobs("Frontend Software Developer");
+        job = jobs.iterator().next();
+        assertEquals(job.getJobTitle(), "Frontend Software Developer");
+        assertEquals(job.getJobLocation(), "Toronto, ON");
+        assertEquals(job.getSalary(), "$89,000");
+        assertEquals(job.getJobDescription(), "Knowledge with developing using React and TypeScript");
+        assertEquals(job.getCompany(), "DataCat");
+        assertEquals(job.getEmploymentType(), "Full Time,Permament");
+    }
 
-    // @Test
-    // public void testSearchJob() throws Exception {
+    @Test
+    public void testFilterEmployment() throws Exception {
+        //test api/jobs/filter/employments/{type}
+        Job job = new Job(1, 
+        "Frontend Software Developer", 
+        "Toronto, ON", 
+        "$89,000", 
+        "Knowledge with developing using React and TypeScript",
+        "DataCat", 
+        "Full Time,Permament"
+        );
+        when(jobsService.filterEmploymentType("Permament")).thenReturn(Arrays.asList(job));
 
-    //     Job job = new Job(1, 
-    //     "Frontend Software Developer", 
-    //     "Toronto, ON", 
-    //     "$89,000", 
-    //     "Knowledge with developing using React and TypeScript",
-    //     "DataCat", 
-    //     "Full Time,Permament"
-    //     );
+        Iterable<Job> jobs = jobsService.filterEmploymentType("Permament");
+        job = jobs.iterator().next();
+        assertEquals(job.getJobTitle(), "Frontend Software Developer");
+        assertEquals(job.getJobLocation(), "Toronto, ON");
+        assertEquals(job.getSalary(), "$89,000");
+        assertEquals(job.getJobDescription(), "Knowledge with developing using React and TypeScript");
+        assertEquals(job.getCompany(), "DataCat");
+        assertEquals(job.getEmploymentType(), "Full Time,Permament");
+    }
 
-    //     when(jobsService.searchJobs("Frontend Software Developer")).thenReturn(Arrays.asList(job));
+    @Test
+    public void testFilterLocatiion() throws Exception {
+        //test api/jobs/filter/locations/{location}
+        Job job = new Job(1, 
+        "Frontend Software Developer", 
+        "Toronto, ON", 
+        "$89,000", 
+        "Knowledge with developing using React and TypeScript",
+        "DataCat", 
+        "Full Time,Permament"
+        );
+        when(jobsService.filterLocation("Toronto, ON")).thenReturn(Arrays.asList(job));
 
-    //     Iterable<Job> jobs = jobsService.searchJobs("Frontend Software Developer");
-    //     int len = 0;
-    //     System.out.print("Job: ");
-    //     System.out.println(jobs);
-    //     for (Job job : jobs) len++;
-    //     assertEquals(3, len);
-    // }
-
-    // @Test
-    // public void testFilterEmployment() throws Exception {
-    //     Iterable<Job> jobs = jobsService.filterEmploymentType("Full time");
-    //     int len = 0;
-    //     System.out.print("Job: ");
-    //     System.out.println(jobs);
-    //     for (Job job : jobs) {
-    //         len++;
-    //     }
-    //     assertEquals(7, len);
-    // }
-
-    // @Test
-    // public void testFilterLocatiion() throws Exception {
-    //     Iterable<Job> jobs = jobsService.filterLocation("Kitchener, ON");
-    //     int len = 0;
-    //     System.out.print("Job: ");
-    //     System.out.println(jobs);
-    //     for (Job job : jobs) len++;
-    //     assertEquals(1, len);
-    // }
+        Iterable<Job> jobs = jobsService.filterLocation("Toronto, ON");
+        job = jobs.iterator().next();
+        assertEquals(job.getJobTitle(), "Frontend Software Developer");
+        assertEquals(job.getJobLocation(), "Toronto, ON");
+        assertEquals(job.getSalary(), "$89,000");
+        assertEquals(job.getJobDescription(), "Knowledge with developing using React and TypeScript");
+        assertEquals(job.getCompany(), "DataCat");
+        assertEquals(job.getEmploymentType(), "Full Time,Permament");
+    }
 
 }
