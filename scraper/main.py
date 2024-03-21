@@ -1,7 +1,7 @@
 import mariadb
 import sys
 import os
-# import json
+import json
 import scraper
 import time
 import platform
@@ -88,12 +88,40 @@ print("Connected to MariaDB Platform!")
 cur = conn.cursor()
 
 
+print("Reading the config file")
+config_file_name = "scraper_config.json"
+
+if not os.path.exists(config_file_name):
+    print("Config file not found. Exiting...")
+    exit()
+
+try:
+    with open(config_file_name, 'r') as file:
+        config = json.load(file)
+
+        required_keys = ['search_term', 'location', 'websites']
+        if not all(key in config for key in required_keys):
+            missing_keys = [key for key in required_keys if key not in config]
+            print("Error. Missing required key(s): ", missing_keys)
+
+        print("search_term: ", config["search_term"])
+        print("location: ", config["location"])
+        print("websites: ", config["websites"])
+
+except json.JSONDecodeError:
+    print("Error. Invalid JSON format. Exiting...")
+    exit()
+except Exception as e:
+    print("Error. Exiting...", e)
+    exit()
+
 print("Start job scraping session")
 job_object_generator = get_job_info(
-    "Software Developer", "Toronto, ON", ["Canadian Job Bank", "Indeed"]
+    config["search_term"], config["location"], config["websites"]
 )
+
 job_object = next(job_object_generator)
-while (job_object is not None):
+while job_object is not None:
     res = scraper.insert_into_database(job_object, conn, cur)
     if res == 0:
         print(
