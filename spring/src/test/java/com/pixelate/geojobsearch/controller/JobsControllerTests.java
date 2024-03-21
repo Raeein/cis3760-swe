@@ -21,6 +21,9 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
+import org.assertj.core.api.Assertions;
+import org.hibernate.mapping.List;
+
 
 @WebMvcTest(controllers = JobsController.class)
 @AutoConfigureMockMvc(addFilters = false)
@@ -45,6 +48,7 @@ public class JobsControllerTests {
         job.setSalary("80000");
         job.setJobDescription("Develop software applications");
         job.setCompany("Pixelate");
+        job.setEmploymentType("Full Time");
     }
 
     @Test
@@ -90,5 +94,70 @@ public class JobsControllerTests {
         given(jobsService.countJobs()).willReturn(1);
         ResultActions result = mockMvc.perform(get("/api/jobs/count"))
                 .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void testGetJobTitle() throws Exception {
+        given(jobsService.getJobTitle(1)).willReturn("Software Developer");
+        ResultActions result = mockMvc.perform(get("/api/jobs/get/1/title"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void testGetJobLocation() throws Exception {
+        given(jobsService.getJobLocation(1)).willReturn("New York");
+        ResultActions result = mockMvc.perform(get("/api/jobs/get/1/location"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void testGetJobSalary() throws Exception {
+        given(jobsService.getJobLocation(1)).willReturn("80000");
+        ResultActions result = mockMvc.perform(get("/api/jobs/get/1/salary"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void testGetJobDescription() throws Exception {
+        given(jobsService.getJobLocation(1)).willReturn("Develop software applications");
+        ResultActions result = mockMvc.perform(get("/api/jobs/get/1/description"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void testGetJobCompany() throws Exception {
+        given(jobsService.getJobLocation(1)).willReturn("Pixelate");
+        ResultActions result = mockMvc.perform(get("/api/jobs/get/1/company"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void testGetJobEmploymentType() throws Exception {
+        given(jobsService.getEmploymentType(1)).willReturn("Full time");
+        ResultActions result = mockMvc.perform(get("/api/jobs/get/1/company"))
+                .andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void testSearchKeyword() throws Exception {
+        when(jobsService.searchJobs("Software")).thenReturn(java.util.Arrays.asList(job));
+        Iterable<Job> result = jobsService.searchJobs("Software");
+        Assertions.assertThat(result).isEqualTo(java.util.Arrays.asList(job));
+
+ 
+    }
+
+    @Test
+    public void testFilterEmployment() throws Exception {
+        when(jobsService.filterEmploymentType("Full time")).thenReturn(java.util.Arrays.asList(job));
+        Iterable<Job> result = jobsService.filterEmploymentType("Full time");
+        Assertions.assertThat(result).isEqualTo(java.util.Arrays.asList(job));
+    }
+
+    @Test
+    public void testFilterLocation() throws Exception {
+        when(jobsService.filterLocation("New York")).thenReturn(java.util.Arrays.asList(job));
+        Iterable<Job> result = jobsService.filterLocation("New York");
+        Assertions.assertThat(result).isEqualTo(java.util.Arrays.asList(job));
     }
 }
