@@ -10,11 +10,32 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class JobTest {
 
     private Job tester;
-
     @BeforeEach
     public void setUp() {
         tester = new Job();
     }
+
+    @Test
+    public void testAllArgsConstructor() {
+        Job job = new Job(1,
+                "Software Engineer",
+                "San Francisco, CA",
+                "$120,000",
+                "Develop cutting-edge software solutions.",
+                "Tech Innovations Inc.",
+                "Full-time");
+
+        // Validate that each field is correctly initialized
+        assertEquals(Integer.valueOf(1), job.getJobId(), "Job ID should be initialized correctly");
+        assertEquals("Software Engineer", job.getJobTitle(), "Job title should be initialized correctly");
+        assertEquals("San Francisco, CA", job.getJobLocation(), "Job location should be initialized correctly");
+        assertEquals("$120,000", job.getSalary(), "Salary should be initialized correctly");
+        assertEquals("Develop cutting-edge software solutions.", job.getJobDescription(), "Job description should be initialized correctly");
+        assertEquals("Tech Innovations Inc.", job.getCompany(), "Company should be initialized correctly");
+        assertEquals("Full-time", job.getEmploymentType(), "Employment type should be initialized correctly");
+    }
+
+
 
     @Test
     public void testSetIdOne(){

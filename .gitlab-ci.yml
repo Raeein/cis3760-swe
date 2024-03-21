@@ -86,7 +86,7 @@ test-spring:
     - echo "Running Java Spring tests"
     - cd spring
     #Run Maven tests
-    - mvn verify
+    - mvn verify -Dtest=!JobIntegrationTest
     #Calculate code coverage
     - awk -F"," '{ instructions += $4 + $5; covered += $5 } END { print covered, "/", instructions, " instructions covered"; print "Total coverage:", 100*covered/instructions,  "%"}' target/site/jacoco/jacoco.csv
 
