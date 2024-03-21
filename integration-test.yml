@@ -2,7 +2,9 @@ version: '3.8'
 # List of Services
 services:
   spring:
-    build: ./spring   # Look for Dockerfile in this path
+    build: 
+      context: ./spring   # Look for Dockerfile in this path
+      dockerfile: Dockerfile.integrate
     ports:
       - "8080:8080"   # Expose port 8080
     environment:
@@ -16,7 +18,9 @@ services:
       - spring-react    # Allow the spring app to talk to the react app
 
   mysql:
-    build: ./mysql    # Look for Dockerfile in this path
+    build: 
+      context: ./mysql    # Look for Dockerfile in this path
+      dockerfile: Dockerfile.integrate
     environment:
       # Mysql docker image env vars
       - MYSQL_ROOT_PASSWORD=pwd
@@ -30,7 +34,7 @@ services:
       retries: 10
     networks:
       - spring-mysql    # Allow the mysql app to talk to the spring app
-      - scraper-mysql   # Allow the mysql app to discover the scraper app
+
 
   react:
     build: ./react    # Look for Dockerfile in this path
@@ -43,21 +47,6 @@ services:
     networks:
       - spring-react    # Allow the react app to discover the spring app
 
-  scraper:
-    build: ./scraper  # Look for Dockerfile in this path
-    environment:
-      - DB_ADDRESS=mysql
-      - DB_DATABASE=geo_job_search_db
-      - DB_USER=root
-      - DB_PASSWORD=pwd
-      - DB_PORT=3306
-    depends_on:
-      mysql:
-        condition: service_healthy
-    networks:
-      - spring-mysql    # Allow the scraper app to talk to the mysql app
-      - scraper-mysql   # Allow the scraper app to discover the mysql app
-
 volumes:
   mariadb_data:
 
@@ -65,4 +54,3 @@ volumes:
 networks:
   spring-mysql:
   spring-react:
-  scraper-mysql:

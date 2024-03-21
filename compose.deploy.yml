@@ -1,10 +1,32 @@
 version: '3.8'
 # List of Services
 services:
+  swag: #reverse proxy
+    image: lscr.io/linuxserver/swag:latest
+    container_name: swag
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - URL=pixelate.socs.uoguelph.ca
+      - VALIDATION=http
+      - STAGING=false #optional
+    volumes:
+      - ./swag/config:/config
+    ports:
+      - 443:443
+      - 80:80 #optional
+    depends_on:
+      - react
+    networks:
+      - swag-react
+    restart: unless-stopped
+
   spring:
     build: ./spring   # Look for Dockerfile in this path
-    ports:
-      - "8080:8080"   # Expose port 8080
+    
     environment:
       # These are used in apllication.property to setup DB connection
       - DB_ADDRESS=jdbc:mysql://mysql:3306
@@ -35,13 +57,13 @@ services:
   react:
     build: ./react    # Look for Dockerfile in this path
     command: npm start
-    ports:
-      - "3000:3000"   # Expose port 3000
+
     environment:
       # Tell the react app that our spring server is running here
       - BACKEND_PROXY=http://spring:8080
     networks:
       - spring-react    # Allow the react app to discover the spring app
+      - swag-react
 
   scraper:
     build: ./scraper  # Look for Dockerfile in this path
@@ -66,3 +88,4 @@ networks:
   spring-mysql:
   spring-react:
   scraper-mysql:
+  swag-react:
