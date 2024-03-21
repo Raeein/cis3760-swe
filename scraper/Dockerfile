@@ -11,7 +11,7 @@ ENV POETRY_NO_INTERACTION=1 \
       POETRY_VERSION=1.7.1
 
 RUN apt-get update -y && \
-    apt-get install -y libmariadb-dev gcc firefox-esr
+    apt-get install -y libmariadb-dev gcc firefox-esr cron
 
 # Only way that worked dont ask me why <3
 RUN pip install poetry==$POETRY_VERSION
@@ -35,4 +35,5 @@ RUN poetry install --no-root --no-dev
 
 COPY . .
 
-CMD ["poetry", "run", "python", "main.py"]
+# CMD ["poetry", "run", "python", "main.py"]
+CMD ["bash", "setup-cron.sh"]

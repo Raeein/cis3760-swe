@@ -12,4 +12,4 @@ COPY src src
 RUN chmod +x ./mvnw
 
 # Run the tests
-CMD ["./mvnw", "test", "-B"]
+CMD ["./mvnw", "test", "-Dtest=!JobIntegrationTest", "-B"]

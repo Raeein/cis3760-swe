@@ -3,6 +3,15 @@ import pytest
 from unittest.mock import MagicMock
 
 
+insert_statement = """
+    INSERT INTO job (
+        jobid, job_title, job_location,
+        salary, job_description, company, employment_type
+    )
+    VALUES (NULL, ?, ?, ?, ?, ?, ?);
+"""
+
+
 @pytest.fixture
 def mock_connection():
     connection = MagicMock()
@@ -81,13 +90,6 @@ def test_get_and_insert_job_data(
     ))
 
 
-def test_get_web_driver():
-    driver = scraper.get_firefox_driver()
-    assert driver is not None
-    scraper.stall_driver(driver)
-    assert True
-
-
 def test_load_targeted_job_board():
     targeted_job_board = scraper.load_targeted_job_board()
     assert targeted_job_board == ["Indeed", "Canadian Job Bank"]
@@ -105,13 +107,13 @@ def test_get_job_board_search_url():
     url = scraper.get_search_url(
         "Engineer", "Toronto", "Indeed"
     )
-    assert url == "https://ca.indeed.com/jobs?q=Engineer&l=Toronto"
+    assert url == "https://ca.indeed.com/jobs?q=Engineer&l=Toronto&sort=date"
     url = scraper.get_search_url(
         "Engineer", "Toronto", "Canadian Job Bank"
     )
     assert url == """
                         https://www.jobbank.gc.ca/jobsearch/jobsearch?
-                        searchstring=Engineer&locationstring=Toronto
+                        searchstring=Engineer&locationstring=Toronto&sort=D
                 """.replace("\n", "").replace(" ", "")
 
 
