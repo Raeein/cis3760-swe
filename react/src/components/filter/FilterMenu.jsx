@@ -20,8 +20,11 @@ export default function FilterMenu({
     filterPane,
     setfilterPane,
 }) {
-    function handleEmployTypeChange(value) {
-        handleEndpointChange(`api/jobs/filter/employments/${value}`);
+    function handleFilterChange(value, type) {
+        type === "employment"
+            ? handleEndpointChange(`api/jobs/filter/employments/${value}`)
+            : handleEndpointChange(`api/jobs/filter/locations/${value}`);
+
         setSearch((prevSearch) => {
             if (value === prevSearch) {
                 handleEndpointChange("api/jobs/all");
@@ -32,17 +35,6 @@ export default function FilterMenu({
         });
     }
 
-    function handleLocationChange(value) {
-        handleEndpointChange(`api/jobs/filter/locations/${value}`);
-        setSearch((prevSearch) => {
-            if (value === prevSearch) {
-                handleEndpointChange("api/jobs/all");
-                return "";
-            } else {
-                return value;
-            }
-        });
-    }
     return (
         <>
             {filterPane.visible && (
@@ -86,7 +78,10 @@ export default function FilterMenu({
                                                 value={type}
                                                 checked={search.includes(type)}
                                                 onChange={() =>
-                                                    handleEmployTypeChange(type)
+                                                    handleFilterChange(
+                                                        type,
+                                                        "employment"
+                                                    )
                                                 }
                                             />
                                             {type}
@@ -103,8 +98,9 @@ export default function FilterMenu({
                                                 <input
                                                     type="checkbox"
                                                     onChange={() =>
-                                                        handleLocationChange(
-                                                            location
+                                                        handleFilterChange(
+                                                            location,
+                                                            "location"
                                                         )
                                                     }
                                                     checked={search.includes(
