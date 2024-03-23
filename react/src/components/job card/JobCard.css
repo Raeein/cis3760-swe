@@ -1,0 +1,67 @@
+.card {
+    height: 200px;
+    width: 400px;
+    min-width: 250px;
+    padding: 1.5rem;
+    border-radius: 16px;
+    background: #17141d;
+    display: flex;
+    flex-direction: column;
+    transition-duration: 600ms;
+    transition-timing-function: ease;
+    margin: 0;
+    scroll-snap-align: start;
+    clear: both;
+    position: relative;
+
+    text-align: center;
+}
+
+.card:focus-within,
+.card:hover ~ .card {
+    transform: translateX(-130px);
+}
+
+.card:not(:hover) {
+    transform: translateX(-70px);
+}
+
+.card h1 {
+    color: #fff;
+    font-size: 1.5rem;
+    /* margin-bottom: 1rem; */
+}
+
+.card h2 {
+    color: #fff;
+    font-size: 1.25rem;
+    /* margin-bottom: 1rem; */
+}
+
+.card p {
+    color: #fff;
+    font-size: 1rem;
+    /* margin-bottom: 1rem; */
+}
+
+.card:after {
+    background: linear-gradient(transparent, mediumslateblue, transparent);
+    height: 120px;
+    width: 1px;
+    position: absolute;
+    right: -1px;
+    content: "";
+    transition: top, opacity;
+    transition-duration: 600ms;
+    transition-timing-function: ease;
+}
+
+.card:after {
+    top: 65%;
+    opacity: 0;
+}
+
+.card:hover:after {
+    top: 25%;
+    opacity: 1;
+}

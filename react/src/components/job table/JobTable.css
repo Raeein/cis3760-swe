@@ -1,0 +1,17 @@
+.JobTable {
+    grid-row: 2 / 10;
+    grid-column: 1 / 6;
+    max-height: 100vh;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+}
+
+.JobTable::-webkit-scrollbar {
+    display: none;
+}
+
+.card-list {
+    padding-top: 20px;
+}

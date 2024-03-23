@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import "./App.css";
-import JobTable from "./components/JobTable.jsx";
+import JobTable from "./components/job table/JobTable.jsx";
 // import fakejobs from "./test.json";
 
 export default function App() {
