@@ -184,9 +184,7 @@ def parse_salary(salary: str) -> str:
     if(index == 0):
         print("Salary not given"); print()
 
-        return str("$" + format(round(num, 2), '.2f'))
-
-   
+        return "Salary not given"
 
     while(salary[index].isnumeric()):
         num = num * 10 + int(salary[index]); 
