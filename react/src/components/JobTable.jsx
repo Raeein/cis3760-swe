@@ -218,3 +218,4 @@ export default function JobTable({ data, handleEndpointChange }) {
         </>
     );
 }
+
