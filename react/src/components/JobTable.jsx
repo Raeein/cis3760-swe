@@ -97,20 +97,6 @@ export default function JobTable({ data, handleEndpointChange }) {
                 </div>
                 <div className="card-list">
                     {data
-                        // .filter((item) => {
-                        //     return (
-                        //         search.toLowerCase() === "" ||
-                        //         item.jobTitle
-                        //             .toLowerCase()
-                        //             .includes(search.toLowerCase()) ||
-                        //         item.jobLocation
-                        //             .toLowerCase()
-                        //             .includes(search.toLowerCase()) ||
-                        //         item.employmentType
-                        //             .toLowerCase()
-                        //             .includes(search.toLowerCase())
-                        //     );
-                        // })
                         .map((job) => (
                             <article
                                 className="card"

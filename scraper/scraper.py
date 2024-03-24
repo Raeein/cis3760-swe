@@ -179,12 +179,14 @@ def parse_salary(salary: str) -> str:
     year_keywords = ["year", "annual", "annum"]
     index = salary.find("$") + 1
 
-    if(index == 0):
-        print("Salary not given")
-        print()
-        return "Salary not given"
-
     num = 0.0
+
+    if(index == 0):
+        print("Salary not given"); print()
+
+        return str("$" + format(round(num, 2), '.2f'))
+
+   
 
     while(salary[index].isnumeric()):
         num = num * 10 + int(salary[index]); 
@@ -204,11 +206,10 @@ def parse_salary(salary: str) -> str:
         if i in salary.lower():
             num = num / 2080.0
             break
-    
-    print("Parsed: ", str(format(round(num, 2), '.2f')))
-    print()
 
-    return str(format(round(num, 2), '.2f'))
+    print("Parsed: ", str("$" + format(round(num, 2), '.2f'))); print()
+
+    return str("$" + format(round(num, 2), '.2f'))
 
 def parse_employment_type(employment_type: str) -> str:
     employment_types = [

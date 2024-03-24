@@ -16,4 +16,8 @@ public interface JobsRepository extends JpaRepository<Job, Integer> {
 
     @Query(value = "SELECT * FROM job WHERE LOWER(job_location) LIKE %:location%", nativeQuery = true)
     Iterable<Job> filterLocation(@Param("location")String location); 
+
+    @Query(value = "SELECT * FROM job WHERE CAST(SUBSTRING(salary, 2) AS DECIMAL(10,2)) " +
+        "BETWEEN :min AND :max", nativeQuery = true)
+    Iterable<Job> filterSalary(@Param("min") float min, @Param("max") float max);
 }
