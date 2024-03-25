@@ -19,9 +19,8 @@ export default function JobTable({ data, handleEndpointChange }) {
     function searchBarChange(event) {
         setSearch(event.target.value);
         handleEndpointChange(`api/jobs/searches/${event.target.value}`);
-        //Introducing React linter fail by having three spaces instead of four.
         if (event.target.value === "") {
-           handleEndpointChange("api/jobs/all");
+            handleEndpointChange("api/jobs/all");
         }
     }
 

@@ -42,7 +42,6 @@ public class JobsServiceImpl implements JobsService {
         try {
             jobsRepository.deleteById(id);
         } catch (Exception exception) {
-            //This is a test line to check if the Java linter will fail if the line length exceeds 120 characters. This line is over 120 characters.
             return exception.getMessage();
         }
         return "Deleted";

@@ -29,8 +29,7 @@ def get_firefox_driver():
     else:
         gecko_driver_path = '/usr/bin/geckodriver'
     try:
-        #Adding Python linter fail with whitespace after '('.
-		service = Service( gecko_driver_path)
+        service = Service(gecko_driver_path)
         driver = webdriver.Firefox(service=service, options=options)
         driver.execute_script(
             "Object.defineProperty(navigator,'webdriver',{get:()=>undefined})"
