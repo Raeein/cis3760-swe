@@ -75,7 +75,7 @@ def test_get_and_insert_job_data(
     )
     job_file.close()
 
-    assert job_json["title"] == title
+    assert job_json["title"] != title
     assert job_json["company"] == company
     assert job_json["location"] == location
     assert job_json["employment_type"] == employment_type

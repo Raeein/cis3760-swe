@@ -1,11 +1,13 @@
 package com.pixelate.geojobsearch.service.Impl;
 
 import com.pixelate.geojobsearch.models.Job;
-import com.pixelate.geojobsearch.repository.JobsRepository;
 import com.pixelate.geojobsearch.service.JobsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import com.pixelate.geojobsearch.repository.JobsRepository;
 
+import java.util.Optional;
 
 @Service
 public class JobsServiceImpl implements JobsService {

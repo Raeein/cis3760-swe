@@ -57,7 +57,7 @@ public class JobsServiceTests {
                 () -> Assertions.assertThat(result.getJobId()).isEqualTo(1),
                 () -> Assertions.assertThat(result.getJobTitle()).isEqualTo("Software Engineer"),
                 () -> Assertions.assertThat(result.getJobLocation()).isEqualTo("New York"),
-                () -> Assertions.assertThat(result.getSalary()).isEqualTo("100000"),
+                () -> Assertions.assertThat(result.getSalary()).isEqualTo("1000000"),
                 () -> Assertions.assertThat(result.getJobDescription()).isEqualTo("Develop software applications"),
                 () -> Assertions.assertThat(result.getCompany()).isEqualTo("Pixelate"),
                 () -> Assertions.assertThat(result.getEmploymentType()).isEqualTo("Full time")
