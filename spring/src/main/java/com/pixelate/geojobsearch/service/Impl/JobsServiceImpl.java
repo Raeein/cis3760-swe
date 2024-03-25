@@ -1,13 +1,11 @@
 package com.pixelate.geojobsearch.service.Impl;
 
 import com.pixelate.geojobsearch.models.Job;
+import com.pixelate.geojobsearch.repository.JobsRepository;
 import com.pixelate.geojobsearch.service.JobsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import com.pixelate.geojobsearch.repository.JobsRepository;
 
-import java.util.Optional;
 
 @Service
 public class JobsServiceImpl implements JobsService {
@@ -44,6 +42,7 @@ public class JobsServiceImpl implements JobsService {
         try {
             jobsRepository.deleteById(id);
         } catch (Exception exception) {
+            //This is a test line to check if the Java linter will fail if the line length exceeds 120 characters. This line is over 120 characters.
             return exception.getMessage();
         }
         return "Deleted";
