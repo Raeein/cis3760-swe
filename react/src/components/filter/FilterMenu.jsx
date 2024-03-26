@@ -36,34 +36,37 @@ export default function FilterMenu({
         });
     }
 
-    const [salary, setSalary] = useState({ min: 0, max: 9999 });
+    const [salary, setSalary] = useState({ min: 0, max: 999 });
 
     function handleMinSalaryChange(event) {
         const newMin = event.target.value;
         setSalary((prevSalary) => {
-            if (newMin === "") {
+            if (newMin === "" && prevSalary.max === "") {
                 handleEndpointChange("api/jobs/all");
-                return 0;
+                return { min: 0, max: 999 };
+            } else {
+                handleEndpointChange(
+                    `api/jobs/filter/salaries/${newMin}&${prevSalary.max}`
+                );
+                return { min: newMin, max: prevSalary.max };
             }
-            return { min: newMin, max: prevSalary.max };
         });
-        handleEndpointChange(
-            `api/jobs/filter/salaries/${newMin}&${salary.max}`
-        );
     }
 
     function handleMaxSalaryChange(event) {
         const newMax = event.target.value;
+        console.log(newMax + "THIS IS THE NEW MAX");
         setSalary((prevSalary) => {
-            if (newMax === "") {
+            if (newMax === "" && prevSalary.min === "") {
                 handleEndpointChange("api/jobs/all");
-                return 9999;
+                return { min: 0, max: 999 };
+            } else {
+                handleEndpointChange(
+                    `api/jobs/filter/salaries/${prevSalary.min}&${newMax}`
+                );
+                return { min: prevSalary.min, max: newMax };
             }
-            return { min: prevSalary.min, max: newMax };
         });
-        handleEndpointChange(
-            `api/jobs/filter/salaries/${salary.min}&${newMax}`
-        );
     }
 
     return (
@@ -87,20 +90,14 @@ export default function FilterMenu({
                                 <div className="values-wrapper">
                                     <input
                                         type="text"
-                                        placeholder={
-                                            salary.min === 0
-                                                ? "min"
-                                                : salary.min
-                                        }
+                                        placeholder="min"
+                                        value={salary.min}
                                         onChange={handleMinSalaryChange}
                                     />
                                     <input
                                         type="text"
-                                        placeholder={
-                                            salary.max === 9999
-                                                ? "max"
-                                                : salary.max
-                                        }
+                                        placeholder="max"
+                                        value={salary.max}
                                         onChange={handleMaxSalaryChange}
                                     />
                                 </div>
