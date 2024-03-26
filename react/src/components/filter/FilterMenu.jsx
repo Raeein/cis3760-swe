@@ -35,6 +35,18 @@ export default function FilterMenu({
         });
     }
 
+    const [salary, setSalary] = useState({ min: 0, max: 0 });
+
+    const handleMinChange = (event) => {
+        setSalary({ ...salary, min: parseInt(event.target.value) || 0 });
+        handleEndpointChange(`/filter/salaries/${salary.min}&${salary.max}`);
+      };
+    
+    const handleMaxChange = (event) => {
+        setSalary({ ...salary, max: parseInt(event.target.value) || 0 });
+        handleEndpointChange(`/filter/salaries/${salary.min}&${salary.max}`);
+    };
+
     return (
         <>
             {filterPane.visible && (
@@ -51,7 +63,7 @@ export default function FilterMenu({
                 >
                     <div className="slider-details">
                         <div className="filters-wrapper">
-                            {/* <div className="salary-wrapper">
+                            <div className="salary-wrapper">
                         <p>Salary</p>
                         <div className="values-wrapper">
                             <input
@@ -65,7 +77,7 @@ export default function FilterMenu({
                                 onChange={handleMaxSalaryChange}
                             />
                         </div>
-                    </div> */}
+                    </div>
                             <div className="employment-wrapper">
                                 <p>Employment Type</p>
                                 <div className="employment-type-wrapper">
