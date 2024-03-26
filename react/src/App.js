@@ -21,7 +21,7 @@ export default function App() {
     }, [endpoint]);
 
     // console log the infomration in the json file as a string
-    //console.log(jobData);
+    console.log(jobData);
 
     return (
         <div className="container">
