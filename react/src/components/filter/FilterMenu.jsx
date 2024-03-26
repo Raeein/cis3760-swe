@@ -41,17 +41,29 @@ export default function FilterMenu({
     function handleMinSalaryChange(event) {
         const newMin = event.target.value;
         setSalary((prevSalary) => {
+            if (newMin === "") {
+                handleEndpointChange("api/jobs/all");
+                return 0;
+            }
             return { min: newMin, max: prevSalary.max };
         });
-        handleEndpointChange(`api/jobs/filter/salaries/${newMin}&${salary.max}`);
+        handleEndpointChange(
+            `api/jobs/filter/salaries/${newMin}&${salary.max}`
+        );
     }
 
     function handleMaxSalaryChange(event) {
         const newMax = event.target.value;
         setSalary((prevSalary) => {
+            if (newMax === "") {
+                handleEndpointChange("api/jobs/all");
+                return 9999;
+            }
             return { min: prevSalary.min, max: newMax };
         });
-        handleEndpointChange(`api/jobs/filter/salaries/${salary.min}&${newMax}`);
+        handleEndpointChange(
+            `api/jobs/filter/salaries/${salary.min}&${newMax}`
+        );
     }
 
     return (
@@ -85,7 +97,7 @@ export default function FilterMenu({
                                     <input
                                         type="text"
                                         placeholder={
-                                            salary.max === 0
+                                            salary.max === 9999
                                                 ? "max"
                                                 : salary.max
                                         }

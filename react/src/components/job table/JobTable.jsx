@@ -40,13 +40,14 @@ export default function JobTable({ data, handleEndpointChange }) {
                     </button>
                 </div>
                 <div className="card-list">
-                    {data.map((job, index) => (
-                        <JobCard
-                            job={job}
-                            handleDetailsPane={setDetailsPane}
-                            key={index}
-                        />
-                    ))}
+                    {Array.isArray(data) &&
+                        data.map((job, index) => (
+                            <JobCard
+                                job={job}
+                                handleDetailsPane={setDetailsPane}
+                                key={index}
+                            />
+                        ))}
                 </div>
             </div>
 
