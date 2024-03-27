@@ -5,8 +5,8 @@ import majorCities from "../../cities";
 import "./FilterMenu.css";
 
 const employment_types = [
-    "Full time",
-    "Part time",
+    "full time",
+    "part time",
     "internship",
     "permanent",
     "temporary",
