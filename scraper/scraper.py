@@ -172,6 +172,7 @@ def get_job_url(job_board_name: str, job_card: str) -> str:
     url += job_card.find('a')['href']
     return url
 
+
 def parse_salary(salary: str) -> str:
     print("Original: ", salary)
 
@@ -181,23 +182,21 @@ def parse_salary(salary: str) -> str:
 
     num = 0.0
 
-    if(index == 0):
-        print("Salary not given"); print()
-
+    if (index == 0):
         return "Salary not given"
 
-    while(salary[index].isnumeric()):
+    while (salary[index].isnumeric()):
         num = num * 10 + int(salary[index]); 
         index += 1
         if(salary[index] == ","):
             index += 1
 
-    if(salary[index] == "."):
+    if (salary[index] == "."):
         index += 1
         while(salary[index].isnumeric()):
             num += int(salary[index]) * (10 ** (-1 * (index - salary.find(".")))); index += 1
 
-    if "day" in salary.lower():
+    if ("day" in salary.lower()):
         num = num / 8
     
     for i in year_keywords:
