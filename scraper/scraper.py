@@ -186,27 +186,27 @@ def parse_salary(salary: str) -> str:
         return "Salary not given"
 
     while (salary[index].isnumeric()):
-        num = num * 10 + int(salary[index]); 
+        num = num * 10 + int(salary[index])
         index += 1
-        if(salary[index] == ","):
+        if (salary[index] == ","):
             index += 1
 
     if (salary[index] == "."):
         index += 1
-        while(salary[index].isnumeric()):
-            num += int(salary[index]) * (10 ** (-1 * (index - salary.find(".")))); index += 1
+        while (salary[index].isnumeric()):
+            num += int(salary[index]) * (10 ** (-1 * (index - salary.find("."))))
+            index += 1
 
     if ("day" in salary.lower()):
         num = num / 8
-    
+
     for i in year_keywords:
         if i in salary.lower():
             num = num / 2080.0
             break
 
-    print("Parsed: ", str("$" + format(round(num, 2), '.2f'))); print()
-
     return str("$" + format(round(num, 2), '.2f'))
+
 
 def parse_employment_type(employment_type: str) -> str:
     employment_types = [
