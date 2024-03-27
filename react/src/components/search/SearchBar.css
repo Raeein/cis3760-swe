@@ -1,0 +1,12 @@
+.search-bar {
+    border-radius: 5px;
+    padding: 10px;
+    width: 60%;
+    border: none;
+    background-color: #383440;
+    color: white;
+    outline: none;
+    /* position: sticky;
+  top: 0;
+  z-index: 1; */
+}
