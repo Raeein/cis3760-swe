@@ -135,8 +135,8 @@ def get_job_json(page_source: str, job_board_name: str, job_url: str) -> dict:
     job_json_object["employment_type"] = parse_employment_type(
         get_job_attribute(page_source, "employment_type", job_board_name)
     )
-    job_json_object["salary"] = get_job_attribute(
-        page_source, "salary", job_board_name
+    job_json_object["salary"] = parse_salary(
+        get_job_attribute(page_source, "salary", job_board_name)
     )
     job_json_object["description"] = get_job_attribute(
         page_source, "description", job_board_name
@@ -171,6 +171,41 @@ def get_job_url(job_board_name: str, job_card: str) -> str:
     url = job_board_objects[job_board_name]["base_url"]
     url += job_card.find('a')['href']
     return url
+
+
+def parse_salary(salary: str) -> str:
+    print("Original: ", salary)
+
+    salary = salary.replace(",", "")
+    year_keywords = ["year", "annual", "annum"]
+    index = salary.find("$") + 1
+
+    num = 0.0
+
+    if (index == 0):
+        return "Salary not given"
+
+    while (salary[index].isnumeric()):
+        num = num * 10 + int(salary[index])
+        index += 1
+        if (salary[index] == ","):
+            index += 1
+
+    if (salary[index] == "."):
+        index += 1
+        while (salary[index].isnumeric()):
+            num += int(salary[index]) * (10 ** (-1 * (index - salary.find("."))))
+            index += 1
+
+    if ("day" in salary.lower()):
+        num = num / 8
+
+    for i in year_keywords:
+        if i in salary.lower():
+            num = num / 2080.0
+            break
+
+    return str("$" + format(round(num, 2), '.2f'))
 
 
 def parse_employment_type(employment_type: str) -> str:

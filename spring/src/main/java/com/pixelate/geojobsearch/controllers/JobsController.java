@@ -99,4 +99,9 @@ public class JobsController {
     private @ResponseBody Iterable<Job> filterLocation(@PathVariable String location) {
         return jobsService.filterLocation(location);
     }
+
+    @GetMapping("/filter/salaries/{min}&{max}")
+    private @ResponseBody Iterable<Job> filterSalary(@PathVariable float min, @PathVariable float max) {
+        return jobsService.filterSalary(min, max);
+    }
 }

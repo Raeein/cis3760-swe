@@ -33,4 +33,6 @@ public interface JobsService {
     public Iterable<Job> filterEmploymentType(String type);
     
     public Iterable<Job> filterLocation(String location);
+    
+    public Iterable<Job> filterSalary(float min, float max);
 }

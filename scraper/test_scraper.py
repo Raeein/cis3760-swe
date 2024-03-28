@@ -41,25 +41,25 @@ def test_get_job_card(file_location: str, job_board: str, length: int):
                 "testWebsite/indeed/indeedJob1.txt", "Indeed",
                 "Cloud Solutions Engineer - .NET and Azure",
                 "Aviso Wealth", "151 Yonge Street, Toronto, ON",
-                "Full Time", "$105,000–$117,000 a year"
+                "Full Time", "$50.48"
         ),
         (
                 "testWebsite/indeed/indeedJob2.txt", "Indeed",
                 "Junior Java Developer",
                 "Triunity Software", "Toronto, ON",
-                "Full Time", "$70,000 a year"
+                "Full Time", "$33.65"
         ),
         (
                 "testWebsite/indeed/indeedJob3.txt", "Indeed",
                 "Senior Software Engineer | Python Developer",
                 "Scotiabank", "40 King Street West, Toronto, ON",
-                "Permanent", "Unknown"
+                "Permanent", "Salary not given"
         ),
         (
                 "testWebsite/canadian_job/CanadianJob1.txt", "Canadian Job Bank",
                 "software engineer",
                 "Micharity Inc", "Toronto, ON",
-                "Full Time,Permanent", "$52.88HOUR hourly /   40 hours per week"
+                "Full Time,Permanent", "$52.88"
         )
     ]
 )

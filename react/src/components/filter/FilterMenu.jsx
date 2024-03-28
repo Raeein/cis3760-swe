@@ -3,6 +3,7 @@ import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
 import majorCities from "../../cities";
 import "./FilterMenu.css";
+import { useState } from "react";
 
 const employment_types = [
     "Full time",
@@ -35,6 +36,39 @@ export default function FilterMenu({
         });
     }
 
+    const [salary, setSalary] = useState({ min: 0, max: 999 });
+
+    function handleMinSalaryChange(event) {
+        const newMin = event.target.value;
+        setSalary((prevSalary) => {
+            if (newMin === "" && prevSalary.max === "") {
+                handleEndpointChange("api/jobs/all");
+                return { min: 0, max: 999 };
+            } else {
+                handleEndpointChange(
+                    `api/jobs/filter/salaries/${newMin}&${prevSalary.max}`
+                );
+                return { min: newMin, max: prevSalary.max };
+            }
+        });
+    }
+
+    function handleMaxSalaryChange(event) {
+        const newMax = event.target.value;
+        console.log(newMax + "THIS IS THE NEW MAX");
+        setSalary((prevSalary) => {
+            if (newMax === "" && prevSalary.min === "") {
+                handleEndpointChange("api/jobs/all");
+                return { min: 0, max: 999 };
+            } else {
+                handleEndpointChange(
+                    `api/jobs/filter/salaries/${prevSalary.min}&${newMax}`
+                );
+                return { min: prevSalary.min, max: newMax };
+            }
+        });
+    }
+
     return (
         <>
             {filterPane.visible && (
@@ -51,21 +85,23 @@ export default function FilterMenu({
                 >
                     <div className="slider-details">
                         <div className="filters-wrapper">
-                            {/* <div className="salary-wrapper">
-                        <p>Salary</p>
-                        <div className="values-wrapper">
-                            <input
-                                type="text"
-                                placeholder="min"
-                                onChange={handleMinSalaryChange}
-                            />
-                            <input
-                                type="text"
-                                placeholder="max"
-                                onChange={handleMaxSalaryChange}
-                            />
-                        </div>
-                    </div> */}
+                            <div className="salary-wrapper">
+                                <p>Salary</p>
+                                <div className="values-wrapper">
+                                    <input
+                                        type="text"
+                                        placeholder="min"
+                                        value={salary.min}
+                                        onChange={handleMinSalaryChange}
+                                    />
+                                    <input
+                                        type="text"
+                                        placeholder="max"
+                                        value={salary.max}
+                                        onChange={handleMaxSalaryChange}
+                                    />
+                                </div>
+                            </div>
                             <div className="employment-wrapper">
                                 <p>Employment Type</p>
                                 <div className="employment-type-wrapper">

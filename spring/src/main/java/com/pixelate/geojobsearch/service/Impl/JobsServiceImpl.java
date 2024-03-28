@@ -103,4 +103,9 @@ public class JobsServiceImpl implements JobsService {
     public Iterable<Job> filterLocation(String location) {
         return jobsRepository.filterLocation(location);
     }
+
+    @Override
+    public Iterable<Job> filterSalary(float min, float max) {
+        return jobsRepository.filterSalary(min, max);
+    }
 }
