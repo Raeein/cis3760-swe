@@ -1,17 +1,17 @@
 body {
-  /* display: flex;
+    /* display: flex;
   justify-content: center; */
-  /* align-items: center; */
-  height: 100vh;
-  max-height: 100vh;
-  overflow-y: hidden;
-  margin: 3px;
-  font-family: sans-serif;
-  background-color: black;
+    /* align-items: center; */
+    height: 100vh;
+    max-height: 100vh;
+    overflow-y: hidden;
+    margin: 3px;
+    font-family: sans-serif;
+    background-color: black;
 }
 
 .container {
-  display: grid;
-  grid-template-columns: repeat(15, 100px);
-  grid-template-rows: repeat(10, 100px);
+    display: grid;
+    grid-template-columns: repeat(15, 100px);
+    grid-template-rows: repeat(10, 100px);
 }

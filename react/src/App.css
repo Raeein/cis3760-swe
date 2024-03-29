@@ -33,7 +33,6 @@
     color: white;
     transition-duration: 600ms;
     transition-timing-function: ease;
-    position: relative;
 }
 
 .slider-details {
