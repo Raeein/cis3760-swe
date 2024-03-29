@@ -129,7 +129,7 @@
     align-items: center;
     cursor: pointer;
     transition: box-shadow 0.3s ease; /* Add transition for smooth hover effect */
-    margin-left: 20px;
+    margin-left: 50px;
 }
 
 .apply:hover {
