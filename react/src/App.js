@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import "./App.css";
 import JobTable from "./components/job table/JobTable.jsx";
+import JobMap from "./components/map/JobMap.jsx";
 // import fakejobs from "./test.json";
 
 export default function App() {
@@ -29,10 +30,7 @@ export default function App() {
                 data={jobData}
                 handleEndpointChange={handleEndpointChange}
             />
-            <div className="map">
-                <h1>MAP</h1>
-                <p>(in progress not currently functional)</p>
-            </div>
+            <JobMap />
         </div>
     );
 }

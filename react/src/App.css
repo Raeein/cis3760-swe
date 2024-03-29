@@ -12,21 +12,6 @@
     padding: 50px 50px 10px 10px;
 }
 
-.map {
-    grid-column: 6 / 14;
-    grid-row: 2 / 10;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: grey;
-    max-height: 100vh;
-    flex-direction: column;
-}
-
-.map > h1 {
-    color: white;
-}
-
 .overlay {
     background-color: transparent !important;
 }
