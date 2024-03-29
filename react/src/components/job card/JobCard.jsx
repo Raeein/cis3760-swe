@@ -3,7 +3,7 @@ import "./JobCard.css";
 import indeedLogo from "../../assets/indeed.svg";
 import canadaJobBankLogo from "../../assets/canadaBank.svg";
 
-export default function JobCard({ job, handleDetailsPane }) {
+export default function JobCard({ job, handleDetailsPane, setLocation }) {
     const randomLogo =
         Math.floor(Math.random() * 2) === 0 ? indeedLogo : canadaJobBankLogo;
 
@@ -11,11 +11,16 @@ export default function JobCard({ job, handleDetailsPane }) {
     const applicants = Math.floor(Math.random() * 20) + 50;
     const percentage = Math.floor((applied / applicants) * 100);
 
+    function handleClicked(location) {
+        setLocation(location);
+        handleDetailsPane({ visible: true, data: job });
+    }
+
     return (
         <article
             className="card"
             key={job.jobId}
-            onClick={() => handleDetailsPane({ visible: true, data: job })}
+            onClick={() => handleClicked(job.jobLocation)}
         >
             <div className="card-header">
                 <div className="header-wrapper">
@@ -40,14 +45,11 @@ export default function JobCard({ job, handleDetailsPane }) {
             </div>
             <div className="card-body">
                 <h1>
-                    {
-                        <h1>
-                            {job.jobTitle.length > 20
-                                ? job.jobTitle.substring(0, 20) + "..."
-                                : job.jobTitle}
-                        </h1>
-                    }
+                    {job.jobTitle.length > 20
+                        ? job.jobTitle.substring(0, 20) + "..."
+                        : job.jobTitle}
                 </h1>
+
                 <p>
                     located in{" "}
                     {job.jobLocation.length > 15

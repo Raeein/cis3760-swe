@@ -8,6 +8,7 @@ import JobMap from "./components/map/JobMap.jsx";
 export default function App() {
     const [jobData, setJobData] = useState([]);
     const [endpoint, setEndpoint] = useState("/api/jobs/all");
+    const [location, setLocation] = useState("Milton, ON");
 
     function handleEndpointChange(value) {
         setEndpoint(value);
@@ -23,14 +24,16 @@ export default function App() {
 
     // console log the infomration in the json file as a string
     console.log(jobData);
+    console.log(location);
 
     return (
         <div className="container">
             <JobTable
                 data={jobData}
                 handleEndpointChange={handleEndpointChange}
+                setLocation={setLocation}
             />
-            <JobMap />
+            <JobMap location={location} />
         </div>
     );
 }

@@ -5,7 +5,7 @@ import FilterMenu from "../filter/FilterMenu";
 import JobSidebar from "../job side bar/JobSidebar";
 import "./JobTable.css";
 
-export default function JobTable({ data, handleEndpointChange }) {
+export default function JobTable({ data, handleEndpointChange, setLocation }) {
     const [search, setSearch] = useState("");
 
     const [detailsPane, setDetailsPane] = useState({
@@ -45,6 +45,7 @@ export default function JobTable({ data, handleEndpointChange }) {
                             <JobCard
                                 job={job}
                                 handleDetailsPane={setDetailsPane}
+                                setLocation={setLocation}
                                 key={index}
                             />
                         ))}
