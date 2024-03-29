@@ -13,7 +13,6 @@
     scroll-snap-align: start;
     clear: both;
     position: relative;
-
     text-align: center;
 }
 
@@ -60,12 +59,13 @@
     color: #fff;
     font-size: 1.75rem;
     margin: 0;
+    font-weight: 10;
 }
 
 .card-body p {
     color: #fff;
     font-size: 1rem;
-    font-weight: thin;
+    font-weight: 5;
     margin: 0;
 }
 
@@ -130,7 +130,7 @@
 }
 
 .apply:hover {
-    box-shadow: 0 0 10px 5px #fed85d; /* Add glow effect on hover */
+    box-shadow: 0 0 15px 4px #fed85d; /* Add glow effect on hover */
 }
 
 .card-footer {
