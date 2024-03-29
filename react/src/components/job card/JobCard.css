@@ -72,7 +72,8 @@
 .header-wrapper {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    /* justify-content: space-between; */
+    align-items: flex-start;
 }
 
 .source-logo {
@@ -99,6 +100,7 @@
     height: 100%;
     width: 50%;
     color: #fff;
+    margin-left: 10px;
 }
 
 .post-info-title {
@@ -127,6 +129,7 @@
     align-items: center;
     cursor: pointer;
     transition: box-shadow 0.3s ease; /* Add transition for smooth hover effect */
+    margin-left: 20px;
 }
 
 .apply:hover {
