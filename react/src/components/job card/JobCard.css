@@ -126,6 +126,11 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    transition: box-shadow 0.3s ease; /* Add transition for smooth hover effect */
+}
+
+.apply:hover {
+    box-shadow: 0 0 10px 5px #fed85d; /* Add glow effect on hover */
 }
 
 .card-footer {

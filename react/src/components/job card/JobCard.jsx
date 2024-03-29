@@ -39,8 +39,21 @@ export default function JobCard({ job, handleDetailsPane }) {
                 </div>
             </div>
             <div className="card-body">
-                <h1>{job.jobTitle}</h1>
-                <p>located in {job.jobLocation}</p>
+                <h1>
+                    {
+                        <h1>
+                            {job.jobTitle.length > 20
+                                ? job.jobTitle.substring(0, 20) + "..."
+                                : job.jobTitle}
+                        </h1>
+                    }
+                </h1>
+                <p>
+                    located in{" "}
+                    {job.jobLocation.length > 15
+                        ? job.jobLocation.substring(0, 20) + "..."
+                        : job.jobLocation}
+                </p>
             </div>
             <div className="card-footer">
                 <div className="progress-bar">
