@@ -4,6 +4,10 @@ import "react-sliding-pane/dist/react-sliding-pane.css";
 import majorCities from "../../cities";
 import "./FilterMenu.css";
 
+// import canada from "canada";
+// const cities = canada.cities || [];
+// const majorCities = cities.map(cityData => `${cityData[0]}, ${cityData[1]}`);
+
 const employment_types = [
     "full time",
     "part time",
