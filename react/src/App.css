@@ -9,7 +9,16 @@
     top: 0;
     font-weight: 1000;
     left: 0;
-    padding: 50px 50px 10px 10px;
+    height: 100px;
+    width: 400px;
+}
+
+.logo-wrapper {
+    height: 75px;
+    width: 400px;
+    padding: 0;
+    overflow: hidden;
+    display: inline-block;
 }
 
 .overlay {

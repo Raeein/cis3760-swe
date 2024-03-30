@@ -45,7 +45,10 @@ export default function JobMap({ location }) {
         <div className="JobMap">
             <APIProvider apiKey="AIzaSyD5jc3qLhA6YtegDcyd6DRL4PjEeVn8PR4">
                 <Map
-                    center={{ lat: coordinates.lat, lng: coordinates.lng }}
+                    center={{
+                        lat: coordinates.lat,
+                        lng: coordinates.lng,
+                    }}
                     zoom={10}
                 >
                     <Marker
