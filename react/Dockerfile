@@ -11,6 +11,7 @@ RUN npm ci
 
 # Install @vis.gl/react-google-maps and @googlemaps/markerclusterer
 RUN npm install @vis.gl/react-google-maps @googlemaps/markerclusterer
+RUN npm install framer-motion
 
 # Set environment variables
 ENV CI=true

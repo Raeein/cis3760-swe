@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import SearchBar from "../search/SearchBar";
 import JobCard from "../job card/JobCard";
 import FilterMenu from "../filter/FilterMenu";
@@ -36,14 +37,19 @@ export default function JobTable({ data, handleEndpointChange, setLocation }) {
                         setSearch={setSearch}
                         handleEndpointChange={handleEndpointChange}
                     />
-                    <button
+                    <motion.button
                         className="filter-icon"
                         onClick={() =>
                             setfilterPane({ visible: true, data: null })
                         }
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{
+                            scale: 0.9,
+                            ease: "easeInOut",
+                        }}
                     >
                         filter
-                    </button>
+                    </motion.button>
                 </div>
                 <div className="card-list">
                     {Array.isArray(data) &&
