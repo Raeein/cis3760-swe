@@ -8,10 +8,10 @@ import { useState } from "react";
 const employment_types = [
     "Full time",
     "Part time",
-    "internship",
-    "permanent",
-    "temporary",
-    "contract",
+    "Internship",
+    "Permanent",
+    "Temporary",
+    "Contract",
 ];
 
 export default function FilterMenu({
@@ -22,9 +22,13 @@ export default function FilterMenu({
     setfilterPane,
 }) {
     function handleFilterChange(value, type) {
-        type === "employment"
-            ? handleEndpointChange(`api/jobs/filter/employments/${value}`)
-            : handleEndpointChange(`api/jobs/filter/locations/${value}`);
+        if (value === "") {
+            handleEndpointChange("api/jobs/all");
+        } else {
+            type === "employment"
+                ? handleEndpointChange(`api/jobs/filter/employments/${value}`)
+                : handleEndpointChange(`api/jobs/filter/locations/${value}`);
+        }
 
         setSearch((prevSearch) => {
             if (value === prevSearch) {
@@ -105,48 +109,33 @@ export default function FilterMenu({
                             <div className="employment-wrapper">
                                 <p>Employment Type</p>
                                 <div className="employment-type-wrapper">
-                                    {employment_types.map((type) => (
-                                        <label htmlFor={type} key={type}>
-                                            <input
-                                                type="checkbox"
-                                                id={type}
-                                                name={type}
-                                                value={type}
-                                                checked={search.includes(type)}
-                                                onChange={() =>
-                                                    handleFilterChange(
-                                                        type,
-                                                        "employment"
-                                                    )
-                                                }
-                                            />
-                                            {type}
-                                        </label>
-                                    ))}
+                                    <select
+                                        value={search}
+                                        onChange={(e) => handleFilterChange(e.target.value, "employment")}
+                                    >
+                                        <option value="">Select Employment Type</option>
+                                        {employment_types.map((type) => (
+                                            <option key={type} value={type}>
+                                                {type}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
                             </div>
                             <div className="locations">
                                 <p>Location</p>
                                 <div className="location-wrapper">
-                                    {majorCities.major_cities.map(
-                                        (location) => (
-                                            <label key={location}>
-                                                <input
-                                                    type="checkbox"
-                                                    onChange={() =>
-                                                        handleFilterChange(
-                                                            location,
-                                                            "location"
-                                                        )
-                                                    }
-                                                    checked={search.includes(
-                                                        location
-                                                    )}
-                                                ></input>
+                                    <select
+                                        value={search}
+                                        onChange={(e) => handleFilterChange(e.target.value, "location")}
+                                    >
+                                        <option value="">Select Location</option>
+                                        {majorCities.major_cities.map((location) => (
+                                            <option key={location} value={location}>
                                                 {location}
-                                            </label>
-                                        )
-                                    )}
+                                            </option>
+                                        ))}
+                                    </select>
                                 </div>
                             </div>
                         </div>

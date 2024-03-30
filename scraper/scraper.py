@@ -174,8 +174,6 @@ def get_job_url(job_board_name: str, job_card: str) -> str:
 
 
 def parse_salary(salary: str) -> str:
-    print("Original: ", salary)
-
     salary = salary.replace(",", "")
     year_keywords = ["year", "annual", "annum"]
     index = salary.find("$") + 1
