@@ -27,7 +27,7 @@ export default function JobTable({ data, handleEndpointChange, setLocation }) {
             <div className="JobTable">
                 <div
                     className={
-                        filterPane.visible
+                        filterPane.visible || detailsPane.visible
                             ? "search-container-filter-opened"
                             : "search-container"
                     }
