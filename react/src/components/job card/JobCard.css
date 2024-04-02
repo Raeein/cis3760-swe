@@ -60,7 +60,7 @@
     color: #fff;
     font-size: 1.75rem;
     margin: 0;
-    font-weight: 10;
+    /* font-weight: 300; */
 }
 
 .card-body p {
@@ -119,13 +119,13 @@
 .apply {
     font-family: "futura";
     font-weight: 500;
-    background-color: #fed85d;
+    background-color: #007bff;
     width: 60px;
     height: 25px;
     padding-bottom: 3px;
     border-radius: 5px;
     display: flex;
-    color: #fffbec;
+    color: white;
     justify-content: center;
     align-items: center;
     cursor: pointer;
@@ -135,11 +135,11 @@
 
 .apply a {
     text-decoration: none;
-    color: #fffbec;
+    color: white;
 }
 
 .apply:hover {
-    box-shadow: 0 0 15px 4px #fed85d; /* Add glow effect on hover */
+    box-shadow: 0 0 15px 4px #007bff; /* Add glow effect on hover */
 }
 
 .card-footer {
@@ -169,6 +169,6 @@
     position: absolute;
     top: 0;
     height: 100%;
-    background-color: #fed85d;
+    background-color: #007bff;
     border-radius: 5px;
 }

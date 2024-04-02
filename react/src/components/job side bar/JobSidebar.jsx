@@ -2,6 +2,8 @@ import React from "react";
 import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
 import "./JobSideBar.css";
+import money from "../../assets/money.svg";
+import pin from "../../assets/pin.svg";
 
 export default function JobSidebar({ detailsPane, setDetailsPane }) {
     return (
@@ -9,7 +11,7 @@ export default function JobSidebar({ detailsPane, setDetailsPane }) {
             {detailsPane.visible && (
                 <SlidingPane
                     isOpen={detailsPane.visible}
-                    title={detailsPane.data.jobTitle}
+                    title={detailsPane.data.jobTitle + " information"}
                     onRequestClose={() =>
                         setDetailsPane({ visible: false, data: null })
                     }
@@ -24,19 +26,28 @@ export default function JobSidebar({ detailsPane, setDetailsPane }) {
                                 <div className="job-info-header">
                                     <h1>{detailsPane.data.jobTitle}</h1>
                                     <h3>{detailsPane.data.company}</h3>
-                                    <h3>{detailsPane.data.jobLocation}</h3>
-                                    <p>Salary: {detailsPane.data.salary}</p>
+                                    <div className="job-info-location">
+                                        <div className="pin-logo">
+                                            <img src={pin} alt="Pin Logo" />
+                                        </div>
+                                        <p>{detailsPane.data.jobLocation}</p>
+                                    </div>
+                                    <div className="pay">
+                                        <div className="money-logo">
+                                            <img src={money} alt="money Logo" />
+                                        </div>
+                                        <p>
+                                            {detailsPane.data.salary}
+                                            /hour -{" "}
+                                            {
+                                                detailsPane.data.employmentType
+                                            }{" "}
+                                            position
+                                        </p>
+                                    </div>
                                 </div>
                                 <div className="job-info-body">
-                                    <p>
-                                        Description:{" "}
-                                        {detailsPane.data.jobDescription}
-                                    </p>
-                                    <p>
-                                        This is a{" "}
-                                        {detailsPane.data.employmentType}{" "}
-                                        position
-                                    </p>
+                                    <p>{detailsPane.data.jobDescription}</p>
                                 </div>
                                 <a
                                     href={detailsPane.data.jobUrl}

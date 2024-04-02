@@ -5,6 +5,50 @@
     align-items: flex-start;
 }
 
+.job-info-location {
+    display: flex; /* Use flexbox */
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+.pin-logo {
+    display: flex; /* Use flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 30px;
+    width: 30px;
+    margin-right: 5px;
+}
+
+.pin-logo img {
+    max-width: 80%; /* Ensure image doesn't exceed container width */
+    max-height: 80%; /* Ensure image doesn't exceed container height */
+    border-radius: inherit; /* Inherit border-radius from parent */
+    padding-top: 20px;
+}
+
+.pay {
+    display: flex; /* Use flexbox */
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.money-logo {
+    display: flex; /* Use flexbox */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 33px;
+    width: 33px;
+    margin-right: 5px;
+}
+
+.money-logo img {
+    max-width: 80%; /* Ensure image doesn't exceed container width */
+    max-height: 80%; /* Ensure image doesn't exceed container height */
+    border-radius: inherit; /* Inherit border-radius from parent */
+}
+
 .apply-button {
     display: inline-block;
     padding: 10px 20px;
@@ -21,4 +65,8 @@
 
 .apply-button:hover {
     background-color: #0056b3;
+}
+
+.job-info-header p {
+    font-weight: 5;
 }
