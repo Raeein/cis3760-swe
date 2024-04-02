@@ -18,14 +18,20 @@ export default function JobSidebar({ detailsPane, setDetailsPane }) {
                     className="slider"
                 >
                     <div className="slider-details">
-                        <p>Salary: {detailsPane.data.salary}</p>
-                        <p>Location: {detailsPane.data.jobLocation}</p>
-                        <p>Company: {detailsPane.data.company}</p>
-                        <p>Description: {detailsPane.data.jobDescription}</p>
-                        <p>Employment type: {detailsPane.data.employmentType}</p>
-                        <a href={detailsPane.data.jobUrl} target="_blank" rel="noopener noreferrer">
-                            Apply
-                        </a>
+                        <div className="job-info">
+                            <div className="job-info-header">
+                                <p>Company: {detailsPane.data.company}</p>
+                                <p>Location: {detailsPane.data.jobLocation}</p>
+                                <p>Salary: {detailsPane.data.salary}</p>
+                            </div>
+                            <p>
+                                Description: {detailsPane.data.jobDescription}
+                            </p>
+                            <p>
+                                This is a {detailsPane.data.employmentType}{" "}
+                                position
+                            </p>
+                        </div>
                     </div>
                 </SlidingPane>
             )}
