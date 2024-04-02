@@ -19,11 +19,11 @@
 
 .card:focus-within,
 .card:hover ~ .card {
-    transform: translateX(-130px);
+    transform: translateX(-30px);
 }
 
 .card:not(:hover) {
-    transform: translateX(-70px);
+    transform: translateX(-10px);
 }
 
 .card:after {
