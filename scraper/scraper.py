@@ -238,6 +238,7 @@ def insert_into_database(job_object: dict, connection, cursor):
     job_url = job_object["url"]
     job_site = job_object["job_site"]
 
+    print(job_title)
     if (job_title != "Unknown"):
         get_statemet = f"""SELECT job_description FROM job
                             WHERE job_title = '{job_title}'
