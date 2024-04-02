@@ -1,6 +1,7 @@
 import React from "react";
 import SlidingPane from "react-sliding-pane";
 import "react-sliding-pane/dist/react-sliding-pane.css";
+import "./JobSideBar.css";
 
 export default function JobSidebar({ detailsPane, setDetailsPane }) {
     return (
@@ -23,7 +24,7 @@ export default function JobSidebar({ detailsPane, setDetailsPane }) {
                         <p>Company: {detailsPane.data.company}</p>
                         <p>Description: {detailsPane.data.jobDescription}</p>
                         <p>Employment type: {detailsPane.data.employmentType}</p>
-                        <a href={detailsPane.data.jobUrl} target="_blank" rel="noopener noreferrer">
+                        <a href={detailsPane.data.jobUrl} target="_blank" rel="noopener noreferrer" className="apply-button">
                             Apply
                         </a>
                     </div>
