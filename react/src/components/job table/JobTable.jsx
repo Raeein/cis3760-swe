@@ -26,7 +26,7 @@ export default function JobTable({ data, handleEndpointChange, setLocation }) {
                     <motion.h1
                         className="logo"
                         initial={{
-                            y: 100,
+                            y: 80,
                             opacity: 0,
                         }}
                         animate={{

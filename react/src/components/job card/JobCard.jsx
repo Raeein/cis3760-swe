@@ -5,7 +5,7 @@ import canadaJobBankLogo from "../../assets/canadaBank.svg";
 
 export default function JobCard({ job, handleDetailsPane, setLocation }) {
     const randomLogo =
-        Math.floor(Math.random() * 2) === 0 ? indeedLogo : canadaJobBankLogo;
+        job.jobSite === "Indeed" ? indeedLogo : canadaJobBankLogo;
 
     const applied = Math.floor(Math.random() * 40) + 10;
     const applicants = Math.floor(Math.random() * 20) + 50;

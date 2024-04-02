@@ -25,7 +25,6 @@ input {
     align-items: center;
     padding: 0;
     margin: 0;
-    border-radius: 5px;
 }
 
 .filters-wrapper {
@@ -36,7 +35,7 @@ input {
     margin: 0;
     border-radius: 5px;
     position: relative;
-    height: 100%;
+    height: 500px;
 }
 
 .location-wrapper {
@@ -45,12 +44,7 @@ input {
     justify-content: space-between;
     padding: 0;
     margin: 0;
-    border-radius: 5px;
-    max-width: 350px;
-    height: 350px;
-    overflow-y: scroll;
 }
-
 .employment-type-wrapper label {
     display: block;
     margin-bottom: 10px;
@@ -58,4 +52,31 @@ input {
 
 .employment-type-wrapper label input[type="checkbox"] {
     margin-right: 5px;
+}
+
+.locations {
+    border-radius: 5px;
+    background-color: #2b2538;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 10px;
+}
+
+.employments {
+    border-radius: 5px;
+    background-color: #2b2538;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 10px;
+}
+
+.salary-wrapper {
+    border-radius: 5px;
+    background-color: #2b2538;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 10px;
 }
