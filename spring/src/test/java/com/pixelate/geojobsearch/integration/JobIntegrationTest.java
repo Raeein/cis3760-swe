@@ -110,7 +110,8 @@ public class JobIntegrationTest {
         "Knowledge with developing using React and TypeScript",
         "DataCat", 
         "Full Time,Permament",
-        "https://ca.indeed.com/"
+        "https://ca.indeed.com/",
+        "Indeed"
         );
 
         when(jobsService.searchJobs("Frontend Software Developer")).thenReturn(Arrays.asList(job));
@@ -136,7 +137,8 @@ public class JobIntegrationTest {
         "Knowledge with developing using React and TypeScript",
         "DataCat", 
         "Full Time,Permament",
-        "https://ca.indeed.com/"
+        "https://ca.indeed.com/",
+        "Indeed"
         );
         when(jobsService.filterEmploymentType("Permament")).thenReturn(Arrays.asList(job));
 
@@ -161,7 +163,8 @@ public class JobIntegrationTest {
         "Knowledge with developing using React and TypeScript",
         "DataCat", 
         "Full Time,Permament",
-        "https://ca.indeed.com/"
+        "https://ca.indeed.com/",
+        "Indeed"
         );
         when(jobsService.filterLocation("Toronto, ON")).thenReturn(Arrays.asList(job));
 

@@ -23,7 +23,9 @@ public class JobTest {
                 "$120,000",
                 "Develop cutting-edge software solutions.",
                 "Tech Innovations Inc.",
-                "Full-time", "https://ca.indeed.com/");
+                "Full-time", 
+                "https://ca.indeed.com/",
+                "Indeed");
 
         // Validate that each field is correctly initialized
         assertEquals(Integer.valueOf(1), job.getJobId(), "Job ID should be initialized correctly");

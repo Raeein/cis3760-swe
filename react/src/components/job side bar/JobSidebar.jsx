@@ -24,6 +24,7 @@ export default function JobSidebar({ detailsPane, setDetailsPane }) {
                         <p>Description: {detailsPane.data.jobDescription}</p>
                         <p>Employment type: {detailsPane.data.employmentType}</p>
                         <p>Link: {detailsPane.data.jobUrl}</p>
+                        <p>Job site: {detailsPane.data.jobSite}</p>
                     </div>
                 </SlidingPane>
             )}

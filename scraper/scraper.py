@@ -4,9 +4,9 @@ from bs4 import BeautifulSoup
 insert_statement = """
     INSERT INTO job (
         jobid, job_title, job_location,
-        salary, job_description, company, employment_type, job_url
+        salary, job_description, company, employment_type, job_url, job_site
     )
-    VALUES (NULL, ?, ?, ?, ?, ?, ?, ?);
+    VALUES (NULL, ?, ?, ?, ?, ?, ?, ?, ?);
 """
 
 job_board_objects = {
@@ -142,6 +142,7 @@ def get_job_json(page_source: str, job_board_name: str, job_url: str) -> dict:
         page_source, "description", job_board_name
     )
     job_json_object["url"] = job_url
+    job_json_object["job_site"] = parse_job_site(job_url)
     return job_json_object
 
 
@@ -172,6 +173,13 @@ def get_job_url(job_board_name: str, job_card: str) -> str:
     url += job_card.find('a')['href']
     return url
 
+def parse_job_site(url: str) -> str:
+    if ("indeed" in url):
+        return "Indeed"
+    elif ("jobbank" in url):
+        return "Canadian Job Bank"
+    else:
+        return "Unknown"
 
 def parse_salary(salary: str) -> str:
     salary = salary.replace(",", "")
@@ -228,6 +236,7 @@ def insert_into_database(job_object: dict, connection, cursor):
     company = job_object["company"]
     employment_type = job_object["employment_type"]
     job_url = job_object["url"]
+    job_site = job_object["job_site"]
 
     if (job_title != "Unknown"):
         get_statemet = f"""SELECT job_description FROM job
@@ -235,7 +244,8 @@ def insert_into_database(job_object: dict, connection, cursor):
                             AND salary = '{salary}'
                             AND company = '{company}'
                             AND employment_type = '{employment_type}'
-                            AND job_url = '{job_url}';
+                            AND job_url = '{job_url}'
+                            AND job_site = '{job_site}';
                         """
         cursor.execute(get_statemet)
 
@@ -249,12 +259,12 @@ def insert_into_database(job_object: dict, connection, cursor):
         if (not duplicate):
             res = cursor.execute(insert_statement, (
                 job_title, job_location, salary,
-                job_description, company, employment_type, job_url
+                job_description, company, employment_type, job_url, job_site
             ))
             if res == 0:
                 print(
                     "Error inserting data: ", job_title, job_location,
-                    salary, job_description, company, employment_type, job_url
+                    salary, job_description, company, employment_type, job_url, job_site
                 )
                 return 0
         else:
