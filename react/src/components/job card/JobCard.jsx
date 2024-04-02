@@ -37,9 +37,15 @@ export default function JobCard({ job, handleDetailsPane, setLocation }) {
                             Posted {Math.floor(Math.random() * 30) + 1} days ago
                         </p>
                     </div>
-                    <div className="apply">
+                    <div className="apply" href={job.jobUrl}>
                         {" "}
-                        <p>Apply</p>{" "}
+                        <a
+                            href={job.jobUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Apply
+                        </a>
                     </div>
                 </div>
             </div>

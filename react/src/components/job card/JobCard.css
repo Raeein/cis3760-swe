@@ -133,6 +133,11 @@
     margin-left: 50px;
 }
 
+.apply a {
+    text-decoration: none;
+    color: #fffbec;
+}
+
 .apply:hover {
     box-shadow: 0 0 15px 4px #fed85d; /* Add glow effect on hover */
 }
