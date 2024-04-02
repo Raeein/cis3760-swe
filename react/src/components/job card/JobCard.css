@@ -117,7 +117,6 @@
 }
 
 .apply {
-    font-family: "futura";
     font-weight: 500;
     background-color: #007bff;
     width: 60px;
@@ -129,8 +128,9 @@
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    transition: box-shadow 0.3s ease; /* Add transition for smooth hover effect */
+    transition: box-shadow 0.3s ease; 
     margin-left: 50px;
+    font-size: 0.9rem
 }
 
 .apply a {

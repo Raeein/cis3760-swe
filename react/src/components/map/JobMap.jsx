@@ -50,6 +50,7 @@ export default function JobMap({ location }) {
                         lng: coordinates.lng,
                     }}
                     zoom={10}
+                    dragPan={true}
                 >
                     <Marker
                         position={{
