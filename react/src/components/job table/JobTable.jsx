@@ -21,25 +21,6 @@ export default function JobTable({ data, handleEndpointChange, setLocation }) {
 
     return (
         <>
-            <div>
-                <span className="logo-wrapper">
-                    <motion.h1
-                        className="logo"
-                        initial={{
-                            y: 80,
-                            opacity: 0,
-                        }}
-                        animate={{
-                            y: 0,
-                            opacity: 1,
-                        }}
-                        transition={{ duration: 1.2, ease: [0.33, 1, 0.68, 1] }}
-                    >
-                        GeoJobSearch
-                    </motion.h1>
-                </span>
-            </div>
-
             <div className="JobTable">
                 <div
                     className={

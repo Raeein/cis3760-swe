@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import "./App.css";
 import JobTable from "./components/job table/JobTable.jsx";
 import JobMap from "./components/map/JobMap.jsx";
+import NavBar from "./components/navbar/NavBar.jsx";
+
 // import fakejobs from "./test.json";
 
 export default function App() {
@@ -28,6 +30,7 @@ export default function App() {
 
     return (
         <div className="container">
+            <NavBar />
             <JobTable
                 data={jobData}
                 handleEndpointChange={handleEndpointChange}

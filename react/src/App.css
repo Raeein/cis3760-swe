@@ -1,26 +1,3 @@
-.h1 {
-    color: #fff;
-}
-
-.logo {
-    color: #fff;
-    font: "Roboto";
-    font-size: 2.8rem;
-    top: 0;
-    font-weight: 1000;
-    left: 0;
-    height: 100px;
-    width: 400px;
-}
-
-.logo-wrapper {
-    height: 75px;
-    width: 400px;
-    padding: 0;
-    overflow: hidden;
-    display: inline-block;
-}
-
 .overlay {
     background-color: transparent !important;
 }

@@ -1,0 +1,69 @@
+.h1 {
+    color: #fff;
+}
+
+.navbar {
+    grid-row: 1 / 1;
+    grid-column: 1 / 15;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+}
+
+.nav-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    width: 800px;
+    justify-content: space-around;
+}
+
+.nav-item {
+    width: 100px;
+    height: 50px;
+    margin-left: 20px;
+    background-color: #007bff;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.5s;
+    transition-timing-function: ease-in-out;
+}
+
+.nav-item:hover {
+    background-color: #0056b3;
+}
+
+.nav-item a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+}
+
+.logo {
+    color: #fff;
+    font: "Roboto";
+    font-size: 2.8rem;
+    top: 0;
+    font-weight: 1000;
+    left: 0;
+    height: 100px;
+    width: 400px;
+}
+
+.logo-wrapper {
+    height: 75px;
+    width: 400px;
+    padding: 0;
+    overflow: hidden;
+    display: inline-block;
+}
