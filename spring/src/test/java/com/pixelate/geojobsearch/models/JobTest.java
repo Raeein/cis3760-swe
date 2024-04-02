@@ -23,7 +23,7 @@ public class JobTest {
                 "$120,000",
                 "Develop cutting-edge software solutions.",
                 "Tech Innovations Inc.",
-                "Full-time");
+                "Full-time", "https://ca.indeed.com/");
 
         // Validate that each field is correctly initialized
         assertEquals(Integer.valueOf(1), job.getJobId(), "Job ID should be initialized correctly");
@@ -33,6 +33,7 @@ public class JobTest {
         assertEquals("Develop cutting-edge software solutions.", job.getJobDescription(), "Job description should be initialized correctly");
         assertEquals("Tech Innovations Inc.", job.getCompany(), "Company should be initialized correctly");
         assertEquals("Full-time", job.getEmploymentType(), "Employment type should be initialized correctly");
+        assertEquals("https://ca.indeed.com/", job.getJobUrl(), "URL should be initialized correctly");
     }
 
 

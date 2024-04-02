@@ -109,7 +109,8 @@ public class JobIntegrationTest {
         "$89,000", 
         "Knowledge with developing using React and TypeScript",
         "DataCat", 
-        "Full Time,Permament"
+        "Full Time,Permament",
+        "https://ca.indeed.com/"
         );
 
         when(jobsService.searchJobs("Frontend Software Developer")).thenReturn(Arrays.asList(job));
@@ -122,6 +123,7 @@ public class JobIntegrationTest {
         assertEquals(job.getJobDescription(), "Knowledge with developing using React and TypeScript");
         assertEquals(job.getCompany(), "DataCat");
         assertEquals(job.getEmploymentType(), "Full Time,Permament");
+        assertEquals(job.getJobUrl(), "https://ca.indeed.com/");
     }
 
     @Test
@@ -133,7 +135,8 @@ public class JobIntegrationTest {
         "$89,000", 
         "Knowledge with developing using React and TypeScript",
         "DataCat", 
-        "Full Time,Permament"
+        "Full Time,Permament",
+        "https://ca.indeed.com/"
         );
         when(jobsService.filterEmploymentType("Permament")).thenReturn(Arrays.asList(job));
 
@@ -145,6 +148,7 @@ public class JobIntegrationTest {
         assertEquals(job.getJobDescription(), "Knowledge with developing using React and TypeScript");
         assertEquals(job.getCompany(), "DataCat");
         assertEquals(job.getEmploymentType(), "Full Time,Permament");
+        assertEquals(job.getJobUrl(), "https://ca.indeed.com/");
     }
 
     @Test
@@ -156,7 +160,8 @@ public class JobIntegrationTest {
         "$89,000", 
         "Knowledge with developing using React and TypeScript",
         "DataCat", 
-        "Full Time,Permament"
+        "Full Time,Permament",
+        "https://ca.indeed.com/"
         );
         when(jobsService.filterLocation("Toronto, ON")).thenReturn(Arrays.asList(job));
 
@@ -168,6 +173,7 @@ public class JobIntegrationTest {
         assertEquals(job.getJobDescription(), "Knowledge with developing using React and TypeScript");
         assertEquals(job.getCompany(), "DataCat");
         assertEquals(job.getEmploymentType(), "Full Time,Permament");
+        assertEquals(job.getJobUrl(), "https://ca.indeed.com/");
     }
 
 

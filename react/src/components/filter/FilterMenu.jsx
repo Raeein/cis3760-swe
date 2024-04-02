@@ -106,7 +106,7 @@ export default function FilterMenu({
                                     />
                                 </div>
                             </div>
-                            <div className="employment-wrapper">
+                            <div className="employments">
                                 <p>Employment Type</p>
                                 <div className="employment-type-wrapper">
                                     <select

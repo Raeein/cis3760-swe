@@ -30,4 +30,7 @@ public class Job {
 
     @Column(name = "employment_type")
     private String employmentType;
+
+    @Column(name = "job_url")
+    private String jobUrl;
 }

@@ -74,7 +74,7 @@ while job_object is not None:
             "Error inserting data: ", job_object["title"],
             job_object["location"], job_object["salary"],
             job_object["description"], job_object["company"],
-            job_object["employment_type"]
+            job_object["employment_type"], job_object["url"]
         )
     job_object = next(job_object_generator)
 

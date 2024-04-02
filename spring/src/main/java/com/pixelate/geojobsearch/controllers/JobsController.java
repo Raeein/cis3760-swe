@@ -49,7 +49,6 @@ public class JobsController {
         return jobsService.allJobs();
     }
 
-
     @GetMapping("/count")
     private @ResponseBody Integer countJobs() {
         return jobsService.countJobs();

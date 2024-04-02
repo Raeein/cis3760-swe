@@ -4,9 +4,9 @@ from bs4 import BeautifulSoup
 insert_statement = """
     INSERT INTO job (
         jobid, job_title, job_location,
-        salary, job_description, company, employment_type
+        salary, job_description, company, employment_type, job_url
     )
-    VALUES (NULL, ?, ?, ?, ?, ?, ?);
+    VALUES (NULL, ?, ?, ?, ?, ?, ?, ?);
 """
 
 job_board_objects = {
@@ -227,13 +227,15 @@ def insert_into_database(job_object: dict, connection, cursor):
     job_description = job_object.get("description", "No description given")
     company = job_object["company"]
     employment_type = job_object["employment_type"]
+    job_url = job_object["url"]
 
     if (job_title != "Unknown"):
         get_statemet = f"""SELECT job_description FROM job
                             WHERE job_title = '{job_title}'
                             AND salary = '{salary}'
                             AND company = '{company}'
-                            AND employment_type = '{employment_type}';
+                            AND employment_type = '{employment_type}'
+                            AND job_url = '{job_url}';
                         """
         cursor.execute(get_statemet)
 
@@ -247,12 +249,12 @@ def insert_into_database(job_object: dict, connection, cursor):
         if (not duplicate):
             res = cursor.execute(insert_statement, (
                 job_title, job_location, salary,
-                job_description, company, employment_type
+                job_description, company, employment_type, job_url
             ))
             if res == 0:
                 print(
                     "Error inserting data: ", job_title, job_location,
-                    salary, job_description, company, employment_type
+                    salary, job_description, company, employment_type, job_url
                 )
                 return 0
         else:
