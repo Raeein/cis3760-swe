@@ -30,7 +30,6 @@
 .pay {
     display: flex; /* Use flexbox */
     flex-direction: row;
-    justify-content: center;
     align-items: center;
 }
 
