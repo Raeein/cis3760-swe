@@ -31,7 +31,7 @@ nav {
 .nav-item {
     width: 100px;
     height: 50px;
-    margin-left: 20px;
+    margin-left: 10px;
     background-color: #007bff;
     border-radius: 50px;
     display: flex;
@@ -74,15 +74,17 @@ nav {
     font-size: 1.2rem;
 }
 
+
 .logo {
     color: #fff;
     font: "Roboto";
-    font-size: 1.8rem;
+    font-size: 2.3rem;
     top: 0;
     font-weight: 1000;
     left: 0;
     height: 100px;
     width: 400px;
+    margin-left: 10px;
 }
 
 .logo-wrapper {

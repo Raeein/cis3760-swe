@@ -79,7 +79,6 @@ export default function JobSidebar({ detailsPane, setDetailsPane }) {
                                             detailsPane.data.jobDescription
                                         )}
                                     </p>
-
                                 </div>
                                 <a
                                     href={detailsPane.data.jobUrl}

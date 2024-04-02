@@ -18,17 +18,17 @@ def get_job_info(
         for job_card in scraper.get_job_cards_from_html(
                 driver.page_source, job_board_name
         ):
-            job_url = scraper.get_job_url(job_board_name, job_card)
-            if job_url is not None:
-                driver.get(url=job_url)
+            the_url = scraper.get_job_url(job_board_name, job_card)
+            print(the_url)
+            if the_url is not None:
+                driver.get(url=the_url)
                 stall_driver(driver)
                 job_json = scraper.get_job_json(
                     driver.page_source,
-                    job_board_name, job_url
+                    job_board_name, the_url
                 )
                 yield job_json
     yield None
-
 
 conn = db_util.get_connection()
 cur = conn.cursor()

@@ -44,7 +44,7 @@ export default function JobTable({ data, handleEndpointChange, setLocation }) {
                             ease: "easeInOut",
                         }}
                     >
-                        filter
+                        Filter
                     </motion.button>
                 </div>
                 <div className="card-list">
