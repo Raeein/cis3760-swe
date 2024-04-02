@@ -1,3 +1,9 @@
+.job-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
 
 .apply-button {
     display: inline-block;
@@ -10,7 +16,7 @@
     text-decoration: none;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    text-align: center; 
+    text-align: center;
 }
 
 .apply-button:hover {

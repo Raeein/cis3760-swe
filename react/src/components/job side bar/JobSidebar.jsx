@@ -19,14 +19,35 @@ export default function JobSidebar({ detailsPane, setDetailsPane }) {
                     className="slider"
                 >
                     <div className="slider-details">
-                        <p>Salary: {detailsPane.data.salary}</p>
-                        <p>Location: {detailsPane.data.jobLocation}</p>
-                        <p>Company: {detailsPane.data.company}</p>
-                        <p>Description: {detailsPane.data.jobDescription}</p>
-                        <p>Employment type: {detailsPane.data.employmentType}</p>
-                        <a href={detailsPane.data.jobUrl} target="_blank" rel="noopener noreferrer" className="apply-button">
-                            Apply
-                        </a>
+                        <div className="slider-details">
+                            <div className="job-info">
+                                <div className="job-info-header">
+                                    <h1>{detailsPane.data.jobTitle}</h1>
+                                    <h3>{detailsPane.data.company}</h3>
+                                    <h3>{detailsPane.data.jobLocation}</h3>
+                                    <p>Salary: {detailsPane.data.salary}</p>
+                                </div>
+                                <div className="job-info-body">
+                                    <p>
+                                        Description:{" "}
+                                        {detailsPane.data.jobDescription}
+                                    </p>
+                                    <p>
+                                        This is a{" "}
+                                        {detailsPane.data.employmentType}{" "}
+                                        position
+                                    </p>
+                                </div>
+                                <a
+                                    href={detailsPane.data.jobUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="apply-button"
+                                >
+                                    Apply
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </SlidingPane>
             )}
