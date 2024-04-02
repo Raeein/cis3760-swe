@@ -43,6 +43,29 @@ nav {
     background-color: #0056b3;
 }
 
+.navbar a:before {
+    content: attr(title);
+    position: absolute;
+    height: 5px;
+    width: 5px;
+    background-color: white;
+    border-radius: 50%;
+    opacity: 0; /* Initially invisible */
+    transform: scale(0);
+    transform-origin: center;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    text-align: center;
+    margin-top: 4px;
+    left: 60%; /* Center horizontally */
+    top: 100%; /* Position below the link */
+    margin-left: -0.5em; /* Adjust based on your design */
+}
+
+.navbar a:hover:before {
+    opacity: 1;
+    transform: scale(1);
+}
+
 .nav-item a {
     color: #fff;
     text-decoration: none;
