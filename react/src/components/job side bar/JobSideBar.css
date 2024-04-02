@@ -5,6 +5,10 @@
     align-items: flex-start;
 }
 
+.job-info-body p {
+    white-space: pre-wrap;
+}
+
 .job-info-location {
     display: flex; /* Use flexbox */
     flex-direction: row;
@@ -60,6 +64,7 @@
     cursor: pointer;
     transition: background-color 0.3s ease;
     text-align: center;
+    margin-bottom: 30px;
 }
 
 .apply-button:hover {

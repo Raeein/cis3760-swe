@@ -6,6 +6,27 @@ import money from "../../assets/money.svg";
 import pin from "../../assets/pin.svg";
 
 export default function JobSidebar({ detailsPane, setDetailsPane }) {
+    function handleLineBreaks(text) {
+        // Split the text into lines
+        let lines = text.split("\n");
+
+        // Process each line
+        for (let i = 0; i < lines.length; i++) {
+            let line = lines[i];
+            // Add a newline before "-" if preceded by a newline in the original text
+            if (line.includes("-") && i > 0 && lines[i - 1].includes("\n")) {
+                lines[i] = "\n" + line;
+            }
+            // Add a newline after ":" and for bullet points
+            lines[i] = line.replace(/:/g, ":\n").replace(/(●|·|•)/g, "\n$1");
+        }
+
+        // Join the lines back together
+        text = lines.join("\n");
+
+        return text;
+    }
+
     return (
         <>
             {detailsPane.visible && (
@@ -47,7 +68,11 @@ export default function JobSidebar({ detailsPane, setDetailsPane }) {
                                     </div>
                                 </div>
                                 <div className="job-info-body">
-                                    <p>{detailsPane.data.jobDescription}</p>
+                                    <p>
+                                        {handleLineBreaks(
+                                            detailsPane.data.jobDescription
+                                        )}
+                                    </p>
                                 </div>
                                 <a
                                     href={detailsPane.data.jobUrl}
